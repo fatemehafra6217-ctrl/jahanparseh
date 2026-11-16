@@ -155,3 +155,328 @@
         function handleLogout() {
             currentUser = null;
             document.getElementById('dashboard-section').classList.add('hidden');
+            document.getElementById('login-section').classList.remove('hidden');
+            document.getElementById('pin-input').value = '';
+        }
+
+        function renderDashboard() {
+            const container = document.getElementById('role-content');
+            const badge = document.getElementById('user-badge');
+            
+            if (currentUser === 'sales') {
+                badge.innerText = 'کارشناس فروش';
+                badge.className = 'px-3 py-1 bg-blue-600 text-white text-xs rounded-lg font-medium';
+                container.innerHTML = renderSalesView();
+            } else if (currentUser === 'finance') {
+                badge.innerText = 'واحد مالی و حسابداری';
+                badge.className = 'px-3 py-1 bg-amber-600 text-white text-xs rounded-lg font-medium';
+                container.innerHTML = renderFinanceView();
+            } else if (currentUser === 'warehouse') {
+                badge.innerText = 'انبارداری مرکزی';
+                badge.className = 'px-3 py-1 bg-purple-600 text-white text-xs rounded-lg font-medium';
+                container.innerHTML = renderWarehouseView();
+            } else if (currentUser === 'driver') {
+                badge.innerText = 'کارتابل رانندگان';
+                badge.className = 'px-3 py-1 bg-emerald-600 text-white text-xs rounded-lg font-medium';
+                container.innerHTML = renderDriverView();
+            } else if (currentUser === 'manager') {
+                badge.innerText = 'مدیریت کل';
+                badge.className = 'px-3 py-1 bg-indigo-600 text-white text-xs rounded-lg font-medium';
+                container.innerHTML = renderManagerView();
+            }
+        }
+
+        // --- نمای کارشناس فروش ---
+        function renderSalesView() {
+            return `
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-slate-800 border border-slate-700 p-5 rounded-2xl shadow-lg space-y-4">
+                        <h3 class="font-bold text-base text-blue-400">➕ ثبت پیش‌فاکتور جدید</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-xs text-slate-300 mb-1">نام مشتری / تعمیرگاه</label>
+                                <input type="text" id="cust-name" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500" placeholder="مثال: لوازم یدکی آزادی">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-300 mb-1">قطعه / پارت نامبر (۵۰ برند ایرانخودرو و سایپا)</label>
+                                <input type="text" id="item-desc" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500" placeholder="مثال: لنت ترمز جلو ایساکو / واترپمپ سایپا">
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs text-slate-300 mb-1">تعداد</label>
+                                    <input type="number" id="item-qty" value="1" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-300 mb-1">مبلغ کل (ریال)</label>
+                                    <input type="number" id="item-price" placeholder="مبلغ به ریال" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                                </div>
+                            </div>
+                            <button onclick="createNewOrder()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-2.5 rounded-xl transition text-sm shadow-lg shadow-blue-600/30">
+                                ثبت و ارسال به واحد مالی
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800 border border-slate-700 p-5 rounded-2xl shadow-lg space-y-4">
+                        <h3 class="font-bold text-base text-slate-200">📋 پیگیری وضعیت سفارش‌ها و فاکتورهای برگشت خورده</h3>
+                        <div class="overflow-x-auto max-h-[350px] overflow-y-auto">
+                            <table class="w-full text-right text-xs">
+                                <thead class="bg-slate-900 text-slate-400 sticky top-0">
+                                    <tr>
+                                        <th class="p-2.5">مشتری</th>
+                                        <th class="p-2.5">قطعه</th>
+                                        <th class="p-2.5">وضعیت</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-700">
+                                    ${orders.length === 0 ? `<tr><td colspan="3" class="text-center p-4 text-slate-500">هیچ سفارشی ثبت نشده است</td></tr>` : 
+                                      orders.map(o => `
+                                        <tr class="${o.status === 'returned' ? 'bg-rose-950/20' : ''}">
+                                            <td class="p-2.5 font-medium">${o.customer}</td>
+                                            <td class="p-2.5 text-slate-300">${o.item} (${o.qty} عدد)</td>
+                                            <td class="p-2.5">
+                                                ${getStatusBadge(o.status)}
+                                                ${o.status === 'returned' ? `<div class="text-[10px] text-rose-400 mt-1">علت عودت: ${o.returnReason || 'ندارد'}</div>` : ''}
+                                            </td>
+                                        </tr>
+                                      `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createNewOrder() {
+            const customer = document.getElementById('cust-name').value;
+            const item = document.getElementById('item-desc').value;
+            const qty = document.getElementById('item-qty').value;
+            const price = document.getElementById('item-price').value;
+
+            if (!customer || !item || !price) {
+                alert('لطفاً تمام اطلاعات فاکتور را پر کنید.');
+                return;
+            }
+
+            const newOrder = {
+                id: Date.now(),
+                customer,
+                item,
+                qty,
+                price,
+                status: 'pending_finance',
+                returnReason: '',
+                date: new Date().toLocaleDateString('fa-IR')
+            };
+
+            saveOrderToCloud(newOrder);
+            document.getElementById('cust-name').value = '';
+            document.getElementById('item-desc').value = '';
+            document.getElementById('item-price').value = '';
+            alert('پیش‌فاکتور با موفقیت ثبت و به واحد مالی ارسال شد.');
+        }
+
+        // --- نمای واحد مالی ---
+        function renderFinanceView() {
+            const pending = orders.filter(o => o.status === 'pending_finance');
+            return `
+                <div class="bg-slate-800 border border-slate-700 p-5 rounded-2xl shadow-lg space-y-4">
+                    <h3 class="font-bold text-base text-amber-400">💰 کارتابل تایید مالی و حسابداری</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-right text-xs">
+                            <thead class="bg-slate-900 text-slate-400">
+                                <tr>
+                                    <th class="p-2.5">تاریخ</th>
+                                    <th class="p-2.5">مشتری</th>
+                                    <th class="p-2.5">شرح کالا</th>
+                                    <th class="p-2.5">مبلغ (ریال)</th>
+                                    <th class="p-2.5 text-center">عملیات مالی</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-700">
+                                ${pending.length === 0 ? `<tr><td colspan="5" class="text-center p-6 text-slate-500">فاکتوری جهت تایید مالی وجود ندارد</td></tr>` :
+                                  pending.map(o => `
+                                    <tr>
+                                        <td class="p-2.5 text-slate-400">${o.date}</td>
+                                        <td class="p-2.5 font-medium">${o.customer}</td>
+                                        <td class="p-2.5 text-slate-300">${o.item} (${o.qty} عدد)</td>
+                                        <td class="p-2.5 text-emerald-400 font-bold">${Number(o.price).toLocaleString()}</td>
+                                        <td class="p-2.5 text-center space-x-2 space-x-reverse">
+                                            <button onclick="updateOrderStatus(${o.id}, 'pending_warehouse')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded-lg transition font-medium">تایید و ارسال به انبار</button>
+                                        </td>
+                                    </tr>
+                                  `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- نمای انبارداری (با قابلیت عودت به کارشناس) ---
+        function renderWarehouseView() {
+            const pendingWarehouse = orders.filter(o => o.status === 'pending_warehouse');
+            return `
+                <div class="bg-slate-800 border border-slate-700 p-5 rounded-2xl shadow-lg space-y-4">
+                    <h3 class="font-bold text-base text-purple-400">📦 کارتابل انبار مرکزی (تایید موجودی و بسته‌بندی)</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-right text-xs">
+                            <thead class="bg-slate-900 text-slate-400">
+                                <tr>
+                                    <th class="p-2.5">مشتری</th>
+                                    <th class="p-2.5">شرح کالا</th>
+                                    <th class="p-2.5">تعداد</th>
+                                    <th class="p-2.5 text-center">عملیات انبار</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-700">
+                                ${pendingWarehouse.length === 0 ? `<tr><td colspan="4" class="text-center p-6 text-slate-500">سفارشی در صف انبار وجود ندارد</td></tr>` :
+                                  pendingWarehouse.map(o => `
+                                    <tr>
+                                        <td class="p-2.5 font-medium">${o.customer}</td>
+                                        <td class="p-2.5 text-slate-300">${o.item}</td>
+                                        <td class="p-2.5">${o.qty}</td>
+                                        <td class="p-2.5 text-center space-x-2 space-x-reverse">
+                                            <button onclick="updateOrderStatus(${o.id}, 'ready_to_ship')" class="bg-purple-600 hover:bg-purple-500 text-white px-3 py-1.5 rounded-lg transition font-medium">تایید موجودی و آماده‌سازی</button>
+                                            <button onclick="returnOrderToSales(${o.id})" class="bg-rose-600 hover:bg-rose-500 text-white px-3 py-1.5 rounded-lg transition font-medium">عودت به کارشناس</button>
+                                        </td>
+                                    </tr>
+                                  `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function returnOrderToSales(id) {
+            const reason = prompt('لطفاً دلیل عودت فاکتور به کارشناس فروش را وارد کنید (مثلاً کسری موجودی انبار / مغایرت پارت نامبر):');
+            if (reason !== null) {
+                const order = orders.find(o => o.id === id);
+                if (order) {
+                    order.status = 'returned';
+                    order.returnReason = reason || 'بدون توضیح';
+                    saveOrderToCloud(order);
+                    alert('فاکتور با موفقیت به کارشناس فروش عودت داده شد.');
+                }
+            }
+        }
+
+        // --- نمای کارتابل راننده ---
+        function renderDriverView() {
+            const readyToShip = orders.filter(o => o.status === 'ready_to_ship' || o.status === 'delivered');
+            return `
+                <div class="bg-slate-800 border border-slate-700 p-5 rounded-2xl shadow-lg space-y-4">
+                    <h3 class="font-bold text-base text-emerald-400">🚚 کارتابل تحویل و امضای دیجیتال رانندگان</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        ${readyToShip.length === 0 ? `<div class="col-span-2 text-center p-6 text-slate-500">سفارشی جهت ارسال در صف نیست</div>` :
+                          readyToShip.map(o => `
+                            <div class="bg-slate-900 border border-slate-700 p-4 rounded-xl space-y-3">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <div class="font-bold text-sm">${o.customer}</div>
+                                        <div class="text-xs text-slate-400 mt-1">${o.item} (${o.qty} عدد)</div>
+                                    </div>
+                                    ${getStatusBadge(o.status)}
+                                </div>
+                                ${o.status === 'ready_to_ship' ? `
+                                    <button onclick="deliverOrder(${o.id})" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-lg text-xs font-medium transition">
+                                        ثبت تحویل بار و امضای دیجیتال مشتری
+                                    </button>
+                                ` : `<div class="text-xs text-emerald-400 text-center bg-emerald-950/30 py-2 rounded-lg border border-emerald-900">✅ تحویل داده شده و امضا ثبت گردید</div>`}
+                            </div>
+                          `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function deliverOrder(id) {
+            const customerSign = prompt('نام تحویل‌گیرنده یا امضای دیجیتال مشتری را وارد کنید:');
+            if (customerSign) {
+                const order = orders.find(o => o.id === id);
+                if (order) {
+                    order.status = 'delivered';
+                    order.signature = customerSign;
+                    saveOrderToCloud(order);
+                    alert('تحویل بار با موفقیت ثبت شد.');
+                }
+            }
+        }
+
+        // --- نمای مدیریت کل ---
+        function renderManagerView() {
+            return `
+                <div class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="bg-slate-800 border border-slate-700 p-4 rounded-2xl shadow">
+                            <div class="text-slate-400 text-xs">کل سفارشات ثبت شده</div>
+                            <div class="text-2xl font-bold text-indigo-400 mt-2">${orders.length}</div>
+                        </div>
+                        <div class="bg-slate-800 border border-slate-700 p-4 rounded-2xl shadow">
+                            <div class="text-slate-400 text-xs">در انتظار تایید مالی</div>
+                            <div class="text-2xl font-bold text-amber-400 mt-2">${orders.filter(o => o.status === 'pending_finance').length}</div>
+                        </div>
+                        <div class="bg-slate-800 border border-slate-700 p-4 rounded-2xl shadow">
+                            <div class="text-slate-400 text-xs">در صف انبار</div>
+                            <div class="text-2xl font-bold text-purple-400 mt-2">${orders.filter(o => o.status === 'pending_warehouse').length}</div>
+                        </div>
+                        <div class="bg-slate-800 border border-slate-700 p-4 rounded-2xl shadow">
+                            <div class="text-slate-400 text-xs">تکمیل شده و تحویل</div>
+                            <div class="text-2xl font-bold text-emerald-400 mt-2">${orders.filter(o => o.status === 'delivered').length}</div>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800 border border-slate-700 p-5 rounded-2xl shadow-lg space-y-4">
+                        <h3 class="font-bold text-base text-slate-200">📊 گزارش کامل جریان سفارشات سازمانی</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-right text-xs">
+                                <thead class="bg-slate-900 text-slate-400">
+                                    <tr>
+                                        <th class="p-2.5">تاریخ</th>
+                                        <th class="p-2.5">مشتری</th>
+                                        <th class="p-2.5">شرح کالا</th>
+                                        <th class="p-2.5">مبلغ کل (ریال)</th>
+                                        <th class="p-2.5">وضعیت جاری</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-700">
+                                    ${orders.map(o => `
+                                        <tr>
+                                            <td class="p-2.5 text-slate-400">${o.date}</td>
+                                            <td class="p-2.5 font-medium">${o.customer}</td>
+                                            <td class="p-2.5 text-slate-300">${o.item} (${o.qty})</td>
+                                            <td class="p-2.5 text-emerald-400">${Number(o.price).toLocaleString()}</td>
+                                            <td class="p-2.5">${getStatusBadge(o.status)}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function updateOrderStatus(id, newStatus) {
+            const order = orders.find(o => o.id === id);
+            if (order) {
+                order.status = newStatus;
+                await saveOrderToCloud(order);
+            }
+        }
+
+        function getStatusBadge(status) {
+            switch(status) {
+                case 'pending_finance': return '<span class="px-2.5 py-1 bg-amber-950/60 text-amber-400 border border-amber-800/50 rounded-md text-[10px]">در انتظار مالی</span>';
+                case 'pending_warehouse': return '<span class="px-2.5 py-1 bg-purple-950/60 text-purple-400 border border-purple-800/50 rounded-md text-[10px]">در صف انبار</span>';
+                case 'ready_to_ship': return '<span class="px-2.5 py-1 bg-blue-950/60 text-blue-400 border border-blue-800/50 rounded-md text-[10px]">آماده بارگیری و ارسال</span>';
+                case 'delivered': return '<span class="px-2.5 py-1 bg-emerald-950/60 text-emerald-400 border border-emerald-800/50 rounded-md text-[10px]">تحویل شده</span>';
+                case 'returned': return '<span class="px-2.5 py-1 bg-rose-950/60 text-rose-400 border border-rose-800/50 rounded-md text-[10px]">برگشت خورده به فروش</span>';
+                default: return '<span class="px-2.5 py-1 bg-slate-700 text-slate-300 rounded-md text-[10px]">نامشخص</span>';
+            }
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
