@@ -1,482 +1,2549 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پرتال یکپارچه فرآیندهای سازمانی - پخش قطعات یدکی</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Vazirmatn', sans-serif; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>پرتال یکپارچه فرآیندهای پخش قطعات یدکی</title>
+  <style>
+    :root {
+      --bg: #f1f5f9;
+      --surface: #ffffff;
+      --surface-soft: #f8fafc;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #64748b;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-soft: #eff6ff;
+      --success: #059669;
+      --success-soft: #ecfdf5;
+      --warning: #d97706;
+      --warning-soft: #fffbeb;
+      --danger: #dc2626;
+      --danger-soft: #fef2f2;
+      --purple: #7c3aed;
+      --shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: Tahoma, "Segoe UI", system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+    }
+
+    .hidden { display: none !important; }
+
+    .app-shell {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 12px 12px 92px;
+    }
+
+    /* هدر بالا */
+    .topbar {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #fff;
+      padding: 14px 16px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .topbar-title h1 {
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .topbar-title p {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+
+    .badge-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(16, 185, 129, 0.18);
+      color: #6ee7b7;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .dot-pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      animation: pulse 1.6s infinite;
+    }
+
+    .badge-live.offline {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fcd34d;
+      border-color: rgba(245, 158, 11, 0.4);
+    }
+
+    .badge-live.offline .dot-pulse {
+      background: #f59e0b;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.3); }
+    }
+
+    /* کارت ورود امن و کشویی */
+    .login-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 24px 20px;
+      max-width: 440px;
+      margin: 24px auto;
+      box-shadow: var(--shadow);
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .login-icon-badge {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin: 0 auto 10px;
+      border: 1px solid #bfdbfe;
+    }
+
+    .login-header h2 {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .login-header p {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .form-group {
+      margin-bottom: 13px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 11px 12px;
+      border-radius: 12px;
+      border: 1.5px solid #cbd5e1;
+      font-size: 13px;
+      background-color: #ffffff;
+      color: var(--text);
+      min-height: 44px;
+    }
+
+    select.form-control {
+      cursor: pointer;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    .password-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .password-wrapper input {
+      padding-left: 44px;
+      letter-spacing: 3px;
+      font-weight: 800;
+    }
+
+    .btn-toggle-eye {
+      position: absolute;
+      left: 10px;
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-error-box {
+      background: var(--danger-soft);
+      border: 1px solid #fecaca;
+      color: var(--danger);
+      border-radius: 11px;
+      padding: 9px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    /* نوار اطلاعات کاربر و آمار */
+    .user-strip {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .user-strip-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .user-badge {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .user-badge strong {
+      font-size: 13.5px;
+      display: block;
+    }
+
+    .user-badge span {
+      font-size: 11px;
+      color: var(--muted);
+      display: block;
+    }
+
+    .btn-sm {
+      padding: 7px 11px;
+      border-radius: 10px;
+      font-size: 11.5px;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: var(--surface-soft);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .btn-logout {
+      background: var(--danger-soft);
+      color: var(--danger);
+      border-color: #fecaca;
+    }
+
+    .btn-wa {
+      background: #16a34a;
+      color: #fff;
+      border-color: #16a34a;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .stat-box {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 8px 6px;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .stat-lbl {
+      font-size: 10.5px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* نقشه شماتیک کلی بالای صفحه (۷ ایستگاه قابل کلیک) */
+    .schematic-master {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 12px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .schematic-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 6px;
+    }
+
+    .schematic-head h3 {
+      font-size: 12.5px;
+      font-weight: 800;
+    }
+
+    .flow-scroll {
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .flow-track {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 650px;
+    }
+
+    .flow-node {
+      flex: 1;
+      background: var(--surface-soft);
+      border: 1.5px solid var(--border);
+      border-radius: 13px;
+      padding: 8px 6px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.12s, border-color 0.12s;
+    }
+
+    .flow-node:hover {
+      border-color: var(--primary);
+    }
+
+    .flow-node.active-role {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .flow-node.selected-station {
+      border-color: #0f172a;
+      box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.15);
+    }
+
+    .flow-node-icon {
+      font-size: 16px;
+      display: block;
+    }
+
+    .flow-node-title {
+      font-size: 10.5px;
+      font-weight: 800;
+      margin-top: 3px;
+      display: block;
+      color: var(--text);
+    }
+
+    .flow-node-count {
+      display: inline-block;
+      margin-top: 4px;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    .flow-node-count.has-items {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .flow-arrow {
+      color: #94a3b8;
+      font-size: 13px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .return-loop-banner {
+      margin-top: 8px;
+      padding: 7px 10px;
+      border-radius: 10px;
+      background: var(--danger-soft);
+      border: 1px dashed #fca5a5;
+      font-size: 11px;
+      color: #991b1b;
+    }
+
+    /* تب‌ها و فیلترها */
+    .tabs-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .phase-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 12px;
+      background: var(--surface);
+      padding: 6px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .phase-btn {
+      padding: 9px 6px;
+      border-radius: 11px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .phase-btn.active {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border-color: #bfdbfe;
+    }
+
+    .tab-btn {
+      padding: 10px 6px;
+      border-radius: 13px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 11.5px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      background: #0f172a;
+      color: #fff;
+      border-color: #0f172a;
+    }
+
+    .filter-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 6px;
+    }
+
+    .filter-pill {
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .filter-pill.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    /* کارت سفارش شماتیک */
+    .order-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      padding: 14px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .order-card.my-turn {
+      border-color: var(--primary);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.12);
+    }
+
+    .order-card.returned-state {
+      border-color: var(--danger);
+      background: #fffafa;
+    }
+
+    .order-card.done-state {
+      border-color: #a7f3d0;
+    }
+
+    .order-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .tag {
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 7px;
+      background: #f1f5f9;
+      color: #334155;
+    }
+
+    .tag-pdf {
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+
+    .tag-rev {
+      background: var(--warning-soft);
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+
+    .order-customer {
+      font-size: 14px;
+      font-weight: 800;
+      margin-top: 6px;
+      color: var(--text);
+    }
+
+    .order-items {
+      font-size: 12px;
+      color: #475569;
+      margin-top: 3px;
+    }
+
+    /* بسته PDF همراه سفارش */
+    .pdf-packet {
+      background: var(--primary-soft);
+      border: 1px solid #bfdbfe;
+      border-radius: 12px;
+      padding: 9px 11px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pdf-packet-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .pdf-packet-info strong {
+      font-size: 11.5px;
+      color: #1e3a8a;
+      display: block;
+    }
+
+    .pdf-packet-info span {
+      font-size: 10.5px;
+      color: #3b82f6;
+      display: block;
+    }
+
+    .pdf-btns {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn-pdf-view {
+      background: #fff;
+      color: #1e40af;
+      border: 1px solid #93c5fd;
+      padding: 7px 10px;
+      border-radius: 9px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .btn-pdf-print {
+      background: #0f172a;
+      color: #fff;
+      border: none;
+      padding: 7px 10px;
+      border-radius: 9px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    /* نوار شماتیک ۷ مرحله‌ای داخل هر کارت */
+    .card-schematic {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 8px;
+      overflow-x: auto;
+      margin-bottom: 10px;
+    }
+
+    .step-chain {
+      display: flex;
+      align-items: flex-start;
+      min-width: 580px;
+    }
+
+    .step-unit {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .step-unit:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 13px;
+      right: 55%;
+      width: 90%;
+      height: 2.5px;
+      background: #cbd5e1;
+      z-index: 0;
+    }
+
+    .step-unit.done:not(:last-child)::after {
+      background: var(--success);
+    }
+
+    .step-circle {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #cbd5e1;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-unit.done .step-circle {
+      background: var(--success);
+      border-color: var(--success);
+      color: #fff;
+    }
+
+    .step-unit.current .step-circle {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+    }
+
+    .step-unit.returned .step-circle {
+      background: var(--danger);
+      border-color: var(--danger);
+      color: #fff;
+    }
+
+    .step-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--muted);
+      margin-top: 4px;
+      line-height: 1.3;
+    }
+
+    .step-unit.done .step-label { color: var(--success); }
+    .step-unit.current .step-label { color: var(--primary); font-weight: 800; }
+
+    .step-time {
+      font-size: 9px;
+      color: #94a3b8;
+      margin-top: 1px;
+    }
+
+    /* باکس هشدار برگشت */
+    .return-alert {
+      background: var(--danger-soft);
+      border: 1.5px solid #fca5a5;
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+      color: #991b1b;
+      font-size: 12px;
+    }
+
+    .return-alert strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    /* جزئیات لجستیک و امضای دیجیتال ثبت‌شده */
+    .logistics-strip {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 9px 11px;
+      margin-bottom: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px 14px;
+      font-size: 11.5px;
+      color: #334155;
+    }
+
+    .sig-preview-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 4px 8px;
+    }
+
+    .sig-preview-box img {
+      height: 36px;
+      width: auto;
+      max-width: 120px;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* دکمه‌های اقدام پایین کارت */
+    .card-footer-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+
+    .btn-action-main {
+      flex: 1;
+      min-width: 180px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      font-size: 12.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-action-main.success { background: var(--success); }
+
+    .btn-action-danger {
+      padding: 12px 12px;
+      border-radius: 12px;
+      border: 1.5px solid #fca5a5;
+      background: var(--danger-soft);
+      color: var(--danger);
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .wait-banner {
+      width: 100%;
+      padding: 9px 11px;
+      border-radius: 10px;
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 11.5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    /* فرم‌ها */
+    .form-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    @media (max-width: 480px) {
+      .form-grid-2 { grid-template-columns: 1fr; }
+    }
+
+    .upload-box {
+      border: 2px dashed #93c5fd;
+      background: var(--primary-soft);
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 14px;
+    }
+
+    /* پد امضای دیجیتال لمسی در کارتابل راننده */
+    .sig-pad-wrapper {
+      border: 2px dashed #94a3b8;
+      border-radius: 14px;
+      background: #ffffff;
+      overflow: hidden;
+      position: relative;
+      touch-action: none;
+    }
+
+    #driver-sig-canvas {
+      width: 100%;
+      height: 165px;
+      display: block;
+      cursor: crosshair;
+      touch-action: none;
+    }
+
+    .sig-pad-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8fafc;
+      padding: 6px 10px;
+      border-top: 1px solid #e2e8f0;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* مودال‌ها */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.72);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+    }
+
+    .modal-panel {
+      background: #fff;
+      width: 100%;
+      max-width: 480px;
+      border-radius: 20px;
+      padding: 18px;
+      max-height: 92vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    }
+
+    .modal-panel.wide {
+      max-width: 720px;
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-head h3 {
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .btn-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: #f1f5f9;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    /* اعلان شناور واتساپ مدیر */
+    .toast-box {
+      position: fixed;
+      bottom: 14px;
+      left: 12px;
+      right: 12px;
+      max-width: 560px;
+      margin: 0 auto;
+      background: #0f172a;
+      color: #fff;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 12px 14px;
+      z-index: 90;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .toast-text {
+      font-size: 11.5px;
+      line-height: 1.5;
+    }
+
+    @media print {
+      body * { visibility: hidden; }
+      #print-area, #print-area * { visibility: visible; }
+      #print-area {
+        position: fixed;
+        inset: 0;
+        background: #fff;
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col">
-    <!-- هدر بالای صفحه -->
-    <header class="bg-slate-800 border-b border-slate-700 px-4 py-3 flex justify-between items-center shadow-md">
-        <div class="flex items-center space-x-3 space-x-reverse">
-            <span class="text-2xl">⚙️</span>
-            <div>
-                <h1 class="font-bold text-base md:text-lg">پرتال یکپارچه فرآیندهای سازمانی - پخش قطعات یدکی</h1>
-                <p class="text-xs text-slate-400">ایرانخودرو و سایپا (۵۰ برند مطرح) | همگام‌سازی زنده بین تمام واحدها</p>
-            </div>
-        </div>
-        <div id="connection-status" class="flex items-center space-x-2 space-x-reverse bg-emerald-900/50 text-emerald-300 px-3 py-1.5 rounded-full text-xs font-medium border border-emerald-700">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>متصل به سرور ابری زنده</span>
-        </div>
+<body>
+  <div class="app-shell">
+    <!-- هدر ثابت بالای سامانه -->
+    <header class="topbar">
+      <div class="topbar-title">
+        <h1>⚙️ پرتال یکپارچه فرآیندهای سازمانی - پخش قطعات یدکی</h1>
+        <p>ایران‌خودرو و سایپا (۵۰ برند) | همگام‌سازی زنده بین تمام واحدها</p>
+      </div>
+      <div id="cloud-status-badge" class="badge-live">
+        <span class="dot-pulse"></span>
+        <span id="cloud-status-text">در حال اتصال به سرور ابری...</span>
+      </div>
     </header>
 
-    <!-- محتوای اصلی -->
-    <main class="flex-1 p-4 md:p-6 max-w-7xl mx-auto w-full">
-        <!-- پنل ورود -->
-        <div id="login-section" class="max-w-md mx-auto bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-xl mt-12">
-            <div class="text-center mb-6">
-                <div class="inline-block p-3 bg-indigo-600/20 text-indigo-400 rounded-full text-3xl mb-2">🔐</div>
-                <h2 class="text-xl font-bold">ورود به کارتابل سازمانی</h2>
-                <p class="text-xs text-slate-400 mt-1">واحد سازمانی خود را از منوی کشویی انتخاب کرده و رمز عبور را وارد نمایید</p>
-            </div>
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">انتخاب واحد سازمانی</label>
-                    <select id="role-select" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-indigo-500">
-                        <option value="manager">👑 مدیرعامل / مدیریت کل</option>
-                        <option value="sales">🛒 کارشناس فروش</option>
-                        <option value="finance">💰 واحد مالی و حسابداری</option>
-                        <option value="warehouse">📦 انبارداری مرکزی</option>
-                        <option value="driver">🚚 کارتابل رانندگان</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-slate-300 mb-1">رمز عبور ۴ رقمی</label>
-                    <input type="text" id="pin-input" maxlength="4" placeholder="••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-center text-lg tracking-widest focus:outline-none focus:border-indigo-500">
-                </div>
-                <button onclick="handleLogin()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 rounded-xl transition duration-200 text-sm shadow-lg shadow-indigo-600/30">
-                    ورود به سیستم
-                </button>
-            </div>
+    <!-- ==================== بخش ۱: صفحه ورود امن و کشویی ==================== -->
+    <section id="screen-login" class="login-card">
+      <div class="login-header">
+        <div class="login-icon-badge">🔐</div>
+        <h2>ورود به کارتابل سازمانی</h2>
+        <p>واحد سازمانی خود را از منوی کشویی انتخاب کرده و رمز عبور را وارد نمایید</p>
+      </div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label for="login-role-select">انتخاب واحد سازمانی</label>
+          <select id="login-role-select" class="form-control" required>
+            <option value="ceo">👔 مدیرعامل</option>
+            <option value="sales">📝 کارشناس فروش</option>
+            <option value="accounting">💰 واحد حسابداری و مالی</option>
+            <option value="sales_mgr">📊 مدیر فروش</option>
+            <option value="warehouse">📦 انباردار</option>
+            <option value="warehouse_sup">🏷️ سرپرست انبار</option>
+            <option value="driver">🚚 راننده و توزیع</option>
+          </select>
         </div>
 
-        <!-- کارتابل اصلی (پس از ورود نمایان می‌شود) -->
-        <div id="dashboard-section" class="hidden space-y-6">
-            <div class="flex justify-between items-center bg-slate-800/60 p-4 rounded-xl border border-slate-700">
-                <div class="flex items-center space-x-3 space-x-reverse">
-                    <span id="user-badge" class="px-3 py-1 bg-indigo-600 text-white text-xs rounded-lg font-medium">کاربر</span>
-                    <span id="welcome-text" class="text-sm font-semibold text-slate-200">خوش آمدید</span>
-                </div>
-                <button onclick="handleLogout()" class="text-xs text-rose-400 hover:text-rose-300 bg-rose-950/40 px-3 py-1.5 rounded-lg border border-rose-900/50 transition">
-                    خروج از حساب
-                </button>
+        <div class="form-group">
+          <label for="login-pin-input">رمز عبور ۴ رقمی</label>
+          <div class="password-wrapper">
+            <input type="password" id="login-pin-input" class="form-control" dir="ltr" inputmode="numeric" maxlength="12" required autocomplete="current-password" placeholder="••••" />
+            <button type="button" id="btn-toggle-eye" class="btn-toggle-eye" title="نمایش / مخفی کردن رمز">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div id="login-error" class="login-error-box hidden">رمز عبور وارد شده برای این واحد صحیح نیست.</div>
+
+        <button type="submit" class="btn-action-main" style="width:100%; padding:13px;">
+          ورود به کارتابل
+        </button>
+      </form>
+    </section>
+
+    <!-- ==================== بخش ۲: داشبورد و کارتابل عملیاتی ==================== -->
+    <section id="screen-app" class="hidden">
+      <!-- نوار اطلاعات کاربر و آمار لحظه‌ای -->
+      <div class="user-strip">
+        <div class="user-strip-top">
+          <div class="user-badge">
+            <span id="active-role-icon" style="font-size:22px;">👔</span>
+            <div>
+              <strong id="active-role-title">مدیرعامل</strong>
+              <span id="active-role-scope">دسترسی کامل به تمام مراحل</span>
+            </div>
+          </div>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <button type="button" id="btn-manual-sync" class="btn-sm" title="بروزرسانی لحظه‌ای از سرور">🔄 بروزرسانی</button>
+            <button type="button" id="btn-ceo-settings" class="btn-sm">⚙️ تنظیمات و رمزها</button>
+            <button type="button" id="btn-logout" class="btn-sm btn-logout">خروج / تغییر کاربر</button>
+          </div>
+        </div>
+
+        <div class="stats-row" id="stats-row"></div>
+      </div>
+
+      <!-- نوار ماژول‌های سازمانی (فاز ۱ فعال + فاز ۲ و ۳ آماده توسعه) -->
+      <nav class="phase-bar" aria-label="ماژول‌های سازمانی">
+        <button type="button" id="phase-btn-1" class="phase-btn active">📦 فروش تا تحویل (فاز ۱)</button>
+        <button type="button" id="phase-btn-2" class="phase-btn">💰 مالی و چک‌ها (فاز ۲)</button>
+        <button type="button" id="phase-btn-3" class="phase-btn">🏭 تامین ۵۰ برند (فاز ۳)</button>
+      </nav>
+
+      <!-- محتوای فاز ۱: زنجیره کامل فروش تا امضای مشتری -->
+      <div id="phase-view-1">
+        <!-- نقشه شماتیک ۷ ایستگاه (قابل کلیک برای فیلتر) -->
+        <div class="schematic-master">
+          <div class="schematic-head">
+            <h3>🗺️ نقشه شماتیک ۷ مرحله‌ای جریان کار (برای فیلتر روی هر ایستگاه بزنید)</h3>
+            <button type="button" id="btn-reset-station" class="btn-sm hidden" style="padding:3px 8px; font-size:10px;">نمایش همه</button>
+          </div>
+          <div class="flow-scroll">
+            <div class="flow-track" id="master-flow-track"></div>
+          </div>
+          <div class="return-loop-banner">
+            <span>↩️ <strong>چرخه برگشت مغایرت:</strong> در صورت گزارش مغایرت توسط مالی، مدیر فروش، مدیرعامل یا انباردار، فاکتور به کارتابل فروش برمی‌گردد تا اصلاح و PDF جدید بارگذاری شود.</span>
+          </div>
+        </div>
+
+        <!-- تب‌های اصلی فاز ۱ -->
+        <div class="tabs-bar">
+          <button type="button" id="tab-btn-board" class="tab-btn active">📋 کارتابل سفارش‌ها</button>
+          <button type="button" id="tab-btn-new" class="tab-btn">➕ ثبت پیش‌فاکتور و PDF</button>
+          <button type="button" id="tab-btn-logs" class="tab-btn">📊 گزارش لحظه‌ای مدیر</button>
+        </div>
+
+        <!-- محتوای تب ۱: لیست سفارش‌ها -->
+        <div id="tab-board">
+          <div class="filter-row">
+            <button type="button" class="filter-pill active" data-filter="mine">⚡ کارتابل من</button>
+            <button type="button" class="filter-pill" data-filter="all">همه سفارش‌ها</button>
+            <button type="button" class="filter-pill" data-filter="returned">⚠️ برگشتی جهت اصلاح</button>
+            <button type="button" class="filter-pill" data-filter="warehouse">📦 در انبار</button>
+            <button type="button" class="filter-pill" data-filter="driver">🚚 در اختیار راننده</button>
+            <button type="button" class="filter-pill" data-filter="done">✅ تحویل و امضاشده</button>
+          </div>
+          <div id="orders-list"></div>
+        </div>
+
+        <!-- محتوای تب ۲: ثبت پیش‌فاکتور و آپلود PDF توسط فروش -->
+        <div id="tab-new" class="hidden">
+          <div id="new-order-permission-msg" class="hidden form-card" style="text-align:center; color:var(--danger); font-size:13px; font-weight:700;">
+            ⛔ ثبت پیش‌فاکتور جدید فقط در دسترسی «کارشناس فروش» یا «مدیرعامل» است.
+          </div>
+
+          <form id="create-order-form" class="form-card">
+            <h3 style="font-size:14px; font-weight:800; margin-bottom:12px;">📝 ثبت پیش‌فاکتور و ارسال بسته PDF به چرخه تایید</h3>
+
+            <div class="form-group">
+              <label for="f-customer">نام فروشگاه / مشتری *</label>
+              <input type="text" id="f-customer" class="form-control" required placeholder="مثلاً: لوازم یدکی مرکزی سایپا - کرج" />
             </div>
 
-            <!-- محتوای داینامیک نقش‌ها -->
-            <div id="role-content"></div>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="f-proforma">شماره پیش‌فاکتور *</label>
+                <input type="text" id="f-proforma" class="form-control" required dir="ltr" placeholder="PF-5010" />
+              </div>
+              <div class="form-group">
+                <label for="f-channel">کانال دریافت سفارش</label>
+                <select id="f-channel" class="form-control">
+                  <option value="روبیکا">🟣 گروه روبیکا</option>
+                  <option value="ایتا">🟠 گروه ایتا</option>
+                  <option value="اپلیکیشن">📱 اپلیکیشن</option>
+                  <option value="تلفنی">☎️ تلفنی</option>
+                  <option value="حضوری">🤝 حضوری</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="f-amount">مبلغ پیش‌فاکتور (تومان)</label>
+                <input type="text" id="f-amount" class="form-control" placeholder="مثلاً: ۷۵,۰۰۰,۰۰۰" />
+              </div>
+              <div class="form-group">
+                <label for="f-payment">شرایط تسویه</label>
+                <select id="f-payment" class="form-control">
+                  <option value="نقدی / واریز آنی">نقدی / واریز آنی</option>
+                  <option value="چک صیادی ۴۵ روزه">چک صیادی ۴۵ روزه</option>
+                  <option value="اعتباری / حساب باز">اعتباری / حساب باز</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="f-items">شرح اقلام و برندها (ایران‌خودرو / سایپا) *</label>
+              <textarea id="f-items" class="form-control" rows="2" required placeholder="مثلاً: دیسک و صفحه عظام پژو ۴۰۵ (۶ دست) + لنت جلو کروز پراید (۱۰ دست)"></textarea>
+            </div>
+
+            <div class="upload-box">
+              <label for="f-pdf" style="display:block; font-size:12px; font-weight:800; color:#1e3a8a; margin-bottom:6px;">
+                📄 بارگذاری فایل PDF پیش‌فاکتور (حداکثر ۱.۵ مگابایت جهت همگام‌سازی ابری و پرینت در انبار)
+              </label>
+              <input type="file" id="f-pdf" accept="application/pdf" style="font-size:12px; width:100%;" />
+              <p id="f-pdf-hint" style="font-size:11px; color:#3b82f6; margin-top:6px;">
+                در صورت عدم انتخاب فایل یا حجم بالاتر از ۱.۵ مگابایت، سیستم به‌صورت خودکار برگه استاندارد قابل پرینت انبار را تولید می‌کند.
+              </p>
+            </div>
+
+            <button type="submit" class="btn-action-main" style="width:100%;">
+              🚀 ثبت پیش‌فاکتور و ارسال بسته PDF به حسابداری
+            </button>
+          </form>
         </div>
-    </main>
 
-    <!-- فوتر -->
-    <footer class="bg-slate-800/40 border-t border-slate-800 text-center py-3 text-xs text-slate-500">
-        سیستم یکپارچه ابری پخش قطعات یدکی خودرو | پشتیبانی از همگام‌سازی لحظه‌ای بین دستگاه‌ها
-    </footer>
+        <!-- محتوای تب ۳: گزارش‌های لحظه‌ای و ارسال خلاصه واتساپ -->
+        <div id="tab-logs" class="hidden">
+          <div class="form-card" style="margin-bottom:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
+              <div>
+                <h3 style="font-size:14px; font-weight:800;">📲 گزارش جامع لحظه‌ای برای مدیرعامل</h3>
+                <p style="font-size:11px; color:var(--muted);">ارسال وضعیت کل سفارش‌ها، انبار و تحویل‌های امضاشده به واتساپ</p>
+              </div>
+              <button type="button" id="btn-send-full-wa" class="btn-sm btn-wa" style="padding:10px 14px; font-size:12px;">
+                ارسال گزارش کل به واتساپ
+              </button>
+            </div>
+          </div>
+          <div id="logs-list" class="form-card"></div>
+        </div>
+      </div>
 
-    <script>
-        // اتصال به Supabase ابری
-        const SUPABASE_URL = 'https://xurxjzepontgnykekcgi.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_BklSNELSFQVAlYAUgHk-bQ_wXK2JvRm';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      <!-- محتوای فاز ۲: واحد مالی و مدیریت چک‌ها (آماده توسعه) -->
+      <div id="phase-view-2" class="hidden">
+        <div class="form-card" style="text-align:center; padding:26px 18px;">
+          <div style="font-size:34px; margin-bottom:8px;">💰</div>
+          <h3 style="font-size:15px; font-weight:800; margin-bottom:6px;">ماژول واحد مالی، کنترل اعتبار و چک‌های صیادی (فاز ۲)</h3>
+          <p style="font-size:12px; color:var(--muted); max-width:520px; margin:0 auto 14px;">
+            این بخش پس از تثبیت کامل عملیات فروش و انبار (فاز ۱)، مستقیماً به پیش‌فاکتورهای تاییدشده متصل می‌شود و شامل ثبت چک‌های صیادی مشتریان، هشدار سررسید و کنترل سقف اعتبار حساب باز خواهد بود.
+          </p>
+          <button type="button" class="btn-sm" onclick="switchPhase(1)">⬅️ بازگشت به کارتابل عملیاتی فاز ۱</button>
+        </div>
+      </div>
 
-        let currentUser = null;
-        let orders = [];
+      <!-- محتوای فاز ۳: واحد تامین و مدیریت ۵۰ برند (آماده توسعه) -->
+      <div id="phase-view-3" class="hidden">
+        <div class="form-card" style="text-align:center; padding:26px 18px;">
+          <div style="font-size:34px; margin-bottom:8px;">🏭</div>
+          <h3 style="font-size:15px; font-weight:800; margin-bottom:6px;">ماژول تامین کالا، نقطه سفارش و ارتباط با ۵۰ برند (فاز ۳)</h3>
+          <p style="font-size:12px; color:var(--muted); max-width:520px; margin:0 auto 14px;">
+            در این فاز، کسری‌های گزارش‌شده توسط انباردار در فاز ۱ به‌صورت خودکار وارد لیست خرید واحد تامین می‌شوند تا سفارش‌گذاری از ۵۰ برند ایران‌خودرو و سایپا بدون تاخیر انجام شود.
+          </p>
+          <button type="button" class="btn-sm" onclick="switchPhase(1)">⬅️ بازگشت به کارتابل عملیاتی فاز ۱</button>
+        </div>
+      </div>
+    </section>
+  </div>
 
-        // پین‌کد ورود واحدها
-        const pins = { manager: '1234', sales: '1111', finance: '2222', warehouse: '3333', driver: '4444' };
+  <!-- ==================== مودال مشاهده و پرینت مستقیم PDF در انبار ==================== -->
+  <div id="modal-pdf" class="modal-backdrop hidden">
+    <div class="modal-panel wide">
+      <div class="modal-head">
+        <h3 id="modal-pdf-title">📄 بسته دیجیتال پیش‌فاکتور</h3>
+        <div style="display:flex; gap:6px;">
+          <button type="button" id="btn-trigger-print" class="btn-pdf-print">🖨️ پرینت مستقیم در انبار</button>
+          <button type="button" data-close-modal="modal-pdf" class="btn-close">✕</button>
+        </div>
+      </div>
+      <div id="modal-pdf-content"></div>
+    </div>
+  </div>
 
-        async function init() {
-            await fetchOrdersFromCloud();
-            setInterval(fetchOrdersFromCloud, 4000);
+  <!-- ==================== مودال مرحله ۶: خروج بار توسط سرپرست انبار ==================== -->
+  <div id="modal-warehouse-exit" class="modal-backdrop hidden">
+    <div class="modal-panel">
+      <div class="modal-head">
+        <h3>🏷️ تایید خروج از انبار و تحویل به ناوگان</h3>
+        <button type="button" data-close-modal="modal-warehouse-exit" class="btn-close">✕</button>
+      </div>
+      <div id="modal-exit-desc" style="font-size:12px; color:var(--muted); margin-bottom:12px;"></div>
+      <div class="form-group">
+        <label for="inp-exit-cartons">تعداد کارتن خروجی از انبار *</label>
+        <input type="number" id="inp-exit-cartons" class="form-control" min="1" placeholder="مثلاً: 8" />
+      </div>
+      <div class="form-group">
+        <label for="inp-exit-driver">نام راننده / خودرو حمل *</label>
+        <input type="text" id="inp-exit-driver" class="form-control" placeholder="مثلاً: آقای رضایی - نیسان شرکت" />
+      </div>
+      <button type="button" id="btn-confirm-exit" class="btn-action-main success" style="width:100%;">
+        ✅ تایید خروج از انبار و ارسال به کارتابل راننده
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== مودال مرحله ۷ (نهایی): تحویل نهایی راننده + پد امضای دیجیتال لمسی ==================== -->
+  <div id="modal-driver-delivery" class="modal-backdrop hidden">
+    <div class="modal-panel">
+      <div class="modal-head">
+        <h3>🚚 ثبت تحویل نهایی و امضای دیجیتال مشتری</h3>
+        <button type="button" data-close-modal="modal-driver-delivery" class="btn-close">✕</button>
+      </div>
+      <div id="modal-delivery-desc" style="font-size:12px; color:var(--muted); margin-bottom:10px;"></div>
+
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label for="inp-del-cartons">تعداد کارتن تحویلی *</label>
+          <input type="number" id="inp-del-cartons" class="form-control" min="1" />
+        </div>
+        <div class="form-group">
+          <label for="inp-del-signer">نام تحویل‌گیرنده در فروشگاه *</label>
+          <input type="text" id="inp-del-signer" class="form-control" placeholder="مثلاً: علی محمدی" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>✍️ کادر امضای دیجیتال مشتری (با انگشت روی صفحه امضا کنید) *</label>
+        <div class="sig-pad-wrapper">
+          <canvas id="driver-sig-canvas"></canvas>
+          <div class="sig-pad-toolbar">
+            <span>مشتری محترم، لطفاً در کادر بالا امضا نمایید</span>
+            <button type="button" id="btn-clear-sig" class="btn-sm" style="padding:4px 9px; font-size:11px; color:var(--danger);">🗑️ پاک کردن امضا</button>
+          </div>
+        </div>
+        <div id="sig-error-msg" class="hidden" style="color:var(--danger); font-size:11.5px; font-weight:700; margin-top:5px;">
+          لطفاً نام تحویل‌گیرنده و امضای دیجیتال مشتری را ثبت کنید.
+        </div>
+      </div>
+
+      <button type="button" id="btn-confirm-delivery" class="btn-action-main success" style="width:100%;">
+        ✅ ثبت قطعی تحویل بار و ارسال گزارش به مدیر
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== مودال برگشت مغایرت به کارشناس فروش ==================== -->
+  <div id="modal-return" class="modal-backdrop hidden">
+    <div class="modal-panel">
+      <div class="modal-head">
+        <h3 style="color:var(--danger);">⚠️ گزارش مغایرت و برگشت به فروش</h3>
+        <button type="button" data-close-modal="modal-return" class="btn-close">✕</button>
+      </div>
+      <p id="modal-return-desc" style="font-size:12px; color:var(--muted); margin-bottom:10px;"></p>
+      <div class="form-group">
+        <label for="inp-return-reason">علت مغایرت *</label>
+        <select id="inp-return-reason" class="form-control">
+          <option value="کسری موجودی قطعه در انبار">کسری موجودی قطعه در انبار</option>
+          <option value="مغایرت کد فنی / مدل خودرو">مغایرت کد فنی / مدل خودرو (ایران‌خودرو/سایپا)</option>
+          <option value="عدم موجودی برند درخواستی">عدم موجودی برند درخواستی</option>
+          <option value="مغایرت اعتبار / شرایط تسویه مالی">مغایرت اعتبار / شرایط تسویه مالی</option>
+          <option value="اصلاح تخفیف یا قیمت فروش">اصلاح تخفیف یا قیمت فروش</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="inp-return-note">توضیحات دقیق جهت اصلاح پیش‌فاکتور *</label>
+        <textarea id="inp-return-note" class="form-control" rows="3" placeholder="مثلاً: از لنت جلو پارس برند کروز فقط ۶ دست موجود است؛ ۴ دست کسری دارد."></textarea>
+      </div>
+      <button type="button" id="btn-confirm-return" class="btn-action-danger" style="width:100%; padding:12px;">
+        ↩️ برگشت فاکتور به کارشناس فروش
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== مودال اصلاح پیش‌فاکتور و آپلود PDF جدید (فروش) ==================== -->
+  <div id="modal-revise" class="modal-backdrop hidden">
+    <div class="modal-panel">
+      <div class="modal-head">
+        <h3>✏️ اصلاح پیش‌فاکتور و بارگذاری PDF جدید</h3>
+        <button type="button" data-close-modal="modal-revise" class="btn-close">✕</button>
+      </div>
+      <div id="modal-revise-alert" class="return-alert"></div>
+      <div class="form-group">
+        <label for="inp-rev-proforma">شماره پیش‌فاکتور اصلاحی *</label>
+        <input type="text" id="inp-rev-proforma" class="form-control" dir="ltr" />
+      </div>
+      <div class="form-group">
+        <label for="inp-rev-amount">مبلغ جدید (تومان)</label>
+        <input type="text" id="inp-rev-amount" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="inp-rev-items">شرح اقلام اصلاح‌شده *</label>
+        <textarea id="inp-rev-items" class="form-control" rows="2"></textarea>
+      </div>
+      <div class="upload-box">
+        <label for="inp-rev-pdf" style="display:block; font-size:12px; font-weight:800; color:#1e3a8a; margin-bottom:5px;">
+          📄 بارگذاری نسخه جدید PDF پیش‌فاکتور
+        </label>
+        <input type="file" id="inp-rev-pdf" accept="application/pdf" style="font-size:12px; width:100%;" />
+        <p id="rev-pdf-hint" style="font-size:11px; color:#3b82f6; margin-top:4px;">فایل PDF جدید جایگزین نسخه قبلی برای پرینت انبار می‌شود.</p>
+      </div>
+      <button type="button" id="btn-confirm-revise" class="btn-action-main" style="width:100%;">
+        🔄 ثبت اصلاحیه و ارسال مجدد به تایید مالی
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== مودال تنظیمات مدیریتی، واتساپ مدیر و تغییر رمزها ==================== -->
+  <div id="modal-settings" class="modal-backdrop hidden">
+    <div class="modal-panel">
+      <div class="modal-head">
+        <h3>⚙️ تنظیمات مدیریتی و تغییر رمزها</h3>
+        <button type="button" data-close-modal="modal-settings" class="btn-close">✕</button>
+      </div>
+      <div class="form-group">
+        <label for="inp-wa-phone">شماره موبایل واتساپ مدیرعامل (با 09 شروع شود)</label>
+        <input type="tel" id="inp-wa-phone" class="form-control" dir="ltr" placeholder="09120000000" />
+      </div>
+      <div id="ceo-pins-section" class="hidden" style="margin-top:14px; padding-top:12px; border-top:1px solid var(--border);">
+        <label style="display:block; font-size:12px; font-weight:800; margin-bottom:8px; color:var(--text);">🔐 رمز عبور اختصاصی واحدهای سازمانی:</label>
+        <div id="ceo-pins-list" style="display:flex; flex-direction:column; gap:8px;"></div>
+      </div>
+      <button type="button" id="btn-save-settings" class="btn-action-main success" style="width:100%; margin-top:14px;">
+        💾 ذخیره تنظیمات و رمزهای جدید
+      </button>
+    </div>
+  </div>
+
+  <!-- اعلان شناور پایین صفحه با دکمه ارسال سریع به واتساپ -->
+  <div id="toast-banner" class="toast-box hidden">
+    <div id="toast-msg" class="toast-text"></div>
+    <div style="display:flex; gap:6px; flex-shrink:0;">
+      <a id="toast-wa-link" href="#" target="_blank" rel="noopener" class="btn-sm btn-wa" style="text-decoration:none;">ارسال واتساپ</a>
+      <button type="button" id="btn-hide-toast" class="btn-close" style="background:#334155; color:#fff;">✕</button>
+    </div>
+  </div>
+
+  <script>
+    // ==================== تنظیمات اتصال مستقیم به دیتابیس ابری Supabase ====================
+    const SUPABASE_URL = 'https://xurxjzepontgnykekcgi.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_BklSNELSFQVAlYAUgHk-bQ_wXK2JvRm';
+    const SUPABASE_TABLE = 'orders';
+    const SETTINGS_RECORD_ID = '__SYSTEM_SETTINGS__';
+
+    // ==================== تعریف ۷ نقش سازمانی و ۷ مرحله چرخه ====================
+    const ROLES = [
+      { id: 'ceo', title: 'مدیرعامل', pin: '1000', icon: '👔', stage: null, scope: 'مشاهده کل شماتیک + تایید نهایی حواله (مرحله ۴)' },
+      { id: 'sales', title: 'کارشناس فروش', pin: '1111', icon: '📝', stage: 1, scope: 'ثبت پیش‌فاکتور، آپلود PDF و اصلاح برگشتی‌ها' },
+      { id: 'accounting', title: 'واحد حسابداری و مالی', pin: '2222', icon: '💰', stage: 2, scope: 'بررسی بسته PDF و تایید اعتبار مالی (مرحله ۲)' },
+      { id: 'sales_mgr', title: 'مدیر فروش', pin: '3333', icon: '📊', stage: 3, scope: 'بررسی تخفیف‌ها و تایید مدیر فروش (مرحله ۳)' },
+      { id: 'warehouse', title: 'انباردار', pin: '4444', icon: '📦', stage: 5, scope: 'پرینت PDF در انبار، جمع‌آوری یا برگشت مغایرت (مرحله ۵)' },
+      { id: 'warehouse_sup', title: 'سرپرست انبار', pin: '5555', icon: '🏷️', stage: 6, scope: 'کنترل خروج بار و تحویل به ناوگان (مرحله ۶)' },
+      { id: 'driver', title: 'راننده و توزیع', pin: '6666', icon: '🚚', stage: 7, scope: 'تحویل نهایی بار + دریافت امضای دیجیتال مشتری (مرحله ۷)' }
+    ];
+
+    const STAGES = [
+      { id: 1, short: 'فروش + PDF', roleId: 'sales', actionText: 'ثبت پیش‌فاکتور' },
+      { id: 2, short: 'حسابداری و مالی', roleId: 'accounting', actionText: 'تایید اعتبار و مالی' },
+      { id: 3, short: 'مدیر فروش', roleId: 'sales_mgr', actionText: 'تایید مدیر فروش' },
+      { id: 4, short: 'مدیرعامل', roleId: 'ceo', actionText: 'تایید نهایی و مجوز انبار' },
+      { id: 5, short: 'جمع‌آوری انبار', roleId: 'warehouse', actionText: 'تکمیل جمع‌آوری بار' },
+      { id: 6, short: 'خروج انبار', roleId: 'warehouse_sup', actionText: 'تایید خروج و تحویل به راننده' },
+      { id: 7, short: 'تحویل و امضا', roleId: 'driver', actionText: 'ثبت تحویل نهایی + امضای مشتری' }
+    ];
+
+    const STORAGE_KEY = 'autoparts_erp_cloud_cache_v2';
+
+    let state = {
+      orders: [],
+      logs: [],
+      waPhone: '',
+      rolePins: {},
+      roleNames: {}
+    };
+
+    let currentRole = null;
+    let activePhase = 1;
+    let activeTab = 'board';
+    let activeFilter = 'mine';
+    let selectedStationStage = null;
+    let tempNewPdf = null;
+    let tempRevPdf = null;
+    let modalTargetOrderId = null;
+    let isSyncing = false;
+    let pollTimer = null;
+
+    // متغیرهای پد امضای دیجیتال
+    let sigCanvas = null;
+    let sigCtx = null;
+    let isDrawingSig = false;
+    let hasSigStroke = false;
+
+    function getRolePin(roleId) {
+      if (state.rolePins && state.rolePins[roleId]) {
+        return String(state.rolePins[roleId]);
+      }
+      const def = ROLES.find(r => r.id === roleId);
+      return def ? def.pin : '';
+    }
+
+    function getRoleDisplayName(roleId) {
+      const def = ROLES.find(r => r.id === roleId);
+      const baseTitle = def ? def.title : '';
+      const person = state.roleNames && state.roleNames[roleId] ? state.roleNames[roleId].trim() : '';
+      return person ? `${baseTitle} (${person})` : baseTitle;
+    }
+
+    function updateLoginDropdownLabels() {
+      const sel = document.getElementById('login-role-select');
+      if (!sel) return;
+      Array.from(sel.options).forEach(opt => {
+        const r = ROLES.find(item => item.id === opt.value);
+        if (r) {
+          opt.textContent = `${r.icon} ${getRoleDisplayName(r.id)}`;
         }
+      });
+    }
 
-        async function fetchOrdersFromCloud() {
-            try {
-                const { data, error } = await supabaseClient.from('orders').select('*');
-                if (!error && data) {
-                    orders = data.map(item => item.data);
-                    if (currentUser) renderDashboard();
-                }
-            } catch (err) {
-                console.error("خطا در همگام‌سازی ابری:", err);
-            }
+    function setCloudStatus(online, customText) {
+      const badge = document.getElementById('cloud-status-badge');
+      const textEl = document.getElementById('cloud-status-text');
+      if (!badge || !textEl) return;
+      if (online) {
+        badge.classList.remove('offline');
+        textEl.textContent = customText || '🟢 متصل به سرور ابری زنده';
+      } else {
+        badge.classList.add('offline');
+        textEl.textContent = customText || '🟠 حالت آفلاین / تلاش مجدد';
+      }
+    }
+
+    function supabaseHeaders(extra = {}) {
+      return {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json',
+        ...extra
+      };
+    }
+
+    // ==================== ۲ سفارش نمونه واقعی جهت تست اولیه ====================
+    function getSeedOrders() {
+      return [
+        {
+          id: 'ord-201',
+          customer: 'لوازم یدکی برادران حسینی (کرج)',
+          proforma: 'PF-8101',
+          channel: 'روبیکا',
+          amount: '۶۴,۵۰۰,۰۰۰',
+          payment: 'چک صیادی ۴۵ روزه',
+          items: 'دیسک و صفحه عظام پژو پارس (۵ دست) + لنت جلو کروز سمند (۸ دست)',
+          stage: 5,
+          status: 'active',
+          rev: 0,
+          pdfName: 'PF-8101_Hosseini.pdf',
+          pdfData: null,
+          times: { 1: '۰۸:۳۰', 2: '۰۸:۴۵', 3: '۰۹:۰۰', 4: '۰۹:۱۰' }
+        },
+        {
+          id: 'ord-202',
+          customer: 'قطعات یدکی سعید - تخصصی سایپا (تهران)',
+          proforma: 'PF-8102',
+          channel: 'ایتا',
+          amount: '۳۸,۲۰۰,۰۰۰',
+          payment: 'نقدی / واریز آنی',
+          items: 'تسمه تایم دایکو پراید (۱۰ عدد) + کمک فنر عظام تیبا (۶ عدد)',
+          stage: 7,
+          status: 'active',
+          rev: 0,
+          pdfName: 'PF-8102_Saeid.pdf',
+          pdfData: null,
+          cartonsOut: 6,
+          driverName: 'آقای کریمی - نیسان شرکت',
+          times: { 1: '۰۸:۰۰', 2: '۰۸:۲۰', 3: '۰۸:۳۵', 4: '۰۸:۵۰', 5: '۰۹:۴۰', 6: '۱۰:۱۵' }
         }
+      ];
+    }
 
-        async function saveOrderToCloud(order) {
-            try {
-                orders = orders.filter(o => o.id !== order.id);
-                orders.push(order);
-                
-                await supabaseClient.from('orders').upsert({
-                    id: order.id.toString(),
-                    data: order,
-                    updated_at: new Date()
-                });
-                renderDashboard();
-            } catch (err) {
-                console.error("خطا در ذخیره در سرور ابری:", err);
-                alert("خطا در ثبت ابری. اتصال اینترنت خود را بررسی کنید.");
-            }
-        }
+    // ==================== حافظه پشتیبان محلی و همگام‌سازی زنده با Supabase ====================
+    function saveLocalCache() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {
+        const slimOrders = state.orders.map(o => ({ ...o, pdfData: null }));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...state, orders: slimOrders }));
+      }
+    }
 
-        // تبدیل خودکار اعداد فارسی/عربی به انگلیسی برای جلوگیری از خطای کیبورد
-        function convertPersianToEnglish(input) {
-            const persianDigits = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g];
-            const arabicDigits = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g];
-            let val = input.trim();
-            for (let i = 0; i < 10; i++) {
-                val = val.replace(persianDigits[i], i).replace(arabicDigits[i], i);
-            }
-            return val;
-        }
-
-        function handleLogin() {
-            const role = document.getElementById('role-select').value;
-            let pin = document.getElementById('pin-input').value;
-            pin = convertPersianToEnglish(pin);
-
-            if (pin === pins[role]) {
-                currentUser = role;
-                document.getElementById('login-section').classList.add('hidden');
-                document.getElementById('dashboard-section').classList.remove('hidden');
-                renderDashboard();
-            } else {
-                alert('رمز عبور اشتباه است! (پیش‌فرض انبار: 3333 یا ۳۳۳۳)');
-            }
-        }
-
-        function handleLogout() {
-            currentUser = null;
-            document.getElementById('dashboard-section').classList.add('hidden');
-            document.getElementById('login-section').classList.remove('hidden');
-            document.getElementById('pin-input').value = '';
-        }
-
-        function renderDashboard() {
-            const container = document.getElementById('role-content');
-            const badge = document.getElementById('user-badge');
-            
-            if (currentUser === 'sales') {
-                badge.innerText = 'کارشناس فروش';
-                badge.className = 'px-3 py-1 bg-blue-600 text-white text-xs rounded-lg font-medium';
-                container.innerHTML = renderSalesView();
-            } else if (currentUser === 'finance') {
-                badge.innerText = 'واحد مالی و حسابداری';
-                badge.className = 'px-3 py-1 bg-amber-600 text-white text-xs rounded-lg font-medium';
-                container.innerHTML = renderFinanceView();
-            } else if (currentUser === 'warehouse') {
-                badge.innerText = 'انبارداری مرکزی';
-                badge.className = 'px-3 py-1 bg-purple-600 text-white text-xs rounded-lg font-medium';
-                container.innerHTML = renderWarehouseView();
-            } else if (currentUser === 'driver') {
-                badge.innerText = 'کارتابل رانندگان';
-                badge.className = 'px-3 py-1 bg-emerald-600 text-white text-xs rounded-lg font-medium';
-                container.innerHTML = renderDriverView();
-            } else if (currentUser === 'manager') {
-                badge.innerText = 'مدیریت کل';
-                badge.className = 'px-3 py-1 bg-indigo-600 text-white text-xs rounded-lg font-medium';
-                container.innerHTML = renderManagerView();
-            }
-        }
-
-        // --- نمای کارشناس فروش ---
-        function renderSalesView() {
-            return `
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="bg-slate-800 border border-slate-700 p-5 rounded-2xl shadow-lg space-y-4">
-                        <h3 class="font-bold text-base text-blue-400">➕ ثبت پیش‌فاکتور جدید</h3>
-                        <div class="space-y-3">
-                            <div>
-                                <label class="block text-xs text-slate-300 mb-1">نام مشتری / تعمیرگاه</label>
-                                <input type="text" id="cust-name" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500" placeholder="مثال: لوازم یدکی آزادی">
-                            </div>
-                            <div>
-                                <label class="block text-xs text-slate-300 mb-1">قطعه / پارت نامبر (۵۰ برند ایرانخودرو و سایپا)</label>
-                                <input type="text" id="item-desc" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500" placeholder="مثال: لنت ترمز جلو ایساکو / واترپمپ سایپا">
-                            </div>
-                            <div class="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label class="block text-xs text-slate-300 mb-1">تعداد</label>
-                                    <input type="number" id="item-qty" value="1" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
-                                </div>
-                                <div>
-                                    <label class="block text-xs text-slate-300 mb-1">مبلغ کل (ریال)</label>
-                                    <input type="number" id="item-price" placeholder="مبلغ به ریال" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
-                                </div>
-                            </div>
-                            <button onclick="createNewOrder()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-2.5 rounded-xl transition text-sm shadow-lg shadow-blue-600/30">
-                                ثبت و ارسال به واحد مالی
-                            </button>
-                        </div>
-                    </div>
-                    <div class="bg-slate-800 border border-slate-700 p-5 rounded-2xl shadow-lg space-y-4">
-                        <h3 class="font-bold text-base text-slate-200">📋 پیگیری وضعیت سفارش‌ها و فاکتورهای برگشت خورده</h3>
-                        <div class="overflow-x-auto max-h-[350px] overflow-y-auto">
-                            <table class="w-full text-right text-xs">
-                                <thead class="bg-slate-900 text-slate-400 sticky top-0">
-                                    <tr>
-                                        <th class="p-2.5">مشتری</th>
-                                        <th class="p-2.5">قطعه</th>
-                                        <th class="p-2.5">وضعیت</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-slate-700">
-                                    ${orders.length === 0 ? `<tr><td colspan="3" class="text-center p-4 text-slate-500">هیچ سفارشی ثبت نشده است</td></tr>` : 
-                                      orders.map(o => `
-                                        <tr class="${o.status === 'returned' ? 'bg-rose-950/20' : ''}">
-                                            <td class="p-2.5 font-medium">${o.customer}</td>
-                                            <td class="p-2.5 text-slate-300">${o.item} (${o.qty} عدد)</td>
-                                            <td class="p-2.5">
-                                                ${getStatusBadge(o.status)}
-                                                ${o.status === 'returned' ? `<div class="text-[10px] text-rose-400 mt-1">علت عودت: ${o.returnReason || 'ندارد'}</div>` : ''}
-                                            </td>
-                                        </tr>
-                                      `).join('')}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function createNewOrder() {
-            const customer = document.getElementById('cust-name').value;
-            const item = document.getElementById('item-desc').value;
-            const qty = document.getElementById('item-qty').value;
-            const price = document.getElementById('item-price').value;
-
-            if (!customer || !item || !price) {
-                alert('لطفاً تمام اطلاعات فاکتور را پر کنید.');
-                return;
-            }
-
-            const newOrder = {
-                id: Date.now(),
-                customer,
-                item,
-                qty,
-                price,
-                status: 'pending_finance',
-                returnReason: '',
-                date: new Date().toLocaleDateString('fa-IR')
+    function loadLocalCache() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') {
+            state = {
+              orders: Array.isArray(parsed.orders) ? parsed.orders : [],
+              logs: Array.isArray(parsed.logs) ? parsed.logs : [],
+              waPhone: parsed.waPhone || '',
+              rolePins: parsed.rolePins || {},
+              roleNames: parsed.roleNames || {}
             };
-
-            saveOrderToCloud(newOrder);
-            document.getElementById('cust-name').value = '';
-            document.getElementById('item-desc').value = '';
-            document.getElementById('item-price').value = '';
-            alert('پیش‌فاکتور با موفقیت ثبت و به واحد مالی ارسال شد.');
+          }
         }
+      } catch (e) {
+        console.warn('Local cache read fallback', e);
+      }
+    }
 
-        // --- نمای واحد مالی ---
-        function renderFinanceView() {
-            const pending = orders.filter(o => o.status === 'pending_finance');
-            return `
-                <div class="bg-slate-800 border border-slate-700 p-5 rounded-2xl shadow-lg space-y-4">
-                    <h3 class="font-bold text-base text-amber-400">💰 کارتابل تایید مالی و حسابداری</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-right text-xs">
-                            <thead class="bg-slate-900 text-slate-400">
-                                <tr>
-                                    <th class="p-2.5">تاریخ</th>
-                                    <th class="p-2.5">مشتری</th>
-                                    <th class="p-2.5">شرح کالا</th>
-                                    <th class="p-2.5">مبلغ (ریال)</th>
-                                    <th class="p-2.5 text-center">عملیات مالی</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-slate-700">
-                                ${pending.length === 0 ? `<tr><td colspan="5" class="text-center p-6 text-slate-500">فاکتوری جهت تایید مالی وجود ندارد</td></tr>` :
-                                  pending.map(o => `
-                                    <tr>
-                                        <td class="p-2.5 text-slate-400">${o.date}</td>
-                                        <td class="p-2.5 font-medium">${o.customer}</td>
-                                        <td class="p-2.5 text-slate-300">${o.item} (${o.qty} عدد)</td>
-                                        <td class="p-2.5 text-emerald-400 font-bold">${Number(o.price).toLocaleString()}</td>
-                                        <td class="p-2.5 text-center space-x-2 space-x-reverse">
-                                            <button onclick="updateOrderStatus(${o.id}, 'pending_warehouse')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded-lg transition font-medium">تایید و ارسال به انبار</button>
-                                        </td>
-                                    </tr>
-                                  `).join('')}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-        }
+    async function upsertCloudRecord(id, payloadObj) {
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_TABLE}?on_conflict=id`, {
+          method: 'POST',
+          headers: supabaseHeaders({ 'Prefer': 'resolution=merge-duplicates,return=minimal' }),
+          body: JSON.stringify({
+            id: id,
+            data: payloadObj,
+            updated_at: new Date().toISOString()
+          })
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        setCloudStatus(true);
+        return true;
+      } catch (err) {
+        console.warn('Cloud upsert failed:', err);
+        setCloudStatus(false);
+        return false;
+      }
+    }
 
-        // --- نمای انبارداری (با قابلیت عودت به کارشناس) ---
-        function renderWarehouseView() {
-            const pendingWarehouse = orders.filter(o => o.status === 'pending_warehouse');
-            return `
-                <div class="bg-slate-800 border border-slate-700 p-5 rounded-2xl shadow-lg space-y-4">
-                    <h3 class="font-bold text-base text-purple-400">📦 کارتابل انبار مرکزی (تایید موجودی و بسته‌بندی)</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-right text-xs">
-                            <thead class="bg-slate-900 text-slate-400">
-                                <tr>
-                                    <th class="p-2.5">مشتری</th>
-                                    <th class="p-2.5">شرح کالا</th>
-                                    <th class="p-2.5">تعداد</th>
-                                    <th class="p-2.5 text-center">عملیات انبار</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-slate-700">
-                                ${pendingWarehouse.length === 0 ? `<tr><td colspan="4" class="text-center p-6 text-slate-500">سفارشی در صف انبار وجود ندارد</td></tr>` :
-                                  pendingWarehouse.map(o => `
-                                    <tr>
-                                        <td class="p-2.5 font-medium">${o.customer}</td>
-                                        <td class="p-2.5 text-slate-300">${o.item}</td>
-                                        <td class="p-2.5">${o.qty}</td>
-                                        <td class="p-2.5 text-center space-x-2 space-x-reverse">
-                                            <button onclick="updateOrderStatus(${o.id}, 'ready_to_ship')" class="bg-purple-600 hover:bg-purple-500 text-white px-3 py-1.5 rounded-lg transition font-medium">تایید موجودی و آماده‌سازی</button>
-                                            <button onclick="returnOrderToSales(${o.id})" class="bg-rose-600 hover:bg-rose-500 text-white px-3 py-1.5 rounded-lg transition font-medium">عودت به کارشناس</button>
-                                        </td>
-                                    </tr>
-                                  `).join('')}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-        }
+    async function syncSettingsToCloud() {
+      saveLocalCache();
+      await upsertCloudRecord(SETTINGS_RECORD_ID, {
+        waPhone: state.waPhone || '',
+        rolePins: state.rolePins || {},
+        roleNames: state.roleNames || {},
+        logs: (state.logs || []).slice(0, 60)
+      });
+    }
 
-        function returnOrderToSales(id) {
-            const reason = prompt('لطفاً دلیل عودت فاکتور به کارشناس فروش را وارد کنید (مثلاً کسری موجودی انبار / مغایرت پارت نامبر):');
-            if (reason !== null) {
-                const order = orders.find(o => o.id === id);
-                if (order) {
-                    order.status = 'returned';
-                    order.returnReason = reason || 'بدون توضیح';
-                    saveOrderToCloud(order);
-                    alert('فاکتور با موفقیت به کارشناس فروش عودت داده شد.');
-                }
+    async function syncOrderToCloud(order) {
+      saveLocalCache();
+      await upsertCloudRecord(order.id, order);
+    }
+
+    async function fetchFromCloud(isInitial = false) {
+      if (isSyncing) return;
+      isSyncing = true;
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_TABLE}?select=*&order=updated_at.desc`, {
+          method: 'GET',
+          headers: supabaseHeaders()
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const rows = await res.json();
+        setCloudStatus(true);
+
+        if (!Array.isArray(rows) || rows.length === 0) {
+          if (isInitial) {
+            state.orders = getSeedOrders();
+            state.logs = [
+              { time: nowTimeStr(), text: '🟢 سیستم ابری راه‌اندازی شد و ۲ سفارش نمونه جهت تست چرخه آماده گردید.' }
+            ];
+            saveLocalCache();
+            for (const ord of state.orders) {
+              await upsertCloudRecord(ord.id, ord);
             }
+            await syncSettingsToCloud();
+          }
+        } else {
+          const fetchedOrders = [];
+          let settingsRow = null;
+
+          rows.forEach(row => {
+            if (row.id === SETTINGS_RECORD_ID) {
+              settingsRow = row.data;
+            } else if (row.data && typeof row.data === 'object') {
+              fetchedOrders.push(row.data);
+            }
+          });
+
+          if (settingsRow) {
+            state.waPhone = settingsRow.waPhone || '';
+            state.rolePins = settingsRow.rolePins || {};
+            state.roleNames = settingsRow.roleNames || {};
+            if (Array.isArray(settingsRow.logs)) {
+              state.logs = settingsRow.logs;
+            }
+            updateLoginDropdownLabels();
+          }
+
+          if (fetchedOrders.length > 0) {
+            state.orders = fetchedOrders;
+          }
+          saveLocalCache();
         }
 
-        // --- نمای کارتابل راننده ---
-        function renderDriverView() {
-            const readyToShip = orders.filter(o => o.status === 'ready_to_ship' || o.status === 'delivered');
-            return `
-                <div class="bg-slate-800 border border-slate-700 p-5 rounded-2xl shadow-lg space-y-4">
-                    <h3 class="font-bold text-base text-emerald-400">🚚 کارتابل تحویل و امضای دیجیتال رانندگان</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        ${readyToShip.length === 0 ? `<div class="col-span-2 text-center p-6 text-slate-500">سفارشی جهت ارسال در صف نیست</div>` :
-                          readyToShip.map(o => `
-                            <div class="bg-slate-900 border border-slate-700 p-4 rounded-xl space-y-3">
-                                <div class="flex justify-between items-start">
-                                    <div>
-                                        <div class="font-bold text-sm">${o.customer}</div>
-                                        <div class="text-xs text-slate-400 mt-1">${o.item} (${o.qty} عدد)</div>
-                                    </div>
-                                    ${getStatusBadge(o.status)}
-                                </div>
-                                ${o.status === 'ready_to_ship' ? `
-                                    <button onclick="deliverOrder(${o.id})" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-lg text-xs font-medium transition">
-                                        ثبت تحویل بار و امضای دیجیتال مشتری
-                                    </button>
-                                ` : `<div class="text-xs text-emerald-400 text-center bg-emerald-950/30 py-2 rounded-lg border border-emerald-900">✅ تحویل داده شده و امضا ثبت گردید</div>`}
-                            </div>
-                          `).join('')}
-                    </div>
-                </div>
+        if (currentRole) {
+          renderDashboard();
+        }
+      } catch (err) {
+        console.warn('Cloud fetch error:', err);
+        setCloudStatus(false);
+        if (isInitial && state.orders.length === 0) {
+          state.orders = getSeedOrders();
+          saveLocalCache();
+        }
+      } finally {
+        isSyncing = false;
+      }
+    }
+
+    function nowTimeStr() {
+      const d = new Date();
+      return d.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function nowDateTimeStr() {
+      const d = new Date();
+      return d.toLocaleDateString('fa-IR') + ' - ' + nowTimeStr();
+    }
+
+    // ==================== ورود امن و کشویی ====================
+    function handleLoginSubmit(event) {
+      event.preventDefault();
+      const roleSelect = document.getElementById('login-role-select');
+      const pinInput = document.getElementById('login-pin-input');
+      const errorBox = document.getElementById('login-error');
+
+      const roleId = roleSelect.value;
+      const enteredPin = pinInput.value.trim();
+      const role = ROLES.find(r => r.id === roleId);
+      const validPin = getRolePin(roleId);
+
+      if (!role || enteredPin !== validPin) {
+        errorBox.classList.remove('hidden');
+        pinInput.focus();
+        return;
+      }
+
+      errorBox.classList.add('hidden');
+      pinInput.value = '';
+      enterRole(role);
+    }
+
+    function enterRole(role) {
+      currentRole = role;
+      document.getElementById('screen-login').classList.add('hidden');
+      document.getElementById('screen-app').classList.remove('hidden');
+
+      document.getElementById('active-role-icon').textContent = role.icon;
+      document.getElementById('active-role-title').textContent = getRoleDisplayName(role.id);
+      document.getElementById('active-role-scope').textContent = role.scope;
+
+      const settingsBtn = document.getElementById('btn-ceo-settings');
+      settingsBtn.textContent = role.id === 'ceo' ? '⚙️ تنظیمات و رمزها' : '📲 واتساپ مدیرعامل';
+
+      selectedStationStage = null;
+      activeFilter = 'mine';
+      updateFilterPillsUI();
+      switchPhase(1);
+      switchTab('board');
+      renderDashboard();
+      fetchFromCloud(false);
+    }
+
+    function logoutRole() {
+      currentRole = null;
+      document.getElementById('screen-app').classList.add('hidden');
+      document.getElementById('screen-login').classList.remove('hidden');
+      document.getElementById('login-pin-input').value = '';
+      document.getElementById('login-error').classList.add('hidden');
+      updateLoginDropdownLabels();
+    }
+
+    function switchPhase(phaseNum) {
+      activePhase = phaseNum;
+      [1, 2, 3].forEach(p => {
+        document.getElementById('phase-view-' + p).classList.toggle('hidden', p !== phaseNum);
+        document.getElementById('phase-btn-' + p).classList.toggle('active', p === phaseNum);
+      });
+    }
+
+    // ==================== رندر داشبورد و نقشه شماتیک ۷ ایستگاه ====================
+    function renderDashboard() {
+      if (currentRole) {
+        document.getElementById('active-role-title').textContent = getRoleDisplayName(currentRole.id);
+      }
+      renderStats();
+      renderMasterSchematic();
+      renderOrdersList();
+      renderLogsList();
+    }
+
+    function renderStats() {
+      const approvalCount = state.orders.filter(o => o.status === 'active' && o.stage <= 4).length;
+      const warehouseCount = state.orders.filter(o => o.status === 'active' && (o.stage === 5 || o.stage === 6)).length;
+      const driverCount = state.orders.filter(o => o.status === 'active' && o.stage === 7).length;
+      const doneCount = state.orders.filter(o => o.stage === 8).length;
+
+      document.getElementById('stats-row').innerHTML = `
+        <div class="stat-box"><div class="stat-num">${approvalCount}</div><div class="stat-lbl">تاییدیه‌ها</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:var(--warning);">${warehouseCount}</div><div class="stat-lbl">در انبار</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:var(--purple);">${driverCount}</div><div class="stat-lbl">نزد راننده</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:var(--success);">${doneCount}</div><div class="stat-lbl">تحویل قطعی</div></div>
+      `;
+    }
+
+    function renderMasterSchematic() {
+      const icons = ['📝', '💰', '📊', '👔', '📦', '🏷️', '🚚'];
+      const track = document.getElementById('master-flow-track');
+      const resetBtn = document.getElementById('btn-reset-station');
+      resetBtn.classList.toggle('hidden', selectedStationStage === null);
+
+      track.innerHTML = STAGES.map((st, idx) => {
+        const count = state.orders.filter(o => {
+          if (st.id === 1) return o.status === 'returned';
+          return o.status === 'active' && o.stage === st.id;
+        }).length;
+
+        const isMyNode = currentRole && (currentRole.id === st.roleId || (st.id === 4 && currentRole.id === 'ceo'));
+        const isSelected = selectedStationStage === st.id;
+
+        return `
+          <div class="flow-node ${isMyNode ? 'active-role' : ''} ${isSelected ? 'selected-station' : ''}" data-station-stage="${st.id}">
+            <span class="flow-node-icon">${icons[idx]}</span>
+            <span class="flow-node-title">${st.id}. ${st.short}</span>
+            <span class="flow-node-count ${count > 0 ? 'has-items' : ''}">${count} مورد</span>
+          </div>
+          ${idx < STAGES.length - 1 ? '<span class="flow-arrow">⬅</span>' : ''}
+        `;
+      }).join('');
+    }
+
+    function canActOnOrder(order) {
+      if (!currentRole || order.stage > 7) return false;
+      if (order.status === 'returned') {
+        return currentRole.id === 'sales' || currentRole.id === 'ceo';
+      }
+      if (currentRole.id === 'ceo') {
+        return order.stage === 4;
+      }
+      const st = STAGES[order.stage - 1];
+      return st && st.roleId === currentRole.id;
+    }
+
+    function updateFilterPillsUI() {
+      document.querySelectorAll('.filter-pill').forEach(btn => {
+        btn.classList.toggle('active', selectedStationStage === null && btn.dataset.filter === activeFilter);
+      });
+    }
+
+    function setOrderFilter(filter) {
+      selectedStationStage = null;
+      activeFilter = filter;
+      updateFilterPillsUI();
+      renderMasterSchematic();
+      renderOrdersList();
+    }
+
+    function renderOrdersList() {
+      const container = document.getElementById('orders-list');
+      let list = state.orders;
+
+      if (selectedStationStage !== null) {
+        if (selectedStationStage === 1) {
+          list = state.orders.filter(o => o.status === 'returned');
+        } else {
+          list = state.orders.filter(o => o.status === 'active' && o.stage === selectedStationStage);
+        }
+      } else if (activeFilter === 'mine') {
+        list = state.orders.filter(o => canActOnOrder(o));
+      } else if (activeFilter === 'returned') {
+        list = state.orders.filter(o => o.status === 'returned');
+      } else if (activeFilter === 'warehouse') {
+        list = state.orders.filter(o => o.status === 'active' && (o.stage === 5 || o.stage === 6));
+      } else if (activeFilter === 'driver') {
+        list = state.orders.filter(o => o.status === 'active' && o.stage === 7);
+      } else if (activeFilter === 'done') {
+        list = state.orders.filter(o => o.stage === 8);
+      }
+
+      if (list.length === 0) {
+        container.innerHTML = `
+          <div class="form-card" style="text-align:center; padding:28px 16px;">
+            <div style="font-size:26px; margin-bottom:6px;">📭</div>
+            <strong style="font-size:13px; display:block;">موردی در این بخش وجود ندارد</strong>
+            <span style="font-size:11.5px; color:var(--muted);">برای مشاهده کل سفارش‌های مجموعه، روی «همه سفارش‌ها» بزنید.</span>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = list.map(order => {
+        const isDone = order.stage === 8;
+        const isReturned = order.status === 'returned';
+        const myTurn = canActOnOrder(order);
+        const currentStageObj = !isDone ? STAGES[order.stage - 1] : null;
+
+        const stepsHtml = STAGES.map(st => {
+          let cls = '';
+          let mark = st.id;
+          if (!isReturned && order.stage > st.id) {
+            cls = 'done';
+            mark = '✓';
+          } else if (isReturned && st.id === 1) {
+            cls = 'returned';
+            mark = '!';
+          } else if (!isReturned && order.stage === st.id) {
+            cls = 'current';
+          }
+          const t = order.times && order.times[st.id] ? order.times[st.id] : '';
+          return `
+            <div class="step-unit ${cls}">
+              <div class="step-circle">${mark}</div>
+              <div class="step-label">${st.short}</div>
+              <div class="step-time">${t}</div>
+            </div>
+          `;
+        }).join('');
+
+        let footerHtml = '';
+        if (isDone) {
+          footerHtml = `
+            <div class="wait-banner" style="background:var(--success-soft); color:var(--success); font-weight:800;">
+              <span>🎉 تحویل قطعی به «${order.customerSigner || 'مشتری'}» (${order.cartonsDelivered || order.cartonsOut} کارتن)</span>
+              <span>${order.times[7] || ''}</span>
+            </div>
+          `;
+        } else if (isReturned) {
+          if (currentRole.id === 'sales' || currentRole.id === 'ceo') {
+            footerHtml = `
+              <button type="button" class="btn-action-danger" style="width:100%;" data-action="revise" data-id="${order.id}">
+                ✏️ اصلاح پیش‌فاکتور و بارگذاری PDF جدید
+              </button>
             `;
-        }
-
-        function deliverOrder(id) {
-            const customerSign = prompt('نام تحویل‌گیرنده یا امضای دیجیتال مشتری را وارد کنید:');
-            if (customerSign) {
-                const order = orders.find(o => o.id === id);
-                if (order) {
-                    order.status = 'delivered';
-                    order.signature = customerSign;
-                    saveOrderToCloud(order);
-                    alert('تحویل بار با موفقیت ثبت شد.');
-                }
-            }
-        }
-
-        // --- نمای مدیریت کل ---
-        function renderManagerView() {
-            return `
-                <div class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div class="bg-slate-800 border border-slate-700 p-4 rounded-2xl shadow">
-                            <div class="text-slate-400 text-xs">کل سفارشات ثبت شده</div>
-                            <div class="text-2xl font-bold text-indigo-400 mt-2">${orders.length}</div>
-                        </div>
-                        <div class="bg-slate-800 border border-slate-700 p-4 rounded-2xl shadow">
-                            <div class="text-slate-400 text-xs">در انتظار تایید مالی</div>
-                            <div class="text-2xl font-bold text-amber-400 mt-2">${orders.filter(o => o.status === 'pending_finance').length}</div>
-                        </div>
-                        <div class="bg-slate-800 border border-slate-700 p-4 rounded-2xl shadow">
-                            <div class="text-slate-400 text-xs">در صف انبار</div>
-                            <div class="text-2xl font-bold text-purple-400 mt-2">${orders.filter(o => o.status === 'pending_warehouse').length}</div>
-                        </div>
-                        <div class="bg-slate-800 border border-slate-700 p-4 rounded-2xl shadow">
-                            <div class="text-slate-400 text-xs">تکمیل شده و تحویل</div>
-                            <div class="text-2xl font-bold text-emerald-400 mt-2">${orders.filter(o => o.status === 'delivered').length}</div>
-                        </div>
-                    </div>
-                    <div class="bg-slate-800 border border-slate-700 p-5 rounded-2xl shadow-lg space-y-4">
-                        <h3 class="font-bold text-base text-slate-200">📊 گزارش کامل جریان سفارشات سازمانی</h3>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-right text-xs">
-                                <thead class="bg-slate-900 text-slate-400">
-                                    <tr>
-                                        <th class="p-2.5">تاریخ</th>
-                                        <th class="p-2.5">مشتری</th>
-                                        <th class="p-2.5">شرح کالا</th>
-                                        <th class="p-2.5">مبلغ کل (ریال)</th>
-                                        <th class="p-2.5">وضعیت جاری</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-slate-700">
-                                    ${orders.map(o => `
-                                        <tr>
-                                            <td class="p-2.5 text-slate-400">${o.date}</td>
-                                            <td class="p-2.5 font-medium">${o.customer}</td>
-                                            <td class="p-2.5 text-slate-300">${o.item} (${o.qty})</td>
-                                            <td class="p-2.5 text-emerald-400">${Number(o.price).toLocaleString()}</td>
-                                            <td class="p-2.5">${getStatusBadge(o.status)}</td>
-                                        </tr>
-                                    `).join('')}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+          } else {
+            footerHtml = `
+              <div class="wait-banner" style="background:var(--danger-soft); color:var(--danger);">
+                <span>⏳ برگشت خورده به کارشناس فروش جهت اصلاح و آپلود PDF جدید</span>
+              </div>
             `;
+          }
+        } else if (myTurn) {
+          if (order.stage === 5) {
+            footerHtml = `
+              <button type="button" class="btn-action-main success" data-action="advance" data-id="${order.id}">
+                ✅ تایید تکمیل جمع‌آوری بار در انبار
+              </button>
+              <button type="button" class="btn-action-danger" data-action="return" data-id="${order.id}">
+                ⚠️ مغایرت / برگشت به فروش
+              </button>
+            `;
+          } else if (order.stage === 6) {
+            footerHtml = `
+              <button type="button" class="btn-action-main success" data-action="warehouse-exit" data-id="${order.id}">
+                🏷️ ثبت خروج انبار و تحویل به ناوگان
+              </button>
+            `;
+          } else if (order.stage === 7) {
+            footerHtml = `
+              <button type="button" class="btn-action-main success" data-action="driver-delivery" data-id="${order.id}">
+                ✍️ ثبت تحویل نهایی + امضای دیجیتال مشتری
+              </button>
+            `;
+          } else if (order.stage === 2 || order.stage === 3 || order.stage === 4) {
+            footerHtml = `
+              <button type="button" class="btn-action-main" data-action="advance" data-id="${order.id}">
+                ✔️ ${currentStageObj.actionText}
+              </button>
+              <button type="button" class="btn-action-danger" data-action="return" data-id="${order.id}">
+                ↩️ برگشت به فروش
+              </button>
+            `;
+          } else {
+            footerHtml = `
+              <button type="button" class="btn-action-main" data-action="advance" data-id="${order.id}">
+                ✔️ ${currentStageObj.actionText}
+              </button>
+            `;
+          }
+        } else {
+          footerHtml = `
+            <div class="wait-banner">
+              <span>🔒 در انتظار اقدام: <strong>${getRoleDisplayName(currentStageObj.roleId)}</strong></span>
+              <span>مرحله ${order.stage} از ۷</span>
+            </div>
+          `;
         }
 
-        async function updateOrderStatus(id, newStatus) {
-            const order = orders.find(o => o.id === id);
-            if (order) {
-                order.status = newStatus;
-                await saveOrderToCloud(order);
-            }
-        }
+        return `
+          <article class="order-card ${isReturned ? 'returned-state' : myTurn ? 'my-turn' : isDone ? 'done-state' : ''}">
+            <div class="order-head">
+              <div>
+                <div class="tag-row">
+                  <span class="tag">${order.proforma}</span>
+                  <span class="tag tag-pdf">📄 بسته PDF</span>
+                  ${order.rev > 0 ? `<span class="tag tag-rev">اصلاحیه #${order.rev}</span>` : ''}
+                  <span class="tag">${order.channel || ''}</span>
+                  <span class="tag">${order.payment || ''}</span>
+                </div>
+                <div class="order-customer">${order.customer}</div>
+                <div class="order-items">${order.items}</div>
+              </div>
+              ${order.amount ? `<div style="text-align:left; flex-shrink:0;"><strong style="font-size:13px;">${order.amount}</strong><div style="font-size:10px; color:var(--muted);">تومان</div></div>` : ''}
+            </div>
 
-        function getStatusBadge(status) {
-            switch(status) {
-                case 'pending_finance': return '<span class="px-2.5 py-1 bg-amber-950/60 text-amber-400 border border-amber-800/50 rounded-md text-[10px]">در انتظار مالی</span>';
-                case 'pending_warehouse': return '<span class="px-2.5 py-1 bg-purple-950/60 text-purple-400 border border-purple-800/50 rounded-md text-[10px]">در صف انبار</span>';
-                case 'ready_to_ship': return '<span class="px-2.5 py-1 bg-blue-950/60 text-blue-400 border border-blue-800/50 rounded-md text-[10px]">آماده بارگیری و ارسال</span>';
-                case 'delivered': return '<span class="px-2.5 py-1 bg-emerald-950/60 text-emerald-400 border border-emerald-800/50 rounded-md text-[10px]">تحویل شده</span>';
-                case 'returned': return '<span class="px-2.5 py-1 bg-rose-950/60 text-rose-400 border border-rose-800/50 rounded-md text-[10px]">برگشت خورده به فروش</span>';
-                default: return '<span class="px-2.5 py-1 bg-slate-700 text-slate-300 rounded-md text-[10px]">نامشخص</span>';
-            }
-        }
+            <div class="pdf-packet">
+              <div class="pdf-packet-info">
+                <span style="font-size:20px;">📑</span>
+                <div>
+                  <strong>${order.pdfName || order.proforma + '.pdf'}</strong>
+                  <span>بسته دیجیتال پیش‌فاکتور (آماده بررسی و پرینت در انبار)</span>
+                </div>
+              </div>
+              <div class="pdf-btns">
+                <button type="button" class="btn-pdf-view" data-action="view-pdf" data-id="${order.id}">👁️ مشاهده PDF</button>
+                <button type="button" class="btn-pdf-print" data-action="print-pdf" data-id="${order.id}">🖨️ پرینت برگه انبار</button>
+              </div>
+            </div>
 
-        window.onload = init;
-    </script>
+            ${isReturned ? `
+              <div class="return-alert">
+                <strong>⚠️ مغایرت گزارش‌شده: ${order.returnReason}</strong>
+                <span>${order.returnNote}</span>
+              </div>
+            ` : ''}
+
+            <div class="card-schematic">
+              <div class="step-chain">${stepsHtml}</div>
+            </div>
+
+            ${(order.cartonsOut || order.cartonsDelivered || order.signatureData) ? `
+              <div class="logistics-strip">
+                <div style="display:flex; flex-wrap:wrap; gap:8px 14px;">
+                  ${order.cartonsOut ? `<span>📦 خروج انبار: <strong>${order.cartonsOut} کارتن</strong></span>` : ''}
+                  ${order.driverName ? `<span>🚚 راننده: <strong>${order.driverName}</strong></span>` : ''}
+                  ${order.cartonsDelivered ? `<span>📦 تحویلی: <strong>${order.cartonsDelivered} کارتن</strong></span>` : ''}
+                  ${order.customerSigner ? `<span>👤 تحویل‌گیرنده: <strong>${order.customerSigner}</strong></span>` : ''}
+                </div>
+                ${order.signatureData ? `
+                  <div class="sig-preview-box" title="امضای دیجیتال مشتری">
+                    <span style="font-size:10px; color:var(--success); font-weight:800;">امضای مشتری:</span>
+                    <img src="${order.signatureData}" alt="امضای مشتری" />
+                  </div>
+                ` : ''}
+              </div>
+            ` : ''}
+
+            <div class="card-footer-actions">
+              ${footerHtml}
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function renderLogsList() {
+      const el = document.getElementById('logs-list');
+      if (state.logs.length === 0) {
+        el.innerHTML = '<p style="font-size:12px; color:var(--muted);">هنوز گزارشی ثبت نشده است.</p>';
+        return;
+      }
+      el.innerHTML = state.logs.map(l => `
+        <div style="padding:9px 0; border-bottom:1px solid var(--border); font-size:12px;">
+          <span style="font-size:10px; color:var(--muted); display:block;">ساعت ${l.time}</span>
+          <span>${l.text}</span>
+        </div>
+      `).join('');
+    }
+
+    // ==================== مدیریت تب‌ها ====================
+    function switchTab(tab) {
+      activeTab = tab;
+      ['board', 'new', 'logs'].forEach(t => {
+        document.getElementById('tab-' + t).classList.toggle('hidden', t !== tab);
+        document.getElementById('tab-btn-' + t).classList.toggle('active', t === tab);
+      });
+
+      if (tab === 'new' && currentRole) {
+        const allowed = currentRole.id === 'sales' || currentRole.id === 'ceo';
+        document.getElementById('create-order-form').classList.toggle('hidden', !allowed);
+        document.getElementById('new-order-permission-msg').classList.toggle('hidden', allowed);
+      }
+    }
+
+    // ==================== مدیریت فایل PDF و پرینت ====================
+    function onPdfSelected(event, mode) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      if (file.size > 1.5 * 1024 * 1024) {
+        if (mode === 'new') {
+          tempNewPdf = { name: file.name, dataUrl: null };
+          document.getElementById('f-pdf-hint').textContent = `⚠️ حجم فایل بیش از ۱.۵ مگابایت است؛ نام فایل ثبت شد و برگه چاپی استاندارد انبار تولید می‌شود.`;
+        } else {
+          tempRevPdf = { name: file.name, dataUrl: null };
+          document.getElementById('rev-pdf-hint').textContent = `⚠️ حجم فایل بیش از ۱.۵ مگابایت است؛ برگه چاپی استاندارد انبار جایگزین می‌شود.`;
+        }
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const packet = { name: file.name, dataUrl: e.target.result };
+        if (mode === 'new') {
+          tempNewPdf = packet;
+          document.getElementById('f-pdf-hint').textContent = `✅ فایل «${file.name}» ضمیمه بسته سفارش شد و روی تمام دستگاه‌ها قابل مشاهده است.`;
+        } else {
+          tempRevPdf = packet;
+          document.getElementById('rev-pdf-hint').textContent = `✅ نسخه جدید «${file.name}» آماده ارسال به انبار است.`;
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function openPdfModal(orderId, autoPrint) {
+      const order = state.orders.find(o => o.id === orderId);
+      if (!order) return;
+
+      document.getElementById('modal-pdf-title').textContent = `📄 ${order.pdfName || order.proforma + '.pdf'}`;
+      const body = document.getElementById('modal-pdf-content');
+
+      if (order.pdfData) {
+        body.innerHTML = `<iframe src="${order.pdfData}" style="width:100%; height:65vh; border:1px solid #cbd5e1; border-radius:12px;"></iframe>`;
+      } else {
+        body.innerHTML = `
+          <div id="print-area" style="border:2px solid #0f172a; border-radius:14px; padding:18px; background:#fff;">
+            <div style="display:flex; justify-content:space-between; border-bottom:2px solid #0f172a; padding-bottom:10px; margin-bottom:12px;">
+              <div>
+                <h4 style="font-size:15px; font-weight:800;">برگه حواله و پیش‌فاکتور انبار | پخش قطعات یدکی</h4>
+                <p style="font-size:11px; color:#475569;">ایران‌خودرو و سایپا (۵۰ برند منتخب)</p>
+              </div>
+              <div style="text-align:left; font-size:12px;">
+                <strong>شماره: ${order.proforma}</strong>
+                <div>نسخه: ${order.rev > 0 ? 'اصلاحیه #' + order.rev : 'اصلی'}</div>
+              </div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; background:#f8fafc; padding:10px; border-radius:10px; font-size:12px; margin-bottom:12px;">
+              <div><strong>مشتری:</strong> ${order.customer}</div>
+              <div><strong>تسویه:</strong> ${order.payment}</div>
+              <div><strong>مبلغ کل:</strong> ${order.amount || '-'} تومان</div>
+              <div><strong>کانال سفارش:</strong> ${order.channel}</div>
+            </div>
+            <div style="border:1px solid #94a3b8; border-radius:10px; padding:12px; font-size:12.5px; margin-bottom:14px;">
+              <strong style="display:block; margin-bottom:6px;">شرح قطعات جهت جمع‌آوری و بسته‌بندی در انبار:</strong>
+              <p>${order.items}</p>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px; font-size:11px; text-align:center;">
+              <div style="border:1px solid #cbd5e1; padding:8px; border-radius:8px;">تایید مالی: ${order.times[2] || 'در انتظار'}</div>
+              <div style="border:1px solid #cbd5e1; padding:8px; border-radius:8px;">مدیر فروش: ${order.times[3] || 'در انتظار'}</div>
+              <div style="border:1px solid #cbd5e1; padding:8px; border-radius:8px;">مدیرعامل: ${order.times[4] || 'در انتظار'}</div>
+            </div>
+          </div>
+        `;
+      }
+
+      document.getElementById('modal-pdf').classList.remove('hidden');
+      if (autoPrint) {
+        setTimeout(() => window.print(), 300);
+      }
+    }
+
+    // ==================== ثبت سفارش جدید ====================
+    async function handleCreateOrder(e) {
+      e.preventDefault();
+      const customer = document.getElementById('f-customer').value.trim();
+      const proforma = document.getElementById('f-proforma').value.trim();
+      const channel = document.getElementById('f-channel').value;
+      const amount = document.getElementById('f-amount').value.trim();
+      const payment = document.getElementById('f-payment').value;
+      const items = document.getElementById('f-items').value.trim();
+      const t = nowTimeStr();
+
+      const newOrder = {
+        id: 'ord-' + Date.now(),
+        customer,
+        proforma,
+        channel,
+        amount,
+        payment,
+        items,
+        stage: 2,
+        status: 'active',
+        rev: 0,
+        pdfName: tempNewPdf ? tempNewPdf.name : `${proforma}_Invoice.pdf`,
+        pdfData: tempNewPdf ? tempNewPdf.dataUrl : null,
+        times: { 1: t }
+      };
+
+      state.orders.unshift(newOrder);
+      await syncOrderToCloud(newOrder);
+      await addLogAndNotify(`📝 پیش‌فاکتور جدید «${proforma}» برای «${customer}» همراه با بسته PDF ثبت و به حسابداری ارسال شد.`);
+
+      tempNewPdf = null;
+      document.getElementById('create-order-form').reset();
+      document.getElementById('f-pdf-hint').textContent = 'در صورت عدم انتخاب فایل یا حجم بالاتر از ۱.۵ مگابایت، سیستم به‌صورت خودکار برگه استاندارد قابل پرینت انبار را تولید می‌کند.';
+      switchTab('board');
+      setOrderFilter('all');
+    }
+
+    // ==================== مراحل ۲ تا ۵ ====================
+    async function advanceOrderStage(orderId) {
+      const order = state.orders.find(o => o.id === orderId);
+      if (!order) return;
+
+      const st = STAGES[order.stage - 1];
+      const t = nowTimeStr();
+      order.times[order.stage] = t;
+      order.stage += 1;
+
+      const msg = order.stage === 6
+        ? `📦 بار جمع شد: سفارش «${order.customer}» (${order.proforma}) در انبار جمع‌آوری شد و در انتظار خروج سرپرست انبار است (ساعت ${t}).`
+        : `✔️ ${st.short} تایید شد: سفارش «${order.customer}» (${order.proforma}) در ساعت ${t} به مرحله بعد رفت.`;
+
+      renderDashboard();
+      await syncOrderToCloud(order);
+      await addLogAndNotify(msg);
+    }
+
+    // ==================== مرحله ۶: خروج بار توسط سرپرست انبار ====================
+    function openWarehouseExitModal(orderId) {
+      const order = state.orders.find(o => o.id === orderId);
+      if (!order) return;
+      modalTargetOrderId = orderId;
+      document.getElementById('modal-exit-desc').textContent = `مشتری: ${order.customer} (${order.proforma})`;
+      document.getElementById('inp-exit-cartons').value = order.cartonsOut || '';
+      document.getElementById('inp-exit-driver').value = order.driverName || '';
+      document.getElementById('modal-warehouse-exit').classList.remove('hidden');
+    }
+
+    async function confirmWarehouseExit() {
+      const order = state.orders.find(o => o.id === modalTargetOrderId);
+      if (!order) return;
+
+      const cartons = parseInt(document.getElementById('inp-exit-cartons').value, 10);
+      const driver = document.getElementById('inp-exit-driver').value.trim();
+      if (!cartons || cartons < 1 || !driver) return;
+
+      const t = nowTimeStr();
+      order.cartonsOut = cartons;
+      order.driverName = driver;
+      order.times[6] = t;
+      order.stage = 7;
+
+      closeModal('modal-warehouse-exit');
+      renderDashboard();
+      await syncOrderToCloud(order);
+      await addLogAndNotify(`🏷️ خروج از انبار: بار «${order.customer}» (${order.proforma}) با ${cartons} کارتن تحویل راننده (${driver}) شد.`);
+    }
+
+    // ==================== مرحله ۷ (نهایی): تحویل راننده + پد امضای دیجیتال لمسی ====================
+    function initSignaturePad() {
+      sigCanvas = document.getElementById('driver-sig-canvas');
+      if (!sigCanvas) return;
+
+      const ratio = Math.max(window.devicePixelRatio || 1, 1);
+      const rect = sigCanvas.getBoundingClientRect();
+      sigCanvas.width = (rect.width || 420) * ratio;
+      sigCanvas.height = (rect.height || 165) * ratio;
+
+      sigCtx = sigCanvas.getContext('2d');
+      sigCtx.scale(ratio, ratio);
+      sigCtx.lineWidth = 2.6;
+      sigCtx.lineCap = 'round';
+      sigCtx.lineJoin = 'round';
+      sigCtx.strokeStyle = '#0f172a';
+      hasSigStroke = false;
+    }
+
+    function clearSignaturePad() {
+      if (!sigCanvas || !sigCtx) return;
+      sigCtx.save();
+      sigCtx.setTransform(1, 0, 0, 1, 0, 0);
+      sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
+      sigCtx.restore();
+      hasSigStroke = false;
+    }
+
+    function getCanvasCoords(e) {
+      const rect = sigCanvas.getBoundingClientRect();
+      const clientX = e.touches && e.touches.length > 0 ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches && e.touches.length > 0 ? e.touches[0].clientY : e.clientY;
+      return {
+        x: clientX - rect.left,
+        y: clientY - rect.top
+      };
+    }
+
+    function startSigStroke(e) {
+      if (!sigCtx) return;
+      e.preventDefault();
+      isDrawingSig = true;
+      const pos = getCanvasCoords(e);
+      sigCtx.beginPath();
+      sigCtx.moveTo(pos.x, pos.y);
+    }
+
+    function moveSigStroke(e) {
+      if (!isDrawingSig || !sigCtx) return;
+      e.preventDefault();
+      const pos = getCanvasCoords(e);
+      sigCtx.lineTo(pos.x, pos.y);
+      sigCtx.stroke();
+      hasSigStroke = true;
+    }
+
+    function endSigStroke() {
+      if (!isDrawingSig) return;
+      isDrawingSig = false;
+      if (sigCtx) sigCtx.closePath();
+    }
+
+    function openDriverDeliveryModal(orderId) {
+      const order = state.orders.find(o => o.id === orderId);
+      if (!order) return;
+      modalTargetOrderId = orderId;
+
+      document.getElementById('modal-delivery-desc').textContent = `مشتری: ${order.customer} (${order.proforma}) | خروجی انبار: ${order.cartonsOut || '-'} کارتن`;
+      document.getElementById('inp-del-cartons').value = order.cartonsOut || '';
+      document.getElementById('inp-del-signer').value = '';
+      document.getElementById('sig-error-msg').classList.add('hidden');
+      document.getElementById('modal-driver-delivery').classList.remove('hidden');
+
+      setTimeout(initSignaturePad, 40);
+    }
+
+    async function confirmDriverDelivery() {
+      const order = state.orders.find(o => o.id === modalTargetOrderId);
+      if (!order) return;
+
+      const cartons = parseInt(document.getElementById('inp-del-cartons').value, 10);
+      const signer = document.getElementById('inp-del-signer').value.trim();
+      const errEl = document.getElementById('sig-error-msg');
+
+      if (!cartons || cartons < 1 || !signer || !hasSigStroke) {
+        errEl.classList.remove('hidden');
+        return;
+      }
+
+      errEl.classList.add('hidden');
+      const dt = nowDateTimeStr();
+      const signatureDataUrl = sigCanvas.toDataURL('image/png');
+
+      order.cartonsDelivered = cartons;
+      order.customerSigner = signer;
+      order.signatureData = signatureDataUrl;
+      order.times[7] = dt;
+      order.stage = 8;
+
+      const reportMsg = `🎉 تحویل نهایی و امضا شد: سفارش «${order.customer}» (${order.proforma}) به تعداد ${cartons} کارتن در تاریخ ${dt} با امضای دیجیتال «${signer}» تحویل گردید.`;
+      closeModal('modal-driver-delivery');
+      renderDashboard();
+      await syncOrderToCloud(order);
+      await addLogAndNotify(reportMsg);
+    }
+
+    // ==================== چرخه برگشت مغایرت و اصلاح ====================
+    function openReturnModal(orderId) {
+      const order = state.orders.find(o => o.id === orderId);
+      if (!order) return;
+      modalTargetOrderId = orderId;
+      document.getElementById('modal-return-desc').textContent = `ثبت مغایرت برای پیش‌فاکتور ${order.proforma} (${order.customer}):`;
+      document.getElementById('inp-return-note').value = '';
+      document.getElementById('modal-return').classList.remove('hidden');
+    }
+
+    async function confirmReturnToSales() {
+      const order = state.orders.find(o => o.id === modalTargetOrderId);
+      if (!order) return;
+      const reason = document.getElementById('inp-return-reason').value;
+      const note = document.getElementById('inp-return-note').value.trim();
+      if (!note) return;
+
+      order.status = 'returned';
+      order.stage = 1;
+      order.returnReason = reason;
+      order.returnNote = note;
+
+      closeModal('modal-return');
+      renderDashboard();
+      await syncOrderToCloud(order);
+      await addLogAndNotify(`⚠️ برگشت مغایرت به فروش: «${order.customer}» (${order.proforma}) به علت «${reason}» برگشت خورد.`);
+    }
+
+    function openReviseModal(orderId) {
+      const order = state.orders.find(o => o.id === orderId);
+      if (!order) return;
+      modalTargetOrderId = orderId;
+      tempRevPdf = null;
+
+      document.getElementById('modal-revise-alert').innerHTML = `<strong>علت برگشت: ${order.returnReason}</strong><span>${order.returnNote}</span>`;
+      document.getElementById('inp-rev-proforma').value = order.proforma;
+      document.getElementById('inp-rev-amount').value = order.amount || '';
+      document.getElementById('inp-rev-items').value = order.items || '';
+      document.getElementById('modal-revise').classList.remove('hidden');
+    }
+
+    async function confirmSalesRevision() {
+      const order = state.orders.find(o => o.id === modalTargetOrderId);
+      if (!order) return;
+
+      order.proforma = document.getElementById('inp-rev-proforma').value.trim() || order.proforma;
+      order.amount = document.getElementById('inp-rev-amount').value.trim();
+      order.items = document.getElementById('inp-rev-items').value.trim();
+      order.rev = (order.rev || 0) + 1;
+      order.status = 'active';
+      order.stage = 2;
+      order.times = { 1: `${nowTimeStr()} (اصلاحیه #${order.rev})` };
+      if (tempRevPdf) {
+        order.pdfName = tempRevPdf.name;
+        order.pdfData = tempRevPdf.dataUrl;
+      } else {
+        order.pdfName = `${order.proforma}_Rev${order.rev}.pdf`;
+      }
+
+      closeModal('modal-revise');
+      renderDashboard();
+      await syncOrderToCloud(order);
+      await addLogAndNotify(`🔄 اصلاح پیش‌فاکتور و آپلود PDF جدید: «${order.customer}» (${order.proforma} - نسخه #${order.rev}) مجدداً به حسابداری ارسال شد.`);
+    }
+
+    // ==================== تنظیمات مدیریتی، واتساپ و تغییر رمزها (همگام‌سازی‌شده در ابر) ====================
+    function openSettingsModal() {
+      document.getElementById('inp-wa-phone').value = state.waPhone || '';
+      const pinsSection = document.getElementById('ceo-pins-section');
+      const pinsList = document.getElementById('ceo-pins-list');
+
+      if (currentRole && currentRole.id === 'ceo') {
+        pinsSection.classList.remove('hidden');
+        pinsList.innerHTML = ROLES.map(r => `
+          <div style="display:grid; grid-template-columns:1.2fr 1fr 0.7fr; align-items:center; gap:6px; background:var(--surface-soft); padding:7px 9px; border-radius:10px; border:1px solid var(--border);">
+            <span style="font-size:11.5px; font-weight:700;">${r.icon} ${r.title}</span>
+            <input type="text" data-role-name="${r.id}" value="${(state.roleNames && state.roleNames[r.id]) || ''}" placeholder="نام مسئول" class="form-control" style="min-height:34px; padding:4px 8px; font-size:11.5px;" />
+            <input type="text" data-role-pin="${r.id}" value="${getRolePin(r.id)}" dir="ltr" class="form-control" style="min-height:34px; padding:4px 6px; text-align:center; font-weight:800; font-size:12px;" />
+          </div>
+        `).join('');
+      } else {
+        pinsSection.classList.add('hidden');
+      }
+
+      document.getElementById('modal-settings').classList.remove('hidden');
+    }
+
+    async function saveManagerSettings() {
+      state.waPhone = document.getElementById('inp-wa-phone').value.trim();
+
+      if (currentRole && currentRole.id === 'ceo') {
+        document.querySelectorAll('[data-role-pin]').forEach(inp => {
+          const rId = inp.getAttribute('data-role-pin');
+          const val = inp.value.trim();
+          if (val) state.rolePins[rId] = val;
+        });
+        document.querySelectorAll('[data-role-name]').forEach(inp => {
+          const rId = inp.getAttribute('data-role-name');
+          state.roleNames[rId] = inp.value.trim();
+        });
+      }
+
+      updateLoginDropdownLabels();
+      closeModal('modal-settings');
+      renderDashboard();
+      await addLogAndNotify('⚙️ تنظیمات مدیریتی، نام مسئولین و رمزهای عبور روی سرور ابری ذخیره شد.');
+    }
+
+    function buildWhatsAppUrl(text) {
+      const encoded = encodeURIComponent(text);
+      let phone = (state.waPhone || '').replace(/\D/g, '');
+      if (phone.startsWith('09')) phone = '98' + phone.slice(1);
+      return phone ? `https://wa.me/${phone}?text=${encoded}` : `https://wa.me/?text=${encoded}`;
+    }
+
+    function sendFullSummaryWhatsApp() {
+      const lines = [
+        `📊 گزارش لحظه‌ای پخش قطعات یدکی (${nowDateTimeStr()})`,
+        ...state.orders.map(o => {
+          const st = o.status === 'returned'
+            ? `برگشت مغایرت (${o.returnReason})`
+            : o.stage === 8
+              ? `تحویل قطعی (${o.cartonsDelivered || o.cartonsOut} کارتن - تحویل‌گیرنده: ${o.customerSigner || '-'} - ساعت: ${o.times[7] || '-'})`
+              : `مرحله ${o.stage}: ${STAGES[o.stage - 1].short}`;
+          return `• ${o.customer} (${o.proforma}) ⬅️ ${st}`;
+        })
+      ];
+      window.open(buildWhatsAppUrl(lines.join('\n')), '_blank', 'noopener');
+    }
+
+    async function addLogAndNotify(text) {
+      state.logs.unshift({ time: nowTimeStr(), text });
+      document.getElementById('toast-msg').textContent = text;
+      document.getElementById('toast-wa-link').href = buildWhatsAppUrl(text);
+      document.getElementById('toast-banner').classList.remove('hidden');
+      renderLogsList();
+      await syncSettingsToCloud();
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    // ==================== اتصال رویدادها پس از بارگذاری DOM ====================
+    document.addEventListener('DOMContentLoaded', function () {
+      loadLocalCache();
+      updateLoginDropdownLabels();
+      fetchFromCloud(true);
+
+      // همگام‌سازی خودکار هر ۴ ثانیه با سرور ابری برای تمام گوشی‌ها
+      pollTimer = setInterval(() => {
+        fetchFromCloud(false);
+      }, 4000);
+
+      // ورود و نمایش رمز
+      document.getElementById('login-form').addEventListener('submit', handleLoginSubmit);
+      document.getElementById('btn-toggle-eye').addEventListener('click', function () {
+        const inp = document.getElementById('login-pin-input');
+        inp.type = inp.type === 'password' ? 'text' : 'password';
+      });
+
+      // دکمه‌های هدر کارتابل
+      document.getElementById('btn-manual-sync').addEventListener('click', () => fetchFromCloud(false));
+      document.getElementById('btn-ceo-settings').addEventListener('click', openSettingsModal);
+      document.getElementById('btn-logout').addEventListener('click', logoutRole);
+
+      // ماژول‌های فازی
+      document.getElementById('phase-btn-1').addEventListener('click', () => switchPhase(1));
+      document.getElementById('phase-btn-2').addEventListener('click', () => switchPhase(2));
+      document.getElementById('phase-btn-3').addEventListener('click', () => switchPhase(3));
+
+      // کلیک روی ایستگاه‌های نقشه شماتیک
+      document.getElementById('master-flow-track').addEventListener('click', function (e) {
+        const node = e.target.closest('[data-station-stage]');
+        if (!node) return;
+        const stId = parseInt(node.getAttribute('data-station-stage'), 10);
+        selectedStationStage = selectedStationStage === stId ? null : stId;
+        switchTab('board');
+        updateFilterPillsUI();
+        renderMasterSchematic();
+        renderOrdersList();
+      });
+
+      document.getElementById('btn-reset-station').addEventListener('click', function () {
+        selectedStationStage = null;
+        updateFilterPillsUI();
+        renderMasterSchematic();
+        renderOrdersList();
+      });
+
+      // تب‌ها
+      document.getElementById('tab-btn-board').addEventListener('click', () => switchTab('board'));
+      document.getElementById('tab-btn-new').addEventListener('click', () => switchTab('new'));
+      document.getElementById('tab-btn-logs').addEventListener('click', () => switchTab('logs'));
+
+      // فیلترهای لیست سفارش
+      document.querySelectorAll('.filter-pill').forEach(btn => {
+        btn.addEventListener('click', function () {
+          setOrderFilter(this.dataset.filter);
+        });
+      });
+
+      // دکمه‌های داخل کارت‌های سفارش
+      document.getElementById('orders-list').addEventListener('click', function (e) {
+        const btn = e.target.closest('[data-action]');
+        if (!btn) return;
+        const action = btn.getAttribute('data-action');
+        const id = btn.getAttribute('data-id');
+
+        if (action === 'advance') advanceOrderStage(id);
+        else if (action === 'warehouse-exit') openWarehouseExitModal(id);
+        else if (action === 'driver-delivery') openDriverDeliveryModal(id);
+        else if (action === 'return') openReturnModal(id);
+        else if (action === 'revise') openReviseModal(id);
+        else if (action === 'view-pdf') openPdfModal(id, false);
+        else if (action === 'print-pdf') openPdfModal(id, true);
+      });
+
+      // فرم ثبت پیش‌فاکتور جدید
+      document.getElementById('create-order-form').addEventListener('submit', handleCreateOrder);
+      document.getElementById('f-pdf').addEventListener('change', e => onPdfSelected(e, 'new'));
+      document.getElementById('inp-rev-pdf').addEventListener('change', e => onPdfSelected(e, 'revise'));
+
+      // دکمه‌های مودال‌ها
+      document.getElementById('btn-trigger-print').addEventListener('click', () => window.print());
+      document.getElementById('btn-confirm-exit').addEventListener('click', confirmWarehouseExit);
+      document.getElementById('btn-confirm-delivery').addEventListener('click', confirmDriverDelivery);
+      document.getElementById('btn-clear-sig').addEventListener('click', clearSignaturePad);
+      document.getElementById('btn-confirm-return').addEventListener('click', confirmReturnToSales);
+      document.getElementById('btn-confirm-revise').addEventListener('click', confirmSalesRevision);
+      document.getElementById('btn-save-settings').addEventListener('click', saveManagerSettings);
+      document.getElementById('btn-send-full-wa').addEventListener('click', sendFullSummaryWhatsApp);
+      document.getElementById('btn-hide-toast').addEventListener('click', () => {
+        document.getElementById('toast-banner').classList.add('hidden');
+      });
+
+      document.querySelectorAll('[data-close-modal]').forEach(btn => {
+        btn.addEventListener('click', function () {
+          closeModal(this.getAttribute('data-close-modal'));
+        });
+      });
+
+      // رویدادهای لمسی و موس برای پد امضای دیجیتال راننده
+      const canvas = document.getElementById('driver-sig-canvas');
+      canvas.addEventListener('mousedown', startSigStroke);
+      canvas.addEventListener('mousemove', moveSigStroke);
+      window.addEventListener('mouseup', endSigStroke);
+
+      canvas.addEventListener('touchstart', startSigStroke, { passive: false });
+      canvas.addEventListener('touchmove', moveSigStroke, { passive: false });
+      canvas.addEventListener('touchend', endSigStroke);
+    });
+  </script>
 </body>
 </html>
