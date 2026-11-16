@@ -50,7 +50,7 @@
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-slate-300 mb-1">رمز عبور ۴ رقمی</label>
-                    <input type="password" id="pin-input" maxlength="4" placeholder="••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-center text-lg tracking-widest focus:outline-none focus:border-indigo-500">
+                    <input type="text" id="pin-input" maxlength="4" placeholder="••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-center text-lg tracking-widest focus:outline-none focus:border-indigo-500">
                 </div>
                 <button onclick="handleLogin()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 rounded-xl transition duration-200 text-sm shadow-lg shadow-indigo-600/30">
                     ورود به سیستم
@@ -126,9 +126,21 @@
             }
         }
 
+        // تبدیل خودکار اعداد فارسی/عربی به انگلیسی برای جلوگیری از خطای کیبورد
+        function convertPersianToEnglish(input) {
+            const persianDigits = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g];
+            const arabicDigits = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g];
+            let val = input.trim();
+            for (let i = 0; i < 10; i++) {
+                val = val.replace(persianDigits[i], i).replace(arabicDigits[i], i);
+            }
+            return val;
+        }
+
         function handleLogin() {
             const role = document.getElementById('role-select').value;
-            const pin = document.getElementById('pin-input').value;
+            let pin = document.getElementById('pin-input').value;
+            pin = convertPersianToEnglish(pin);
 
             if (pin === pins[role]) {
                 currentUser = role;
@@ -136,155 +148,10 @@
                 document.getElementById('dashboard-section').classList.remove('hidden');
                 renderDashboard();
             } else {
-                alert('رمز عبور اشتباه است! (پیش‌فرض مدیر: 1234، فروش: 1111، مالی: 2222، انبار: 3333، راننده: 4444)');
+                alert('رمز عبور اشتباه است! (پیش‌فرض انبار: 3333 یا ۳۳۳۳)');
             }
         }
 
         function handleLogout() {
             currentUser = null;
             document.getElementById('dashboard-section').classList.add('hidden');
-            document.getElementById('login-section').classList.remove('hidden');
-            document.getElementById('pin-input').value = '';
-        }
-
-        function renderDashboard() {
-            const container = document.getElementById('role-content');
-            const badge = document.getElementById('user-badge');
-            
-            if (currentUser === 'sales') {
-                badge.innerText = 'کارشناس فروش';
-                badge.className = 'px-3 py-1 bg-blue-600 text-white text-xs rounded-lg font-medium';
-                container.innerHTML = renderSalesView();
-            } else if (currentUser === 'finance') {
-                badge.innerText = 'واحد مالی و حسابداری';
-                badge.className = 'px-3 py-1 bg-amber-600 text-white text-xs rounded-lg font-medium';
-                container.innerHTML = renderFinanceView();
-            } else if (currentUser === 'warehouse') {
-                badge.innerText = 'انبارداری مرکزی';
-                badge.className = 'px-3 py-1 bg-purple-600 text-white text-xs rounded-lg font-medium';
-                container.innerHTML = renderWarehouseView();
-            } else if (currentUser === 'driver') {
-                badge.innerText = 'کارتابل رانندگان';
-                badge.className = 'px-3 py-1 bg-emerald-600 text-white text-xs rounded-lg font-medium';
-                container.innerHTML = renderDriverView();
-            } else if (currentUser === 'manager') {
-                badge.innerText = 'مدیریت کل';
-                badge.className = 'px-3 py-1 bg-indigo-600 text-white text-xs rounded-lg font-medium';
-                container.innerHTML = renderManagerView();
-            }
-        }
-
-        // --- نمای کارشناس فروش ---
-        function renderSalesView() {
-            return `
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="bg-slate-800 border border-slate-700 p-5 rounded-2xl shadow-lg space-y-4">
-                        <h3 class="font-bold text-base text-blue-400">➕ ثبت پیش‌فاکتور جدید</h3>
-                        <div class="space-y-3">
-                            <div>
-                                <label class="block text-xs text-slate-300 mb-1">نام مشتری / تعمیرگاه</label>
-                                <input type="text" id="cust-name" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500" placeholder="مثال: لوازم یدکی آزادی">
-                            </div>
-                            <div>
-                                <label class="block text-xs text-slate-300 mb-1">قطعه / پارت نامبر (۵۰ برند ایرانخودرو و سایپا)</label>
-                                <input type="text" id="item-desc" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500" placeholder="مثال: لنت ترمز جلو ایساکو / واترپمپ سایپا">
-                            </div>
-                            <div class="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label class="block text-xs text-slate-300 mb-1">تعداد</label>
-                                    <input type="number" id="item-qty" value="1" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
-                                </div>
-                                <div>
-                                    <label class="block text-xs text-slate-300 mb-1">مبلغ کل (ریال)</label>
-                                    <input type="number" id="item-price" placeholder="مبلغ به ریال" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
-                                </div>
-                            </div>
-                            <button onclick="createNewOrder()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-2.5 rounded-xl transition text-sm shadow-lg shadow-blue-600/30">
-                                ثبت و ارسال به واحد مالی
-                            </button>
-                        </div>
-                    </div>
-                    <div class="bg-slate-800 border border-slate-700 p-5 rounded-2xl shadow-lg space-y-4">
-                        <h3 class="font-bold text-base text-slate-200">📋 پیگیری وضعیت سفارش‌ها و فاکتورهای برگشت خورده</h3>
-                        <div class="overflow-x-auto max-h-[350px] overflow-y-auto">
-                            <table class="w-full text-right text-xs">
-                                <thead class="bg-slate-900 text-slate-400 sticky top-0">
-                                    <tr>
-                                        <th class="p-2.5">مشتری</th>
-                                        <th class="p-2.5">قطعه</th>
-                                        <th class="p-2.5">وضعیت</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-slate-700">
-                                    ${orders.length === 0 ? `<tr><td colspan="3" class="text-center p-4 text-slate-500">هیچ سفارشی ثبت نشده است</td></tr>` : 
-                                      orders.map(o => `
-                                        <tr class="${o.status === 'returned' ? 'bg-rose-950/20' : ''}">
-                                            <td class="p-2.5 font-medium">${o.customer}</td>
-                                            <td class="p-2.5 text-slate-300">${o.item} (${o.qty} عدد)</td>
-                                            <td class="p-2.5">
-                                                ${getStatusBadge(o.status)}${o.status === 'returned' ? `<div class="text-[10px] text-rose-400 mt-1">علت عودت: ${o.returnReason || 'ندارد'}</div>` : ''}
-                                            </td>
-                                        </tr>
-                                      `).join('')}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function createNewOrder() {
-            const customer = document.getElementById('cust-name').value;
-            const item = document.getElementById('item-desc').value;
-            const qty = document.getElementById('item-qty').value;
-            const price = document.getElementById('item-price').value;
-
-            if (!customer || !item || !price) {
-                alert('لطفاً تمام اطلاعات فاکتور را پر کنید.');
-                return;
-            }
-
-            const newOrder = {
-                id: Date.now(),
-                customer,
-                item,
-                qty,
-                price,
-                status: 'pending_finance',
-                returnReason: '',
-                date: new Date().toLocaleDateString('fa-IR')
-            };
-
-            saveOrderToCloud(newOrder);
-            document.getElementById('cust-name').value = '';
-            document.getElementById('item-desc').value = '';
-            document.getElementById('item-price').value = '';
-            alert('پیش‌فاکتور با موفقیت ثبت و به واحد مالی ارسال شد.');
-        }
-
-        // --- نمای واحد مالی ---
-        function renderFinanceView() {
-            const pending = orders.filter(o => o.status === 'pending_finance');
-            return `
-                <div class="bg-slate-800 border border-slate-700 p-5 rounded-2xl shadow-lg space-y-4">
-                    <h3 class="font-bold text-base text-amber-400">💰 کارتابل تایید مالی و حسابداری</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-right text-xs">
-                            <thead class="bg-slate-900 text-slate-400">
-                                <tr>
-                                    <th class="p-2.5">تاریخ</th>
-                                    <th class="p-2.5">مشتری</th>
-                                    <th class="p-2.5">شرح کالا</th>
-                                    <th class="p-2.5">مبلغ (ریال)</th>
-                                    <th class="p-2.5 text-center">عملیات مالی</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-slate-700">
-                                ${pending.length === 0 ? `<tr><td colspan="5" class="text-center p-6 text-slate-500">فاکتوری جهت تایید مالی وجود ندارد</td></tr>` :
-                                  pending.map(o => `
-                                    <tr>
-                                        <td class="p-2.5 text-slate-400">${o.date}</td>
-                                        <td class="p-2.5 font-medium">${o.customer}</td>
-                                        <td class="p-2.5 text-slate-300">${o.item} (${o.qty} عدد)</td>
-                                        <td class="p-2.5 text-emerald-400 font-bold">${
