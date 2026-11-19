@@ -572,18 +572,6 @@
       border: 1px solid #fde68a;
     }
 
-    .tag-approved {
-      background: var(--success-soft);
-      color: var(--success);
-      border: 1px solid #a7f3d0;
-    }
-
-    .tag-rejected {
-      background: var(--danger-soft);
-      color: var(--danger);
-      border: 1px solid #fecaca;
-    }
-
     .order-customer {
       font-size: 14px;
       font-weight: 800;
@@ -1954,7 +1942,6 @@
         <div class="stat-box"><div class="stat-num" style="color:var(--success);">${doneCount}</div><div class="stat-lbl">تحویل قطعی</div></div>
       `;
 
-      // بروزرسانی شمارنده اسناد مالی منتظر تایید در دکمه فاز ۲ بالای صفحه
       const pendingChecksCount = (state.checks || []).filter(c => c.financeStatus === 'pending' || c.ceoStatus === 'pending').length;
       const p2Badge = document.getElementById('phase2-badge');
       if (p2Badge) {
@@ -2880,8 +2867,7 @@
           return `• ${o.customer} (${o.proforma}) ⬅️ ${st}`;
         })
       ];
-      window.open(buildWhatsAppUrl(lines.join('
-')), '_blank', 'noopener');
+      window.open(buildWhatsAppUrl(lines.join('\n')), '_blank', 'noopener');
     }
 
     async function addLogAndNotify(text) {
