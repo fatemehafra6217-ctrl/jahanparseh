@@ -22,6 +22,7 @@
       --danger: #dc2626;
       --danger-soft: #fef2f2;
       --purple: #7c3aed;
+      --purple-soft: #f5f3ff;
       --shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
     }
 
@@ -48,7 +49,7 @@
     .hidden { display: none !important; }
 
     .app-shell {
-      max-width: 780px;
+      max-width: 820px;
       margin: 0 auto;
       padding: 12px 12px 92px;
     }
@@ -121,7 +122,7 @@
       border: 1px solid var(--border);
       border-radius: 22px;
       padding: 24px 20px;
-      max-width: 440px;
+      max-width: 450px;
       margin: 24px auto;
       box-shadow: var(--shadow);
     }
@@ -313,7 +314,7 @@
       margin-top: 2px;
     }
 
-    /* نقشه شماتیک کلی بالای صفحه (۷ ایستگاه قابل کلیک) */
+    /* نقشه شماتیک کلی بالای صفحه */
     .schematic-master {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -345,7 +346,11 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      min-width: 650px;
+      min-width: 620px;
+    }
+
+    .flow-track.compact {
+      min-width: 440px;
     }
 
     .flow-node {
@@ -512,6 +517,59 @@
       border-color: var(--primary);
     }
 
+    /* جدول گزارش خلاصه مدیرعامل */
+    .ceo-summary-card {
+      background: var(--surface);
+      border: 1.5px solid #bfdbfe;
+      border-radius: 18px;
+      padding: 14px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .ceo-summary-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .ceo-summary-head h3 {
+      font-size: 13px;
+      font-weight: 800;
+      color: #1e3a8a;
+    }
+
+    .summary-table-wrap {
+      overflow-x: auto;
+    }
+
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11.5px;
+      min-width: 460px;
+    }
+
+    .summary-table th, .summary-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: right;
+    }
+
+    .summary-table th {
+      background: var(--surface-soft);
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 11px;
+    }
+
+    .summary-table tr:last-child td {
+      border-bottom: none;
+    }
+
     /* کارت سفارش شماتیک */
     .order-card {
       background: var(--surface);
@@ -564,6 +622,18 @@
       background: #fef2f2;
       color: #b91c1c;
       border: 1px solid #fecaca;
+    }
+
+    .tag-inv {
+      background: var(--success-soft);
+      color: #065f46;
+      border: 1px solid #6ee7b7;
+    }
+
+    .tag-sales {
+      background: var(--primary-soft);
+      color: #1e40af;
+      border: 1px solid #bfdbfe;
     }
 
     .tag-rev {
@@ -645,7 +715,7 @@
       cursor: pointer;
     }
 
-    /* نوار شماتیک ۷ مرحله‌ای داخل هر کارت */
+    /* نوار شماتیک داخل هر کارت */
     .card-schematic {
       background: var(--surface-soft);
       border: 1px solid var(--border);
@@ -658,7 +728,11 @@
     .step-chain {
       display: flex;
       align-items: flex-start;
-      min-width: 580px;
+      min-width: 540px;
+    }
+
+    .step-chain.three-step {
+      min-width: 300px;
     }
 
     .step-unit {
@@ -787,18 +861,18 @@
       display: block;
     }
 
-    /* کارت تصویر چک / فیش مالی مستقل */
-    .check-media-row {
+    /* گالری تصاویر چک و فیش در کارت مالی */
+    .check-thumbs-grid {
       display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 8px 0 10px;
     }
 
     .check-thumb-box {
-      width: 96px;
-      height: 96px;
-      border-radius: 14px;
+      width: 84px;
+      height: 84px;
+      border-radius: 12px;
       border: 1.5px solid #cbd5e1;
       background: var(--surface-soft);
       overflow: hidden;
@@ -824,7 +898,7 @@
       right: 0;
       background: rgba(15, 23, 42, 0.72);
       color: #fff;
-      font-size: 9.5px;
+      font-size: 9px;
       font-weight: 700;
       text-align: center;
       padding: 2px 0;
@@ -861,6 +935,22 @@
       color: #991b1b;
     }
 
+    .safe-banner {
+      background: #ecfdf5;
+      border: 1.5px solid #6ee7b7;
+      color: #065f46;
+      border-radius: 11px;
+      padding: 8px 11px;
+      font-size: 11.5px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
     /* دکمه‌های اقدام پایین کارت */
     .card-footer-actions {
       display: flex;
@@ -872,7 +962,7 @@
 
     .btn-action-main {
       flex: 1;
-      min-width: 180px;
+      min-width: 170px;
       padding: 12px 14px;
       border-radius: 12px;
       border: none;
@@ -888,6 +978,8 @@
     }
 
     .btn-action-main.success { background: var(--success); }
+    .btn-action-main.warning { background: var(--warning); }
+    .btn-action-main.purple { background: var(--purple); }
 
     .btn-action-danger {
       padding: 12px 12px;
@@ -1083,25 +1175,31 @@
       <div class="login-header">
         <div class="login-icon-badge">🔐</div>
         <h2>ورود به کارتابل سازمانی</h2>
-        <p>واحد سازمانی خود را از منوی کشویی انتخاب کرده و رمز عبور را وارد نمایید</p>
+        <p>واحد سازمانی یا کارتابل خود را انتخاب کرده و رمز عبور را وارد نمایید</p>
       </div>
 
       <form id="login-form">
         <div class="form-group">
-          <label for="login-role-select">انتخاب واحد سازمانی</label>
+          <label for="login-role-select">انتخاب کارتابل / واحد سازمانی</label>
           <select id="login-role-select" class="form-control" required>
-            <option value="ceo">👔 مدیرعامل</option>
-            <option value="sales">📝 کارشناس فروش</option>
-            <option value="accounting">💰 واحد حسابداری و مالی</option>
-            <option value="sales_mgr">📊 مدیر فروش</option>
-            <option value="warehouse">📦 انباردار</option>
-            <option value="warehouse_sup">🏷️ سرپرست انبار</option>
-            <option value="driver">🚚 راننده و توزیع</option>
+            <option value="ceo">👔 مدیرعامل (داشبورد گزارش و تایید مالی)</option>
+            <optgroup label="── کارشناسان فروش (کارتابل اختصاصی) ──">
+              <option value="sales_1">📝 امیرحسین غفاری (کارشناس فروش)</option>
+              <option value="sales_2">📝 علی آشکار (کارشناس فروش)</option>
+              <option value="sales_3">📝 افسانه کردی (کارشناس فروش)</option>
+              <option value="sales_4">📝 فاطمه افرا (کارشناس فروش)</option>
+            </optgroup>
+            <optgroup label="── واحدهای عملیاتی و ستادی ──">
+              <option value="sales_mgr">📊 مدیر فروش</option>
+              <option value="accounting">💰 واحد حسابداری و مالی</option>
+              <option value="warehouse_sup">📦 سرپرست انبار</option>
+              <option value="driver">🚚 راننده و توزیع</option>
+            </optgroup>
           </select>
         </div>
 
         <div class="form-group">
-          <label for="login-pin-input">رمز عبور ۴ رقمی</label>
+          <label for="login-pin-input">رمز عبور</label>
           <div class="password-wrapper">
             <input type="password" id="login-pin-input" class="form-control" dir="ltr" inputmode="numeric" maxlength="12" required autocomplete="current-password" placeholder="••••" />
             <button type="button" id="btn-toggle-eye" class="btn-toggle-eye" title="نمایش / مخفی کردن رمز">
@@ -1113,7 +1211,7 @@
           </div>
         </div>
 
-        <div id="login-error" class="login-error-box hidden">رمز عبور وارد شده برای این واحد صحیح نیست.</div>
+        <div id="login-error" class="login-error-box hidden">رمز عبور وارد شده برای این کارتابل صحیح نیست.</div>
 
         <button type="submit" class="btn-action-main" style="width:100%; padding:13px;">
           ورود به کارتابل
@@ -1130,7 +1228,7 @@
             <span id="active-role-icon" style="font-size:22px;">👔</span>
             <div>
               <strong id="active-role-title">مدیرعامل</strong>
-              <span id="active-role-scope">دسترسی کامل به تمام مراحل</span>
+              <span id="active-role-scope">گزارش جامع فروش و تایید مدارک مالی</span>
             </div>
           </div>
           <div style="display:flex; gap:6px; flex-wrap:wrap;">
@@ -1153,19 +1251,22 @@
         <button type="button" id="phase-btn-3" class="phase-btn">🏭 تامین ۵۰ برند (فاز ۳)</button>
       </nav>
 
-      <!-- محتوای فاز ۱: زنجیره کامل فروش تا امضای مشتری -->
+      <!-- ==================== محتوای فاز ۱: زنجیره فروش تا امضای مشتری ==================== -->
       <div id="phase-view-1">
-        <!-- نقشه شماتیک ۷ ایستگاه (قابل کلیک برای فیلتر) -->
+        <!-- خلاصه گزارش مدیرعامل (فقط در کارتابل مدیرعامل نمایش داده می‌شود) -->
+        <div id="ceo-sales-summary" class="hidden"></div>
+
+        <!-- نقشه شماتیک ۶ ایستگاه (قابل کلیک برای فیلتر) -->
         <div class="schematic-master">
           <div class="schematic-head">
-            <h3>🗺️ نقشه شماتیک ۷ مرحله‌ای جریان کار (برای فیلتر روی هر ایستگاه بزنید)</h3>
+            <h3>🗺️ نقشه شماتیک ۶ مرحله‌ای جریان فروش تا تحویل (برای فیلتر روی هر ایستگاه بزنید)</h3>
             <button type="button" id="btn-reset-station" class="btn-sm hidden" style="padding:3px 8px; font-size:10px;">نمایش همه</button>
           </div>
           <div class="flow-scroll">
             <div class="flow-track" id="master-flow-track"></div>
           </div>
           <div class="return-loop-banner">
-            <span>↩️ <strong>چرخه برگشت مغایرت:</strong> در صورت گزارش مغایرت توسط مالی، مدیر فروش، مدیرعامل یا انباردار، فاکتور به کارتابل فروش برمی‌گردد تا اصلاح و PDF جدید بارگذاری شود.</span>
+            <span>↩️ <strong>چرخه‌های برگشت:</strong> عدم تایید مشتری ⬅️ برگشت به کارشناس فروش و تایید مجدد مدیر فروش | مغایرت نرم‌افزار در حسابداری ⬅️ عودت به مدیر فروش | مغایرت انبار ⬅️ برگشت به کارشناس فروش.</span>
           </div>
         </div>
 
@@ -1173,7 +1274,7 @@
         <div class="tabs-bar">
           <button type="button" id="tab-btn-board" class="tab-btn active">📋 کارتابل سفارش‌ها</button>
           <button type="button" id="tab-btn-new" class="tab-btn">➕ ثبت پیش‌فاکتور و PDF</button>
-          <button type="button" id="tab-btn-logs" class="tab-btn">📊 گزارش لحظه‌ای مدیر</button>
+          <button type="button" id="tab-btn-logs" class="tab-btn">📊 گزارش لحظه‌ای و واتساپ</button>
         </div>
 
         <!-- محتوای تب ۱: لیست سفارش‌ها -->
@@ -1181,22 +1282,22 @@
           <div class="filter-row">
             <button type="button" class="filter-pill active" data-filter="mine">⚡ کارتابل من</button>
             <button type="button" class="filter-pill" data-filter="all">همه سفارش‌ها</button>
-            <button type="button" class="filter-pill" data-filter="returned">⚠️ برگشتی جهت اصلاح</button>
+            <button type="button" class="filter-pill" data-filter="returned">⚠️ برگشتی / مغایرت</button>
             <button type="button" class="filter-pill" data-filter="warehouse">📦 در انبار</button>
-            <button type="button" class="filter-pill" data-filter="driver">🚚 در اختیار راننده</button>
+            <button type="button" class="filter-pill" data-filter="driver">🚚 نزد راننده</button>
             <button type="button" class="filter-pill" data-filter="done">✅ تحویل و امضاشده</button>
           </div>
           <div id="orders-list"></div>
         </div>
 
-        <!-- محتوای تب ۲: ثبت پیش‌فاکتور و آپلود PDF توسط فروش -->
+        <!-- محتوای تب ۲: ثبت پیش‌فاکتور و آپلود PDF توسط کارشناسان فروش -->
         <div id="tab-new" class="hidden">
           <div id="new-order-permission-msg" class="hidden form-card" style="text-align:center; color:var(--danger); font-size:13px; font-weight:700;">
-            ⛔ ثبت پیش‌فاکتور جدید فقط در دسترسی «کارشناس فروش» یا «مدیرعامل» است.
+            ⛔ ثبت پیش‌فاکتور جدید فقط در کارتابل اختصاصی «کارشناسان فروش» فعال است.
           </div>
 
           <form id="create-order-form" class="form-card">
-            <h3 style="font-size:14px; font-weight:800; margin-bottom:12px;">📝 ثبت پیش‌فاکتور و ارسال بسته PDF به چرخه تایید</h3>
+            <h3 style="font-size:14px; font-weight:800; margin-bottom:12px;">📝 ثبت پیش‌فاکتور و ارسال بسته PDF به مدیر فروش</h3>
 
             <div class="form-group">
               <label for="f-customer">نام فروشگاه / مشتری *</label>
@@ -1251,7 +1352,7 @@
             </div>
 
             <button type="submit" class="btn-action-main" style="width:100%;">
-              🚀 ثبت پیش‌فاکتور و ارسال بسته PDF به حسابداری
+              🚀 ثبت پیش‌فاکتور و ارسال به مدیر فروش
             </button>
           </form>
         </div>
@@ -1262,7 +1363,7 @@
             <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
               <div>
                 <h3 style="font-size:14px; font-weight:800;">📲 گزارش جامع لحظه‌ای برای مدیرعامل</h3>
-                <p style="font-size:11px; color:var(--muted);">ارسال وضعیت کل سفارش‌ها، انبار و تحویل‌های امضاشده به واتساپ</p>
+                <p style="font-size:11px; color:var(--muted);">ارسال وضعیت کل سفارش‌ها، انبار، تحویل‌های امضاشده و مدارک مالی به واتساپ</p>
               </div>
               <button type="button" id="btn-send-full-wa" class="btn-sm btn-wa" style="padding:10px 14px; font-size:12px;">
                 ارسال گزارش کل به واتساپ
@@ -1273,71 +1374,96 @@
         </div>
       </div>
 
-      <!-- ==================== محتوای فاز ۲: پنجره مستقل مالی (بارگذاری و تایید چک و فیش) ==================== -->
+      <!-- ==================== محتوای فاز ۲: چرخه ۳ مرحله‌ای مالی، چک‌ها و واریزی‌ها ==================== -->
       <div id="phase-view-2" class="hidden">
-        <!-- باکس راهنمای استقلال فرآیند -->
-        <div class="form-card" style="margin-bottom:12px; border-color:#fde68a; background:var(--warning-soft);">
-          <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;">
-            <div>
-              <h3 style="font-size:13.5px; font-weight:800; color:#92400e;">💰 پنجره مستقل اسناد مالی (بارگذاری تصویر چک و فیش واریزی)</h3>
-              <p style="font-size:11.5px; color:#b45309; margin-top:3px;">
-                این بخش کاملاً مستقل از فرآیند تایید پیش‌فاکتورهاست. کارشناس فروش تصویر چک یا عکس فیش را به همراه کپشن (متعلق به چه کسی است) بارگذاری می‌کند تا <strong>تایید واحد مالی</strong> و <strong>تایید مدیریت</strong> بخورد.
-              </p>
-            </div>
+        <!-- گزارش خلاصه مالی برای مدیرعامل و مالی -->
+        <div id="ceo-finance-summary" class="hidden"></div>
+
+        <!-- نقشه شماتیک ۳ مرحله‌ای فرآیند مالی -->
+        <div class="schematic-master">
+          <div class="schematic-head">
+            <h3>🗺️ نقشه شماتیک ۳ مرحله‌ای تسویه مالی (چک‌های دریافتی و واریزی‌ها)</h3>
+          </div>
+          <div class="flow-scroll">
+            <div class="flow-track compact" id="finance-flow-track"></div>
+          </div>
+          <div class="return-loop-banner" style="background:var(--warning-soft); border-color:#fcd34d; color:#92400e;">
+            <span>💡 <strong>مسیر تایید دوگانه:</strong> هر سند پس از تایید <strong>واحد مالی + مدیرعامل</strong> به‌صورت خودکار نهایی می‌شود (چک‌ها به <strong>صندوق چک‌ها</strong> منتقل و واریزی‌ها جهت <strong>ثبت حسابداری</strong> تایید می‌شوند). در صورت رد، سند به کارتابل همان کارشناس برمی‌گردد.</span>
           </div>
         </div>
 
-        <!-- فرم بارگذاری چک / عکس فیش (در دسترس کارشناس فروش، واحد مالی و مدیرعامل) -->
+        <!-- فرم بارگذاری مدارک تسویه مشتری (اختصاصی ۴ کارشناس فروش + مالی) -->
         <div id="check-upload-wrapper" class="form-card" style="margin-bottom:12px;">
-          <h3 style="font-size:13.5px; font-weight:800; margin-bottom:12px; color:var(--text);">📤 ثبت و بارگذاری تصویر چک یا فیش واریزی جدید</h3>
+          <h3 style="font-size:13.5px; font-weight:800; margin-bottom:12px; color:var(--text);">📤 بارگذاری مدارک تسویه مشتری (تصویر چک دریافتی یا واریزی)</h3>
           <form id="create-check-form">
             <div class="form-grid-2">
               <div class="form-group">
-                <label for="c-type">نوع سند مالی *</label>
+                <label for="c-type">نوع مدرک تسویه *</label>
                 <select id="c-type" class="form-control">
-                  <option value="چک صیادی / بانکی">📝 چک صیادی / بانکی</option>
-                  <option value="فیش واریزی / کارت به کارت">🧾 فیش واریزی / کارت به کارت</option>
-                  <option value="رسید کارتخوان / حواله پایا">🏧 رسید کارتخوان / حواله پایا</option>
+                  <option value="چک دریافتی">📝 چک دریافتی (ارسال به صندوق)</option>
+                  <option value="واریزی">🧾 تصویر واریزی (تایید مبلغ و ثبت حسابداری)</option>
                 </select>
               </div>
               <div class="form-group">
-                <label for="c-amount">مبلغ سند (تومان - اختیاری)</label>
-                <input type="text" id="c-amount" class="form-control" placeholder="مثلاً: ۴۵,۰۰۰,۰۰۰" />
+                <label for="c-customer">نام مشتری / صاحب حساب *</label>
+                <input type="text" id="c-customer" class="form-control" required placeholder="مثلاً: فروشگاه پارس یدک - آقای حسینی" />
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="c-amount">مبلغ (تومان) *</label>
+                <input type="text" id="c-amount" class="form-control" required placeholder="مثلاً: ۴۵,۰۰۰,۰۰۰" />
+              </div>
+              <div class="form-group">
+                <label for="c-ref">تاریخ سررسید چک / شماره پیگیری واریز</label>
+                <input type="text" id="c-ref" class="form-control" placeholder="مثلاً: سررسید ۱۴۰۵/۱۰/۱۵ یا ش.پ ۱۲۳۴" />
               </div>
             </div>
 
             <div class="form-group">
-              <label for="c-caption">کپشن (متعلق به کیست؟ / نام مشتری یا صاحب چک و توضیحات) *</label>
-              <textarea id="c-caption" class="form-control" rows="2" required placeholder="مثلاً: چک صیادی بانک ملت به سررسید ۱۵ آذر - متعلق به آقای حسینی (فروشگاه مرکزی کرج)"></textarea>
+              <label for="c-caption">کپشن و توضیحات تکمیلی (متعلق به کیست / بابت کدام حساب) *</label>
+              <textarea id="c-caption" class="form-control" rows="2" required placeholder="مثلاً: چک صیادی بانک ملت متعلق به آقای حسینی بابت تسویه فاکتور آبان‌ماه..."></textarea>
             </div>
 
             <div class="upload-box amber">
               <label for="c-image" style="display:block; font-size:12px; font-weight:800; color:#92400e; margin-bottom:6px;">
-                📸 انتخاب تصویر چک یا عکس فیش واریزی *
+                📸 بارگذاری تصاویر چک یا فیش واریزی (امکان انتخاب یک یا چند تصویر) *
               </label>
-              <input type="file" id="c-image" accept="image/*" required style="font-size:12px; width:100%;" />
-              <div id="c-image-preview-wrap" class="hidden" style="margin-top:10px; display:flex; align-items:center; gap:10px;">
-                <img id="c-image-preview" src="" alt="پیش‌نمایش" style="width:72px; height:72px; object-fit:cover; border-radius:10px; border:1.5px solid #f59e0b; background:#fff;" />
-                <span id="c-image-hint" style="font-size:11px; color:#92400e; font-weight:700;">تصویر آماده بارگذاری است.</span>
+              <input type="file" id="c-image" accept="image/*" multiple required style="font-size:12px; width:100%;" />
+              <div id="c-image-preview-wrap" class="hidden" style="margin-top:10px;">
+                <div id="c-image-preview-list" class="check-thumbs-grid"></div>
+                <span id="c-image-hint" style="font-size:11px; color:#92400e; font-weight:700;"></span>
               </div>
             </div>
 
-            <button type="submit" class="btn-action-main" style="width:100%; background:var(--warning);">
-              📤 بارگذاری تصویر و ارسال جهت تایید مالی و مدیریت
+            <button type="submit" class="btn-action-main warning" style="width:100%;">
+              📤 ارسال مدارک تسویه جهت تایید واحد مالی و مدیریت
             </button>
           </form>
         </div>
 
-        <!-- فیلترهای لیست چک‌ها و فیش‌ها -->
-        <div class="filter-row">
-          <button type="button" class="check-filter-pill active" data-check-filter="all">همه اسناد مالی</button>
-          <button type="button" class="check-filter-pill" data-check-filter="pending_fin">⏳ در انتظار تایید مالی</button>
-          <button type="button" class="check-filter-pill" data-check-filter="pending_ceo">👔 در انتظار تایید مدیریت</button>
-          <button type="button" class="check-filter-pill" data-check-filter="approved_all">✅ تایید نهایی شده</button>
-          <button type="button" class="check-filter-pill" data-check-filter="rejected">❌ رد شده</button>
+        <!-- فیلتر انتخاب کارشناس (ویژه مالی و مدیرعامل) -->
+        <div id="finance-sales-filter-wrap" class="hidden" style="margin-bottom:8px;">
+          <select id="finance-sales-filter" class="form-control" style="min-height:38px; padding:6px 10px; font-size:12px;">
+            <option value="all">👥 نمایش مدارک همه کارشناسان فروش</option>
+            <option value="sales_1">📝 فقط مشتریان امیرحسین غفاری</option>
+            <option value="sales_2">📝 فقط مشتریان علی آشکار</option>
+            <option value="sales_3">📝 فقط مشتریان افسانه کردی</option>
+            <option value="sales_4">📝 فقط مشتریان فاطمه افرا</option>
+          </select>
         </div>
 
-        <!-- لیست کارت‌های چک و فیش -->
+        <!-- فیلترهای لیست چک‌ها، واریزی‌ها و صندوق -->
+        <div class="filter-row">
+          <button type="button" class="check-filter-pill active" data-check-filter="all">همه مدارک مالی</button>
+          <button type="button" class="check-filter-pill" data-check-filter="pending_me">⚡ منتظر اقدام من</button>
+          <button type="button" class="check-filter-pill" data-check-filter="safe_checks">🗄️ صندوق چک‌ها</button>
+          <button type="button" class="check-filter-pill" data-check-filter="approved_deposits">📒 واریزی‌های ثبت‌شده</button>
+          <button type="button" class="check-filter-pill" data-check-filter="returned">⚠️ برگشتی به کارشناس</button>
+        </div>
+
+        <!-- لیست کارت‌های چک و واریزی -->
         <div id="checks-list"></div>
       </div>
 
@@ -1347,7 +1473,7 @@
           <div style="font-size:34px; margin-bottom:8px;">🏭</div>
           <h3 style="font-size:15px; font-weight:800; margin-bottom:6px;">ماژول تامین کالا، نقطه سفارش و ارتباط با ۵۰ برند (فاز ۳)</h3>
           <p style="font-size:12px; color:var(--muted); max-width:520px; margin:0 auto 14px;">
-            در این فاز، کسری‌های گزارش‌شده توسط انباردار در فاز ۱ به‌صورت خودکار وارد لیست خرید واحد تامین می‌شوند تا سفارش‌گذاری از ۵۰ برند ایران‌خودرو و سایپا بدون تاخیر انجام شود.
+            در این فاز، کسری‌های گزارش‌شده توسط انبار به‌صورت خودکار وارد لیست خرید واحد تامین می‌شوند تا سفارش‌گذاری از ۵۰ برند ایران‌خودرو و سایپا بدون تاخیر انجام شود.
           </p>
           <button type="button" class="btn-sm" onclick="switchPhase(1)">⬅️ بازگشت به کارتابل عملیاتی فاز ۱</button>
         </div>
@@ -1355,11 +1481,40 @@
     </section>
   </div>
 
-  <!-- ==================== مودال مشاهده تصویر بزرگ چک / فیش مالی ==================== -->
+  <!-- ==================== مودال مرحله ۴: تبدیل پیش‌فاکتور به فاکتور فروش (حسابداری) ==================== -->
+  <div id="modal-convert-invoice" class="modal-backdrop hidden">
+    <div class="modal-panel">
+      <div class="modal-head">
+        <h3>🧾 تبدیل پیش‌فاکتور به فاکتور فروش نهایی</h3>
+        <button type="button" data-close-modal="modal-convert-invoice" class="btn-close">✕</button>
+      </div>
+      <div id="modal-convert-desc" style="font-size:12px; color:var(--muted); margin-bottom:12px;"></div>
+      <div class="form-group">
+        <label for="inp-final-invoice-no">شماره فاکتور فروش نهایی (ثبت‌شده در نرم‌افزار حسابداری) *</label>
+        <input type="text" id="inp-final-invoice-no" class="form-control" dir="ltr" placeholder="مثلاً: INV-1405-8821" />
+      </div>
+      <div class="form-group">
+        <label for="inp-accounting-note">توضیحات بررسی حساب مشتری (اختیاری)</label>
+        <input type="text" id="inp-accounting-note" class="form-control" placeholder="مثلاً: مانده حساب بررسی و تایید شد" />
+      </div>
+      <div class="upload-box">
+        <label for="inp-final-inv-pdf" style="display:block; font-size:12px; font-weight:800; color:#1e3a8a; margin-bottom:5px;">
+          📄 بارگذاری PDF فاکتور فروش نهایی جهت پرینت انبار (اختیاری)
+        </label>
+        <input type="file" id="inp-final-inv-pdf" accept="application/pdf" style="font-size:12px; width:100%;" />
+        <p id="final-inv-pdf-hint" style="font-size:11px; color:#3b82f6; margin-top:4px;">در صورت عدم انتخاب فایل جدید، همان فایل پیش‌فاکتور همراه با شماره فاکتور نهایی به انبار ارسال می‌شود.</p>
+      </div>
+      <button type="button" id="btn-confirm-convert-invoice" class="btn-action-main success" style="width:100%;">
+        ✅ ثبت شماره فاکتور نهایی و ارسال به انبار
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== مودال مشاهده تصویر بزرگ چک / واریزی ==================== -->
   <div id="modal-check-img" class="modal-backdrop hidden">
     <div class="modal-panel wide">
       <div class="modal-head">
-        <h3 id="modal-check-title">🖼️ تصویر سند مالی</h3>
+        <h3 id="modal-check-title">🖼️ تصویر مدرک تسویه</h3>
         <div style="display:flex; gap:6px;">
           <a id="btn-download-check-img" href="#" download="financial-doc.jpg" class="btn-pdf-view" style="text-decoration:none;">⬇️ دانلود تصویر</a>
           <button type="button" data-close-modal="modal-check-img" class="btn-close">✕</button>
@@ -1367,8 +1522,65 @@
       </div>
       <div id="modal-check-caption-box" style="background:var(--surface-soft); border:1px solid var(--border); border-radius:12px; padding:10px 12px; font-size:12px; margin-bottom:10px;"></div>
       <div style="background:#f8fafc; border:1px solid var(--border); border-radius:14px; padding:8px; text-align:center; max-height:65vh; overflow:auto;">
-        <img id="modal-check-full-img" src="" alt="تصویر چک یا فیش" style="max-width:100%; height:auto; border-radius:10px; display:inline-block;" />
+        <img id="modal-check-full-img" src="" alt="تصویر مدرک مالی" style="max-width:100%; height:auto; border-radius:10px; display:inline-block;" />
       </div>
+    </div>
+  </div>
+
+  <!-- ==================== مودال رد مدرک مالی و برگشت به کارشناس ==================== -->
+  <div id="modal-check-reject" class="modal-backdrop hidden">
+    <div class="modal-panel">
+      <div class="modal-head">
+        <h3 style="color:var(--danger);">❌ رد مدرک تسویه و برگشت به کارشناس</h3>
+        <button type="button" data-close-modal="modal-check-reject" class="btn-close">✕</button>
+      </div>
+      <div id="modal-check-reject-desc" style="font-size:12px; color:var(--muted); margin-bottom:10px;"></div>
+      <div class="form-group">
+        <label for="inp-check-reject-note">علت عدم تایید (جهت اصلاح توسط کارشناس فروش) *</label>
+        <textarea id="inp-check-reject-note" class="form-control" rows="3" placeholder="مثلاً: تصویر چک ناخواناست / شماره صیادی ثبت نشده / مبلغ واریزی مغایرت دارد..."></textarea>
+      </div>
+      <button type="button" id="btn-confirm-check-reject" class="btn-action-danger" style="width:100%; padding:12px;">
+        ↩️ ثبت عدم تایید و برگشت به کارشناس فروش
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== مودال اصلاح مدرک مالی برگشتی توسط کارشناس ==================== -->
+  <div id="modal-revise-check" class="modal-backdrop hidden">
+    <div class="modal-panel">
+      <div class="modal-head">
+        <h3>✏️ اصلاح و ارسال مجدد مدرک تسویه</h3>
+        <button type="button" data-close-modal="modal-revise-check" class="btn-close">✕</button>
+      </div>
+      <div id="modal-revise-check-alert" class="return-alert"></div>
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label for="inp-rev-chk-customer">نام مشتری *</label>
+          <input type="text" id="inp-rev-chk-customer" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="inp-rev-chk-amount">مبلغ (تومان) *</label>
+          <input type="text" id="inp-rev-chk-amount" class="form-control" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inp-rev-chk-ref">تاریخ سررسید / شماره پیگیری</label>
+        <input type="text" id="inp-rev-chk-ref" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="inp-rev-chk-caption">کپشن و توضیحات اصلاح‌شده *</label>
+        <textarea id="inp-rev-chk-caption" class="form-control" rows="2"></textarea>
+      </div>
+      <div class="upload-box amber">
+        <label for="inp-rev-chk-img" style="display:block; font-size:12px; font-weight:800; color:#92400e; margin-bottom:5px;">
+          📸 بارگذاری تصویر جدید (اختیاری - در صورت انتخاب جایگزین تصاویر قبلی می‌شود)
+        </label>
+        <input type="file" id="inp-rev-chk-img" accept="image/*" multiple style="font-size:12px; width:100%;" />
+        <p id="rev-chk-img-hint" style="font-size:11px; color:#92400e; margin-top:4px;"></p>
+      </div>
+      <button type="button" id="btn-confirm-revise-check" class="btn-action-main warning" style="width:100%;">
+        🔄 ثبت اصلاحیه و ارسال مجدد به مالی و مدیریت
+      </button>
     </div>
   </div>
 
@@ -1376,7 +1588,7 @@
   <div id="modal-pdf" class="modal-backdrop hidden">
     <div class="modal-panel wide">
       <div class="modal-head">
-        <h3 id="modal-pdf-title">📄 بسته دیجیتال پیش‌فاکتور</h3>
+        <h3 id="modal-pdf-title">📄 بسته دیجیتال سفارش</h3>
         <div style="display:flex; gap:6px;">
           <button type="button" id="btn-trigger-print" class="btn-pdf-print">🖨️ پرینت مستقیم در انبار</button>
           <button type="button" data-close-modal="modal-pdf" class="btn-close">✕</button>
@@ -1386,17 +1598,23 @@
     </div>
   </div>
 
-  <!-- ==================== مودال مرحله ۶: خروج بار توسط سرپرست انبار ==================== -->
+  <!-- ==================== مودال مرحله ۵: جمع‌آوری و خروج بار توسط سرپرست انبار ==================== -->
   <div id="modal-warehouse-exit" class="modal-backdrop hidden">
     <div class="modal-panel">
       <div class="modal-head">
-        <h3>🏷️ تایید خروج از انبار و تحویل به ناوگان</h3>
+        <h3>📦 ثبت جمع‌آوری کالا، تعداد کارتن و ساعت خروج</h3>
         <button type="button" data-close-modal="modal-warehouse-exit" class="btn-close">✕</button>
       </div>
       <div id="modal-exit-desc" style="font-size:12px; color:var(--muted); margin-bottom:12px;"></div>
-      <div class="form-group">
-        <label for="inp-exit-cartons">تعداد کارتن خروجی از انبار *</label>
-        <input type="number" id="inp-exit-cartons" class="form-control" min="1" placeholder="مثلاً: 8" />
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label for="inp-exit-cartons">تعداد کارتن خروجی *</label>
+          <input type="number" id="inp-exit-cartons" class="form-control" min="1" placeholder="مثلاً: 8" />
+        </div>
+        <div class="form-group">
+          <label for="inp-exit-time">ساعت خروج از انبار *</label>
+          <input type="text" id="inp-exit-time" class="form-control" dir="ltr" placeholder="مثلاً: 14:30" />
+        </div>
       </div>
       <div class="form-group">
         <label for="inp-exit-driver">نام راننده / خودرو حمل *</label>
@@ -1408,7 +1626,7 @@
     </div>
   </div>
 
-  <!-- ==================== مودال مرحله ۷ (نهایی): تحویل نهایی راننده + پد امضای دیجیتال لمسی ==================== -->
+  <!-- ==================== مودال مرحله ۶ (نهایی): تحویل نهایی راننده + پد امضای دیجیتال لمسی ==================== -->
   <div id="modal-driver-delivery" class="modal-backdrop hidden">
     <div class="modal-panel">
       <div class="modal-head">
@@ -1443,35 +1661,29 @@
       </div>
 
       <button type="button" id="btn-confirm-delivery" class="btn-action-main success" style="width:100%;">
-        ✅ ثبت قطعی تحویل بار و ارسال گزارش به مدیر
+        ✅ ثبت قطعی تحویل بار و ارسال گزارش
       </button>
     </div>
   </div>
 
-  <!-- ==================== مودال برگشت مغایرت به کارشناس فروش ==================== -->
+  <!-- ==================== مودال برگشت مغایرت / عدم تایید ==================== -->
   <div id="modal-return" class="modal-backdrop hidden">
     <div class="modal-panel">
       <div class="modal-head">
-        <h3 style="color:var(--danger);">⚠️ گزارش مغایرت و برگشت به فروش</h3>
+        <h3 id="modal-return-title" style="color:var(--danger);">⚠️ گزارش مغایرت و برگشت</h3>
         <button type="button" data-close-modal="modal-return" class="btn-close">✕</button>
       </div>
       <p id="modal-return-desc" style="font-size:12px; color:var(--muted); margin-bottom:10px;"></p>
       <div class="form-group">
-        <label for="inp-return-reason">علت مغایرت *</label>
-        <select id="inp-return-reason" class="form-control">
-          <option value="کسری موجودی قطعه در انبار">کسری موجودی قطعه در انبار</option>
-          <option value="مغایرت کد فنی / مدل خودرو">مغایرت کد فنی / مدل خودرو (ایران‌خودرو/سایپا)</option>
-          <option value="عدم موجودی برند درخواستی">عدم موجودی برند درخواستی</option>
-          <option value="مغایرت اعتبار / شرایط تسویه مالی">مغایرت اعتبار / شرایط تسویه مالی</option>
-          <option value="اصلاح تخفیف یا قیمت فروش">اصلاح تخفیف یا قیمت فروش</option>
-        </select>
+        <label for="inp-return-reason">علت برگشت / مغایرت *</label>
+        <select id="inp-return-reason" class="form-control"></select>
       </div>
       <div class="form-group">
-        <label for="inp-return-note">توضیحات دقیق جهت اصلاح پیش‌فاکتور *</label>
-        <textarea id="inp-return-note" class="form-control" rows="3" placeholder="مثلاً: از لنت جلو پارس برند کروز فقط ۶ دست موجود است؛ ۴ دست کسری دارد."></textarea>
+        <label for="inp-return-note">توضیحات دقیق *</label>
+        <textarea id="inp-return-note" class="form-control" rows="3" placeholder="توضیحات دقیق مغایرت یا اصلاح موردنیاز را بنویسید..."></textarea>
       </div>
       <button type="button" id="btn-confirm-return" class="btn-action-danger" style="width:100%; padding:12px;">
-        ↩️ برگشت فاکتور به کارشناس فروش
+        ↩️ ثبت برگشت
       </button>
     </div>
   </div>
@@ -1480,7 +1692,7 @@
   <div id="modal-revise" class="modal-backdrop hidden">
     <div class="modal-panel">
       <div class="modal-head">
-        <h3>✏️ اصلاح پیش‌فاکتور و بارگذاری PDF جدید</h3>
+        <h3>✏️ اصلاح پیش‌فاکتور و ارسال مجدد به مدیر فروش</h3>
         <button type="button" data-close-modal="modal-revise" class="btn-close">✕</button>
       </div>
       <div id="modal-revise-alert" class="return-alert"></div>
@@ -1501,10 +1713,10 @@
           📄 بارگذاری نسخه جدید PDF پیش‌فاکتور
         </label>
         <input type="file" id="inp-rev-pdf" accept="application/pdf" style="font-size:12px; width:100%;" />
-        <p id="rev-pdf-hint" style="font-size:11px; color:#3b82f6; margin-top:4px;">فایل PDF جدید جایگزین نسخه قبلی برای پرینت انبار می‌شود.</p>
+        <p id="rev-pdf-hint" style="font-size:11px; color:#3b82f6; margin-top:4px;">فایل PDF جدید جایگزین نسخه قبلی برای بررسی و پرینت انبار می‌شود.</p>
       </div>
       <button type="button" id="btn-confirm-revise" class="btn-action-main" style="width:100%;">
-        🔄 ثبت اصلاحیه و ارسال مجدد به تایید مالی
+        🔄 ثبت اصلاحیه و ارسال مجدد برای تایید مدیر فروش
       </button>
     </div>
   </div>
@@ -1521,7 +1733,7 @@
         <input type="tel" id="inp-wa-phone" class="form-control" dir="ltr" placeholder="09120000000" />
       </div>
       <div id="ceo-pins-section" class="hidden" style="margin-top:14px; padding-top:12px; border-top:1px solid var(--border);">
-        <label style="display:block; font-size:12px; font-weight:800; margin-bottom:8px; color:var(--text);">🔐 رمز عبور اختصاصی واحدهای سازمانی:</label>
+        <label style="display:block; font-size:12px; font-weight:800; margin-bottom:8px; color:var(--text);">🔐 رمز عبور اختصاصی کارتابل‌ها:</label>
         <div id="ceo-pins-list" style="display:flex; flex-direction:column; gap:8px;"></div>
       </div>
       <button type="button" id="btn-save-settings" class="btn-action-main success" style="width:100%; margin-top:14px;">
@@ -1544,38 +1756,41 @@
     const SUPABASE_URL = 'https://xurxjzepontgnykekcgi.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_BklSNELSFQVAlYAUgHk-bQ_wXK2JvRm';
     const SUPABASE_TABLE = 'orders';
-    const SETTINGS_RECORD_ID = '__SYSTEM_SETTINGS__';
+    const SETTINGS_RECORD_ID = '__SYSTEM_SETTINGS_V3__';
 
-    // ==================== تعریف ۷ نقش سازمانی و ۷ مرحله چرخه ====================
+    // ==================== تعریف کارتابل‌های سازمانی (۴ کارشناس فروش مجزا + واحدها + مدیرعامل) ====================
     const ROLES = [
-      { id: 'ceo', title: 'مدیرعامل', pin: '1000', icon: '👔', stage: null, scope: 'مشاهده کل شماتیک + تایید نهایی حواله (مرحله ۴)' },
-      { id: 'sales', title: 'کارشناس فروش', pin: '1111', icon: '📝', stage: 1, scope: 'ثبت پیش‌فاکتور، آپلود PDF و اصلاح برگشتی‌ها' },
-      { id: 'accounting', title: 'واحد حسابداری و مالی', pin: '2222', icon: '💰', stage: 2, scope: 'بررسی بسته PDF و تایید اعتبار مالی (مرحله ۲)' },
-      { id: 'sales_mgr', title: 'مدیر فروش', pin: '3333', icon: '📊', stage: 3, scope: 'بررسی تخفیف‌ها و تایید مدیر فروش (مرحله ۳)' },
-      { id: 'warehouse', title: 'انباردار', pin: '4444', icon: '📦', stage: 5, scope: 'پرینت PDF در انبار، جمع‌آوری یا برگشت مغایرت (مرحله ۵)' },
-      { id: 'warehouse_sup', title: 'سرپرست انبار', pin: '5555', icon: '🏷️', stage: 6, scope: 'کنترل خروج بار و تحویل به ناوگان (مرحله ۶)' },
-      { id: 'driver', title: 'راننده و توزیع', pin: '6666', icon: '🚚', stage: 7, scope: 'تحویل نهایی بار + دریافت امضای دیجیتال مشتری (مرحله ۷)' }
+      { id: 'ceo', title: 'مدیرعامل', pin: '1000', icon: '👔', isSales: false, scope: 'گزارش خلاصه فروش + بررسی و تایید مدارک مالی و چک‌ها' },
+      { id: 'sales_1', title: 'امیرحسین غفاری', roleLabel: 'کارشناس فروش', pin: '1101', icon: '📝', isSales: true, scope: 'ثبت پیش‌فاکتور، تاییدیه مشتری و بارگذاری مدارک تسویه (مشتریان اختصاصی)' },
+      { id: 'sales_2', title: 'علی آشکار', roleLabel: 'کارشناس فروش', pin: '1102', icon: '📝', isSales: true, scope: 'ثبت پیش‌فاکتور، تاییدیه مشتری و بارگذاری مدارک تسویه (مشتریان اختصاصی)' },
+      { id: 'sales_3', title: 'افسانه کردی', roleLabel: 'کارشناس فروش', pin: '1103', icon: '📝', isSales: true, scope: 'ثبت پیش‌فاکتور، تاییدیه مشتری و بارگذاری مدارک تسویه (مشتریان اختصاصی)' },
+      { id: 'sales_4', title: 'فاطمه افرا', roleLabel: 'کارشناس فروش', pin: '1104', icon: '📝', isSales: true, scope: 'ثبت پیش‌فاکتور، تاییدیه مشتری و بارگذاری مدارک تسویه (مشتریان اختصاصی)' },
+      { id: 'sales_mgr', title: 'مدیر فروش', pin: '3333', icon: '📊', isSales: false, scope: 'تایید پیش‌فاکتورها و بررسی مغایرت‌های عودتی از مالی' },
+      { id: 'accounting', title: 'واحد حسابداری و مالی', pin: '2222', icon: '💰', isSales: false, scope: 'بررسی حساب، تبدیل به فاکتور فروش، تایید چک‌ها و دسترسی صندوق' },
+      { id: 'warehouse_sup', title: 'سرپرست انبار', pin: '5555', icon: '📦', isSales: false, scope: 'جمع‌آوری کالا، ثبت تعداد کارتن، ساعت خروج و تحویل به راننده' },
+      { id: 'driver', title: 'راننده و توزیع', pin: '6666', icon: '🚚', isSales: false, scope: 'تحویل نهایی بار + دریافت امضای دیجیتال لمسی مشتری' }
     ];
 
+    const SALES_ROLES = ROLES.filter(r => r.isSales);
+
+    // ==================== ۶ مرحله اصلی زنجیره فروش (بدون مدیرعامل) ====================
     const STAGES = [
-      { id: 1, short: 'فروش + PDF', roleId: 'sales', actionText: 'ثبت پیش‌فاکتور' },
-      { id: 2, short: 'حسابداری و مالی', roleId: 'accounting', actionText: 'تایید اعتبار و مالی' },
-      { id: 3, short: 'مدیر فروش', roleId: 'sales_mgr', actionText: 'تایید مدیر فروش' },
-      { id: 4, short: 'مدیرعامل', roleId: 'ceo', actionText: 'تایید نهایی و مجوز انبار' },
-      { id: 5, short: 'جمع‌آوری انبار', roleId: 'warehouse', actionText: 'تکمیل جمع‌آوری بار' },
-      { id: 6, short: 'خروج انبار', roleId: 'warehouse_sup', actionText: 'تایید خروج و تحویل به راننده' },
-      { id: 7, short: 'تحویل و امضا', roleId: 'driver', actionText: 'ثبت تحویل نهایی + امضای مشتری' }
+      { id: 1, short: 'کارشناس فروش', roleId: 'sales', icon: '📝' },
+      { id: 2, short: 'مدیر فروش', roleId: 'sales_mgr', icon: '📊' },
+      { id: 3, short: 'تاییدیه مشتری', roleId: 'sales_owner', icon: '🤝' },
+      { id: 4, short: 'حسابداری و فاکتور', roleId: 'accounting', icon: '💰' },
+      { id: 5, short: 'سرپرست انبار', roleId: 'warehouse_sup', icon: '📦' },
+      { id: 6, short: 'راننده و امضا', roleId: 'driver', icon: '🚚' }
     ];
 
-    const STORAGE_KEY = 'autoparts_erp_cloud_cache_v2';
+    const STORAGE_KEY = 'autoparts_erp_cloud_cache_v3';
 
     let state = {
       orders: [],
       checks: [],
       logs: [],
       waPhone: '',
-      rolePins: {},
-      roleNames: {}
+      rolePins: {}
     };
 
     let currentRole = null;
@@ -1583,11 +1798,20 @@
     let activeTab = 'board';
     let activeFilter = 'mine';
     let activeCheckFilter = 'all';
+    let activeFinanceSalesFilter = 'all';
     let selectedStationStage = null;
+
     let tempNewPdf = null;
     let tempRevPdf = null;
-    let tempCheckImage = null;
+    let tempFinalInvPdf = null;
+    let tempCheckImages = [];
+    let tempRevCheckImages = [];
+
     let modalTargetOrderId = null;
+    let modalReturnTarget = 'sales'; // 'sales' | 'sales_mgr'
+    let modalTargetCheckId = null;
+    let modalCheckRejectBy = 'finance'; // 'finance' | 'ceo'
+
     let isSyncing = false;
     let pollTimer = null;
 
@@ -1596,6 +1820,16 @@
     let sigCtx = null;
     let isDrawingSig = false;
     let hasSigStroke = false;
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
 
     function normalizeDigits(str) {
       if (!str) return '';
@@ -1616,22 +1850,19 @@
       return def ? def.pin : '';
     }
 
-    function getRoleDisplayName(roleId) {
+    function getRoleTitle(roleId) {
       const def = ROLES.find(r => r.id === roleId);
-      const baseTitle = def ? def.title : '';
-      const person = state.roleNames && state.roleNames[roleId] ? state.roleNames[roleId].trim() : '';
-      return person ? `${baseTitle} (${person})` : baseTitle;
+      if (!def) return '';
+      return def.roleLabel ? `${def.title} (${def.roleLabel})` : def.title;
     }
 
-    function updateLoginDropdownLabels() {
-      const sel = document.getElementById('login-role-select');
-      if (!sel) return;
-      Array.from(sel.options).forEach(opt => {
-        const r = ROLES.find(item => item.id === opt.value);
-        if (r) {
-          opt.textContent = `${r.icon} ${getRoleDisplayName(r.id)}`;
-        }
-      });
+    function getSalesOwnerName(orderOrCheck) {
+      if (orderOrCheck.salesOwnerName) return orderOrCheck.salesOwnerName;
+      if (orderOrCheck.salesOwnerId) {
+        const r = ROLES.find(x => x.id === orderOrCheck.salesOwnerId);
+        if (r) return r.title;
+      }
+      return 'کارشناس فروش';
     }
 
     function setCloudStatus(online, customText) {
@@ -1656,42 +1887,14 @@
       };
     }
 
-    // ==================== ۲ سفارش نمونه واقعی جهت تست اولیه ====================
-    function getSeedOrders() {
-      return [
-        {
-          id: 'ord-201',
-          customer: 'لوازم یدکی برادران حسینی (کرج)',
-          proforma: 'PF-8101',
-          channel: 'روبیکا',
-          amount: '۶۴,۵۰۰,۰۰۰',
-          payment: 'چک صیادی ۴۵ روزه',
-          items: 'دیسک و صفحه عظام پژو پارس (۵ دست) + لنت جلو کروز سمند (۸ دست)',
-          stage: 5,
-          status: 'active',
-          rev: 0,
-          pdfName: 'PF-8101_Hosseini.pdf',
-          pdfData: null,
-          times: { 1: '۰۸:۳۰', 2: '۰۸:۴۵', 3: '۰۹:۰۰', 4: '۰۹:۱۰' }
-        },
-        {
-          id: 'ord-202',
-          customer: 'قطعات یدکی سعید - تخصصی سایپا (تهران)',
-          proforma: 'PF-8102',
-          channel: 'ایتا',
-          amount: '۳۸,۲۰۰,۰۰۰',
-          payment: 'نقدی / واریز آنی',
-          items: 'تسمه تایم دایکو پراید (۱۰ عدد) + کمک فنر عظام تیبا (۶ عدد)',
-          stage: 7,
-          status: 'active',
-          rev: 0,
-          pdfName: 'PF-8102_Saeid.pdf',
-          pdfData: null,
-          cartonsOut: 6,
-          driverName: 'آقای کریمی - نیسان شرکت',
-          times: { 1: '۰۸:۰۰', 2: '۰۸:۲۰', 3: '۰۸:۳۵', 4: '۰۸:۵۰', 5: '۰۹:۴۰', 6: '۱۰:۱۵' }
-        }
-      ];
+    function nowTimeStr() {
+      const d = new Date();
+      return d.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function nowDateTimeStr() {
+      const d = new Date();
+      return d.toLocaleDateString('fa-IR') + ' - ' + nowTimeStr();
     }
 
     // ==================== حافظه پشتیبان محلی و همگام‌سازی زنده با Supabase ====================
@@ -1700,7 +1903,7 @@
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       } catch (e) {
         const slimOrders = state.orders.map(o => ({ ...o, pdfData: null }));
-        const slimChecks = state.checks.map(c => ({ ...c, imageData: null }));
+        const slimChecks = state.checks.map(c => ({ ...c, images: [], imageData: null }));
         localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...state, orders: slimOrders, checks: slimChecks }));
       }
     }
@@ -1716,8 +1919,7 @@
               checks: Array.isArray(parsed.checks) ? parsed.checks : [],
               logs: Array.isArray(parsed.logs) ? parsed.logs : [],
               waPhone: parsed.waPhone || '',
-              rolePins: parsed.rolePins || {},
-              roleNames: parsed.roleNames || {}
+              rolePins: parsed.rolePins || {}
             };
           }
         }
@@ -1752,8 +1954,7 @@
       await upsertCloudRecord(SETTINGS_RECORD_ID, {
         waPhone: state.waPhone || '',
         rolePins: state.rolePins || {},
-        roleNames: state.roleNames || {},
-        logs: (state.logs || []).slice(0, 60)
+        logs: (state.logs || []).slice(0, 80)
       });
     }
 
@@ -1765,6 +1966,39 @@
     async function syncCheckToCloud(checkItem) {
       saveLocalCache();
       await upsertCloudRecord(checkItem.id, checkItem);
+    }
+
+    function normalizeOrderRecord(o) {
+      if (!o || typeof o !== 'object') return null;
+      if (!o.times || typeof o.times !== 'object') o.times = {};
+      if (!o.status) o.status = 'active';
+      // مهاجرت امن سفارش‌های قدیمی به ساختار ۶ مرحله‌ای جدید
+      if (!o.schemaVersion) {
+        if (o.status === 'returned') o.status = 'returned_to_sales';
+        if (o.stage === 8) o.stage = 7;
+        else if (o.stage === 7) o.stage = 6;
+        else if (o.stage === 5 || o.stage === 6) o.stage = 5;
+        else if (o.stage === 4) o.stage = 4;
+        else if (o.stage === 3) o.stage = 2;
+        else if (o.stage === 2) o.stage = 4;
+      }
+      return o;
+    }
+
+    function normalizeCheckRecord(c) {
+      if (!c || typeof c !== 'object') return null;
+      if (!Array.isArray(c.images)) {
+        c.images = c.imageData ? [{ name: c.imageName || 'doc.jpg', dataUrl: c.imageData }] : [];
+      }
+      if (!c.docType) c.docType = 'چک دریافتی';
+      if (!c.financeStatus) c.financeStatus = 'pending';
+      if (!c.ceoStatus) c.ceoStatus = 'pending';
+      if (!c.status) {
+        if (c.financeStatus === 'approved' && c.ceoStatus === 'approved') c.status = 'finalized';
+        else if (c.financeStatus === 'rejected' || c.ceoStatus === 'rejected') c.status = 'returned';
+        else c.status = 'pending';
+      }
+      return c;
     }
 
     async function fetchFromCloud(isInitial = false) {
@@ -1779,19 +2013,7 @@
         const rows = await res.json();
         setCloudStatus(true);
 
-        if (!Array.isArray(rows) || rows.length === 0) {
-          if (isInitial) {
-            state.orders = getSeedOrders();
-            state.logs = [
-              { time: nowTimeStr(), text: '🟢 سیستم ابری راه‌اندازی شد و ۲ سفارش نمونه جهت تست چرخه آماده گردید.' }
-            ];
-            saveLocalCache();
-            for (const ord of state.orders) {
-              await upsertCloudRecord(ord.id, ord);
-            }
-            await syncSettingsToCloud();
-          }
-        } else {
+        if (Array.isArray(rows)) {
           const fetchedOrders = [];
           const fetchedChecks = [];
           let settingsRow = null;
@@ -1799,11 +2021,15 @@
           rows.forEach(row => {
             if (row.id === SETTINGS_RECORD_ID) {
               settingsRow = row.data;
+            } else if (String(row.id).startsWith('__SYSTEM_SETTINGS__')) {
+              // نادیده گرفتن تنظیمات نسخه‌های قدیمی برای جلوگیری از تداخل رمزها
             } else if (row.data && typeof row.data === 'object') {
-              if (String(row.id).startsWith('chk-') || row.data.recordType === 'check_receipt') {
-                fetchedChecks.push(row.data);
-              } else {
-                fetchedOrders.push(row.data);
+              if (String(row.id).startsWith('chk-') || String(row.id).startsWith('chk_') || row.data.recordType === 'check_receipt' || row.data.recordType === 'receipt') {
+                const normC = normalizeCheckRecord(row.data);
+                if (normC) fetchedChecks.push(normC);
+              } else if (row.data.proforma || row.data.customer) {
+                const normO = normalizeOrderRecord(row.data);
+                if (normO) fetchedOrders.push(normO);
               }
             }
           });
@@ -1811,16 +2037,12 @@
           if (settingsRow) {
             state.waPhone = settingsRow.waPhone || '';
             state.rolePins = settingsRow.rolePins || {};
-            state.roleNames = settingsRow.roleNames || {};
             if (Array.isArray(settingsRow.logs)) {
               state.logs = settingsRow.logs;
             }
-            updateLoginDropdownLabels();
           }
 
-          if (fetchedOrders.length > 0) {
-            state.orders = fetchedOrders;
-          }
+          state.orders = fetchedOrders;
           state.checks = fetchedChecks;
           saveLocalCache();
         }
@@ -1831,23 +2053,29 @@
       } catch (err) {
         console.warn('Cloud fetch error:', err);
         setCloudStatus(false);
-        if (isInitial && state.orders.length === 0) {
-          state.orders = getSeedOrders();
-          saveLocalCache();
-        }
       } finally {
         isSyncing = false;
       }
     }
 
-    function nowTimeStr() {
-      const d = new Date();
-      return d.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+    // ==================== جداسازی کامل دید هر کارشناس فروش ====================
+    function getVisibleOrders() {
+      if (!currentRole) return [];
+      if (currentRole.isSales) {
+        return state.orders.filter(o => o.salesOwnerId === currentRole.id);
+      }
+      return state.orders;
     }
 
-    function nowDateTimeStr() {
-      const d = new Date();
-      return d.toLocaleDateString('fa-IR') + ' - ' + nowTimeStr();
+    function getVisibleChecks() {
+      if (!currentRole) return [];
+      if (currentRole.isSales) {
+        return state.checks.filter(c => c.salesOwnerId === currentRole.id);
+      }
+      if (activeFinanceSalesFilter !== 'all') {
+        return state.checks.filter(c => c.salesOwnerId === activeFinanceSalesFilter);
+      }
+      return state.checks;
     }
 
     // ==================== ورود امن و کشویی ====================
@@ -1879,15 +2107,23 @@
       document.getElementById('screen-app').classList.remove('hidden');
 
       document.getElementById('active-role-icon').textContent = role.icon;
-      document.getElementById('active-role-title').textContent = getRoleDisplayName(role.id);
+      document.getElementById('active-role-title').textContent = getRoleTitle(role.id);
       document.getElementById('active-role-scope').textContent = role.scope;
 
       const settingsBtn = document.getElementById('btn-ceo-settings');
       settingsBtn.textContent = role.id === 'ceo' ? '⚙️ تنظیمات و رمزها' : '📲 واتساپ مدیرعامل';
 
+      // برای مدیرعامل، فیلتر پیش‌فرض همه سفارش‌ها تا گزارش کامل ببیند
       selectedStationStage = null;
-      activeFilter = 'mine';
+      activeFilter = role.id === 'ceo' ? 'all' : 'mine';
+      activeCheckFilter = (role.id === 'ceo' || role.id === 'accounting') ? 'pending_me' : 'all';
+      activeFinanceSalesFilter = 'all';
+      const salesFilterSel = document.getElementById('finance-sales-filter');
+      if (salesFilterSel) salesFilterSel.value = 'all';
+
+      // مخفی کردن تب «ثبت پیش‌فاکتور جدید» برای غیر کارشناسان فروش (یا نمایش پیام دسترسی)
       updateFilterPillsUI();
+      updateCheckFilterPillsUI();
       switchPhase(1);
       switchTab('board');
       renderDashboard();
@@ -1900,7 +2136,6 @@
       document.getElementById('screen-login').classList.remove('hidden');
       document.getElementById('login-pin-input').value = '';
       document.getElementById('login-error').classList.add('hidden');
-      updateLoginDropdownLabels();
     }
 
     function switchPhase(phaseNum) {
@@ -1911,42 +2146,58 @@
       });
 
       if (phaseNum === 2 && currentRole) {
-        const canUploadCheck = ['sales', 'accounting', 'ceo'].includes(currentRole.id);
+        const canUploadCheck = currentRole.isSales || currentRole.id === 'accounting';
         document.getElementById('check-upload-wrapper').classList.toggle('hidden', !canUploadCheck);
-        renderChecksList();
+        const showSalesFilter = currentRole.id === 'ceo' || currentRole.id === 'accounting' || currentRole.id === 'sales_mgr';
+        document.getElementById('finance-sales-filter-wrap').classList.toggle('hidden', !showSalesFilter);
+        renderFinancePhase();
       }
     }
 
-    // ==================== رندر داشبورد و نقشه شماتیک ۷ ایستگاه ====================
+    // ==================== رندر کل داشبورد ====================
     function renderDashboard() {
-      if (currentRole) {
-        document.getElementById('active-role-title').textContent = getRoleDisplayName(currentRole.id);
-      }
+      if (!currentRole) return;
       renderStats();
+      renderCeoSalesSummary();
       renderMasterSchematic();
       renderOrdersList();
-      renderChecksList();
+      renderFinancePhase();
       renderLogsList();
     }
 
     function renderStats() {
-      const approvalCount = state.orders.filter(o => o.status === 'active' && o.stage <= 4).length;
-      const warehouseCount = state.orders.filter(o => o.status === 'active' && (o.stage === 5 || o.stage === 6)).length;
-      const driverCount = state.orders.filter(o => o.status === 'active' && o.stage === 7).length;
-      const doneCount = state.orders.filter(o => o.stage === 8).length;
+      const visibleOrders = getVisibleOrders();
+      const salesFlowCount = visibleOrders.filter(o => o.status !== 'done' && o.stage <= 4).length;
+      const warehouseCount = visibleOrders.filter(o => o.status === 'active' && o.stage === 5).length;
+      const driverCount = visibleOrders.filter(o => o.status === 'active' && o.stage === 6).length;
+      const doneCount = visibleOrders.filter(o => o.stage === 7).length;
 
       document.getElementById('stats-row').innerHTML = `
-        <div class="stat-box"><div class="stat-num">${approvalCount}</div><div class="stat-lbl">تاییدیه‌ها</div></div>
-        <div class="stat-box"><div class="stat-num" style="color:var(--warning);">${warehouseCount}</div><div class="stat-lbl">در انبار</div></div>
+        <div class="stat-box"><div class="stat-num">${salesFlowCount}</div><div class="stat-lbl">فروش و مالی</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:var(--warning);">${warehouseCount}</div><div class="stat-lbl">سرپرست انبار</div></div>
         <div class="stat-box"><div class="stat-num" style="color:var(--purple);">${driverCount}</div><div class="stat-lbl">نزد راننده</div></div>
         <div class="stat-box"><div class="stat-num" style="color:var(--success);">${doneCount}</div><div class="stat-lbl">تحویل قطعی</div></div>
       `;
 
-      const pendingChecksCount = (state.checks || []).filter(c => c.financeStatus === 'pending' || c.ceoStatus === 'pending').length;
+      // شمارنده مدارک مالی نیازمند اقدام در تب فاز ۲
+      const allMyVisibleChecks = currentRole.isSales
+        ? state.checks.filter(c => c.salesOwnerId === currentRole.id)
+        : state.checks;
+      let badgeCount = 0;
+      if (currentRole.id === 'ceo') {
+        badgeCount = allMyVisibleChecks.filter(c => c.status === 'pending' && c.ceoStatus === 'pending').length;
+      } else if (currentRole.id === 'accounting') {
+        badgeCount = allMyVisibleChecks.filter(c => c.status === 'pending' && c.financeStatus === 'pending').length;
+      } else if (currentRole.isSales) {
+        badgeCount = allMyVisibleChecks.filter(c => c.status === 'returned').length;
+      } else {
+        badgeCount = allMyVisibleChecks.filter(c => c.status === 'pending').length;
+      }
+
       const p2Badge = document.getElementById('phase2-badge');
       if (p2Badge) {
-        if (pendingChecksCount > 0) {
-          p2Badge.textContent = pendingChecksCount;
+        if (badgeCount > 0) {
+          p2Badge.textContent = badgeCount;
           p2Badge.classList.remove('hidden');
         } else {
           p2Badge.classList.add('hidden');
@@ -1954,24 +2205,80 @@
       }
     }
 
+    // ==================== گزارش خلاصه مدیرعامل در بخش فروش ====================
+    function renderCeoSalesSummary() {
+      const box = document.getElementById('ceo-sales-summary');
+      if (!box) return;
+      if (!currentRole || currentRole.id !== 'ceo') {
+        box.classList.add('hidden');
+        return;
+      }
+      box.classList.remove('hidden');
+
+      const rowsHtml = SALES_ROLES.map(sr => {
+        const repOrders = state.orders.filter(o => o.salesOwnerId === sr.id);
+        const total = repOrders.length;
+        const inProgress = repOrders.filter(o => o.status === 'active' && o.stage < 7).length;
+        const returned = repOrders.filter(o => o.status === 'returned_to_sales' || o.status === 'returned_to_sales_mgr').length;
+        const delivered = repOrders.filter(o => o.stage === 7).length;
+        return `
+          <tr>
+            <td><strong>${escapeHtml(sr.title)}</strong></td>
+            <td>${total}</td>
+            <td style="color:var(--primary); font-weight:700;">${inProgress}</td>
+            <td style="color:var(--danger); font-weight:700;">${returned}</td>
+            <td style="color:var(--success); font-weight:800;">${delivered}</td>
+          </tr>
+        `;
+      }).join('');
+
+      box.innerHTML = `
+        <div class="ceo-summary-card">
+          <div class="ceo-summary-head">
+            <h3>📊 گزارش خلاصه وضعیت فروش به تفکیک کارشناسان (نمای نظارتی مدیرعامل)</h3>
+            <span class="tag tag-sales">کل سفارش‌ها: ${state.orders.length} مورد</span>
+          </div>
+          <div class="summary-table-wrap">
+            <table class="summary-table">
+              <thead>
+                <tr>
+                  <th>کارشناس فروش</th>
+                  <th>کل ثبت‌شده</th>
+                  <th>در جریان</th>
+                  <th>برگشتی/مغایرت</th>
+                  <th>تحویل قطعی</th>
+                </tr>
+              </thead>
+              <tbody>${rowsHtml}</tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
     function renderMasterSchematic() {
-      const icons = ['📝', '💰', '📊', '👔', '📦', '🏷️', '🚚'];
       const track = document.getElementById('master-flow-track');
       const resetBtn = document.getElementById('btn-reset-station');
       resetBtn.classList.toggle('hidden', selectedStationStage === null);
 
+      const visibleOrders = getVisibleOrders();
+
       track.innerHTML = STAGES.map((st, idx) => {
-        const count = state.orders.filter(o => {
-          if (st.id === 1) return o.status === 'returned';
+        const count = visibleOrders.filter(o => {
+          if (st.id === 1) return o.status === 'returned_to_sales';
+          if (st.id === 2) return (o.status === 'active' && o.stage === 2) || o.status === 'returned_to_sales_mgr';
           return o.status === 'active' && o.stage === st.id;
         }).length;
 
-        const isMyNode = currentRole && (currentRole.id === st.roleId || (st.id === 4 && currentRole.id === 'ceo'));
+        const isMyNode = currentRole && (
+          (currentRole.isSales && (st.id === 1 || st.id === 3)) ||
+          currentRole.id === st.roleId
+        );
         const isSelected = selectedStationStage === st.id;
 
         return `
           <div class="flow-node ${isMyNode ? 'active-role' : ''} ${isSelected ? 'selected-station' : ''}" data-station-stage="${st.id}">
-            <span class="flow-node-icon">${icons[idx]}</span>
+            <span class="flow-node-icon">${st.icon}</span>
             <span class="flow-node-title">${st.id}. ${st.short}</span>
             <span class="flow-node-count ${count > 0 ? 'has-items' : ''}">${count} مورد</span>
           </div>
@@ -1981,15 +2288,23 @@
     }
 
     function canActOnOrder(order) {
-      if (!currentRole || order.stage > 7) return false;
-      if (order.status === 'returned') {
-        return currentRole.id === 'sales' || currentRole.id === 'ceo';
+      if (!currentRole || order.stage >= 7) return false;
+      // مدیرعامل از چرخه تایید فروش حذف شده است (فقط گزارش‌گیری)
+      if (currentRole.id === 'ceo') return false;
+
+      if (order.status === 'returned_to_sales') {
+        return currentRole.isSales && order.salesOwnerId === currentRole.id;
       }
-      if (currentRole.id === 'ceo') {
-        return order.stage === 4;
+      if (order.status === 'returned_to_sales_mgr') {
+        return currentRole.id === 'sales_mgr';
       }
-      const st = STAGES[order.stage - 1];
-      return st && st.roleId === currentRole.id;
+
+      if (order.stage === 2) return currentRole.id === 'sales_mgr';
+      if (order.stage === 3) return currentRole.isSales && order.salesOwnerId === currentRole.id;
+      if (order.stage === 4) return currentRole.id === 'accounting';
+      if (order.stage === 5) return currentRole.id === 'warehouse_sup';
+      if (order.stage === 6) return currentRole.id === 'driver';
+      return false;
     }
 
     function updateFilterPillsUI() {
@@ -2008,24 +2323,26 @@
 
     function renderOrdersList() {
       const container = document.getElementById('orders-list');
-      let list = state.orders;
+      let list = getVisibleOrders();
 
       if (selectedStationStage !== null) {
         if (selectedStationStage === 1) {
-          list = state.orders.filter(o => o.status === 'returned');
+          list = list.filter(o => o.status === 'returned_to_sales');
+        } else if (selectedStationStage === 2) {
+          list = list.filter(o => (o.status === 'active' && o.stage === 2) || o.status === 'returned_to_sales_mgr');
         } else {
-          list = state.orders.filter(o => o.status === 'active' && o.stage === selectedStationStage);
+          list = list.filter(o => o.status === 'active' && o.stage === selectedStationStage);
         }
       } else if (activeFilter === 'mine') {
-        list = state.orders.filter(o => canActOnOrder(o));
+        list = currentRole.id === 'ceo' ? list : list.filter(o => canActOnOrder(o));
       } else if (activeFilter === 'returned') {
-        list = state.orders.filter(o => o.status === 'returned');
+        list = list.filter(o => o.status === 'returned_to_sales' || o.status === 'returned_to_sales_mgr');
       } else if (activeFilter === 'warehouse') {
-        list = state.orders.filter(o => o.status === 'active' && (o.stage === 5 || o.stage === 6));
+        list = list.filter(o => o.status === 'active' && o.stage === 5);
       } else if (activeFilter === 'driver') {
-        list = state.orders.filter(o => o.status === 'active' && o.stage === 7);
+        list = list.filter(o => o.status === 'active' && o.stage === 6);
       } else if (activeFilter === 'done') {
-        list = state.orders.filter(o => o.stage === 8);
+        list = list.filter(o => o.stage === 7);
       }
 
       if (list.length === 0) {
@@ -2033,28 +2350,34 @@
           <div class="form-card" style="text-align:center; padding:28px 16px;">
             <div style="font-size:26px; margin-bottom:6px;">📭</div>
             <strong style="font-size:13px; display:block;">موردی در این بخش وجود ندارد</strong>
-            <span style="font-size:11.5px; color:var(--muted);">برای مشاهده کل سفارش‌های مجموعه، روی «همه سفارش‌ها» بزنید.</span>
+            <span style="font-size:11.5px; color:var(--muted);">برای مشاهده سایر سفارش‌های قابل دسترس خود، روی «همه سفارش‌ها» بزنید.</span>
           </div>
         `;
         return;
       }
 
       container.innerHTML = list.map(order => {
-        const isDone = order.stage === 8;
-        const isReturned = order.status === 'returned';
+        const isDone = order.stage >= 7;
+        const isReturnedSales = order.status === 'returned_to_sales';
+        const isReturnedMgr = order.status === 'returned_to_sales_mgr';
+        const isAnyReturned = isReturnedSales || isReturnedMgr;
         const myTurn = canActOnOrder(order);
-        const currentStageObj = !isDone ? STAGES[order.stage - 1] : null;
+        const currentStageObj = !isDone ? STAGES[Math.min(Math.max(order.stage - 1, 0), STAGES.length - 1)] : null;
+        const ownerName = getSalesOwnerName(order);
 
         const stepsHtml = STAGES.map(st => {
           let cls = '';
           let mark = st.id;
-          if (!isReturned && order.stage > st.id) {
+          if (!isAnyReturned && order.stage > st.id) {
             cls = 'done';
             mark = '✓';
-          } else if (isReturned && st.id === 1) {
+          } else if (isReturnedSales && st.id === 1) {
             cls = 'returned';
             mark = '!';
-          } else if (!isReturned && order.stage === st.id) {
+          } else if (isReturnedMgr && st.id === 2) {
+            cls = 'returned';
+            mark = '!';
+          } else if (!isAnyReturned && order.stage === st.id) {
             cls = 'current';
           }
           const t = order.times && order.times[st.id] ? order.times[st.id] : '';
@@ -2062,7 +2385,7 @@
             <div class="step-unit ${cls}">
               <div class="step-circle">${mark}</div>
               <div class="step-label">${st.short}</div>
-              <div class="step-time">${t}</div>
+              <div class="step-time">${escapeHtml(t)}</div>
             </div>
           `;
         }).join('');
@@ -2071,106 +2394,133 @@
         if (isDone) {
           footerHtml = `
             <div class="wait-banner" style="background:var(--success-soft); color:var(--success); font-weight:800;">
-              <span>🎉 تحویل قطعی به «${order.customerSigner || 'مشتری'}» (${order.cartonsDelivered || order.cartonsOut} کارتن)</span>
-              <span>${order.times[7] || ''}</span>
+              <span>🎉 تحویل قطعی به «${escapeHtml(order.customerSigner || 'مشتری')}» (${escapeHtml(order.cartonsDelivered || order.cartonsOut)} کارتن)</span>
+              <span>${escapeHtml(order.times[6] || '')}</span>
             </div>
           `;
-        } else if (isReturned) {
-          if (currentRole.id === 'sales' || currentRole.id === 'ceo') {
+        } else if (isReturnedSales) {
+          if (myTurn) {
             footerHtml = `
-              <button type="button" class="btn-action-danger" style="width:100%;" data-action="revise" data-id="${order.id}">
-                ✏️ اصلاح پیش‌فاکتور و بارگذاری PDF جدید
+              <button type="button" class="btn-action-danger" style="width:100%;" data-action="revise" data-id="${escapeHtml(order.id)}">
+                ✏️ اصلاح پیش‌فاکتور و ارسال مجدد جهت تایید مدیر فروش
               </button>
             `;
           } else {
             footerHtml = `
               <div class="wait-banner" style="background:var(--danger-soft); color:var(--danger);">
-                <span>⏳ برگشت خورده به کارشناس فروش جهت اصلاح و آپلود PDF جدید</span>
+                <span>⏳ برگشت خورده به کارشناس فروش (<strong>${escapeHtml(ownerName)}</strong>) جهت اصلاح و تایید مجدد مدیر فروش</span>
               </div>
             `;
           }
-        } else if (myTurn) {
-          if (order.stage === 5) {
+        } else if (isReturnedMgr) {
+          if (myTurn) {
             footerHtml = `
-              <button type="button" class="btn-action-main success" data-action="advance" data-id="${order.id}">
-                ✅ تایید تکمیل جمع‌آوری بار در انبار
+              <button type="button" class="btn-action-main success" data-action="mgr-resolve-to-acc" data-id="${escapeHtml(order.id)}">
+                🔄 بررسی انجام شد / ارسال مجدد به حسابداری
               </button>
-              <button type="button" class="btn-action-danger" data-action="return" data-id="${order.id}">
-                ⚠️ مغایرت / برگشت به فروش
-              </button>
-            `;
-          } else if (order.stage === 6) {
-            footerHtml = `
-              <button type="button" class="btn-action-main success" data-action="warehouse-exit" data-id="${order.id}">
-                🏷️ ثبت خروج انبار و تحویل به ناوگان
-              </button>
-            `;
-          } else if (order.stage === 7) {
-            footerHtml = `
-              <button type="button" class="btn-action-main success" data-action="driver-delivery" data-id="${order.id}">
-                ✍️ ثبت تحویل نهایی + امضای دیجیتال مشتری
-              </button>
-            `;
-          } else if (order.stage === 2 || order.stage === 3 || order.stage === 4) {
-            footerHtml = `
-              <button type="button" class="btn-action-main" data-action="advance" data-id="${order.id}">
-                ✔️ ${currentStageObj.actionText}
-              </button>
-              <button type="button" class="btn-action-danger" data-action="return" data-id="${order.id}">
-                ↩️ برگشت به فروش
+              <button type="button" class="btn-action-danger" data-action="return-to-sales" data-id="${escapeHtml(order.id)}">
+                ↩️ ارجاع به کارشناس فروش جهت اصلاح
               </button>
             `;
           } else {
             footerHtml = `
-              <button type="button" class="btn-action-main" data-action="advance" data-id="${order.id}">
-                ✔️ ${currentStageObj.actionText}
+              <div class="wait-banner" style="background:var(--danger-soft); color:var(--danger);">
+                <span>⚠️ مغایرت نرم‌افزار گزارش‌شده توسط مالی — در انتظار بررسی <strong>مدیر فروش</strong></span>
+              </div>
+            `;
+          }
+        } else if (myTurn) {
+          if (order.stage === 2) {
+            footerHtml = `
+              <button type="button" class="btn-action-main" data-action="advance" data-id="${escapeHtml(order.id)}">
+                ✔️ تایید مدیر فروش و ارسال جهت تاییدیه مشتری
+              </button>
+              <button type="button" class="btn-action-danger" data-action="return-to-sales" data-id="${escapeHtml(order.id)}">
+                ↩️ برگشت به کارشناس
+              </button>
+            `;
+          } else if (order.stage === 3) {
+            footerHtml = `
+              <button type="button" class="btn-action-main success" data-action="advance" data-id="${escapeHtml(order.id)}">
+                🤝 ثبت تاییدیه مشتری و ارسال به حسابداری
+              </button>
+              <button type="button" class="btn-action-danger" data-action="customer-reject" data-id="${escapeHtml(order.id)}">
+                ❌ عدم تایید مشتری (برگشت به مرحله اول)
+              </button>
+            `;
+          } else if (order.stage === 4) {
+            footerHtml = `
+              <button type="button" class="btn-action-main success" data-action="convert-invoice" data-id="${escapeHtml(order.id)}">
+                🧾 تبدیل به فاکتور فروش و ارسال به انبار
+              </button>
+              <button type="button" class="btn-action-danger" data-action="return-to-mgr" data-id="${escapeHtml(order.id)}">
+                ⚠️ مغایرت با نرم‌افزار (عودت به مدیر فروش)
+              </button>
+            `;
+          } else if (order.stage === 5) {
+            footerHtml = `
+              <button type="button" class="btn-action-main success" data-action="warehouse-exit" data-id="${escapeHtml(order.id)}">
+                📦 ثبت جمع‌آوری، تعداد کارتن و ساعت خروج
+              </button>
+              <button type="button" class="btn-action-danger" data-action="return-to-sales" data-id="${escapeHtml(order.id)}">
+                ⚠️ مغایرت انبار / برگشت به کارشناس
+              </button>
+            `;
+          } else if (order.stage === 6) {
+            footerHtml = `
+              <button type="button" class="btn-action-main success" data-action="driver-delivery" data-id="${escapeHtml(order.id)}">
+                ✍️ ثبت تحویل نهایی + امضای دیجیتال مشتری
               </button>
             `;
           }
         } else {
+          const waitingWho = currentStageObj.roleId === 'sales_owner'
+            ? `ثبت تاییدیه مشتری توسط ${ownerName}`
+            : getRoleTitle(currentStageObj.roleId);
           footerHtml = `
             <div class="wait-banner">
-              <span>🔒 در انتظار اقدام: <strong>${getRoleDisplayName(currentStageObj.roleId)}</strong></span>
-              <span>مرحله ${order.stage} از ۷</span>
+              <span>${currentRole.id === 'ceo' ? '👁️ نمای گزارش مدیرعامل — ' : '🔒 '}در مرحله: <strong>${escapeHtml(waitingWho)}</strong></span>
+              <span>مرحله ${order.stage} از ۶</span>
             </div>
           `;
         }
 
         return `
-          <article class="order-card ${isReturned ? 'returned-state' : myTurn ? 'my-turn' : isDone ? 'done-state' : ''}">
+          <article class="order-card ${isAnyReturned ? 'returned-state' : myTurn ? 'my-turn' : isDone ? 'done-state' : ''}">
             <div class="order-head">
               <div>
                 <div class="tag-row">
-                  <span class="tag">${order.proforma}</span>
-                  <span class="tag tag-pdf">📄 بسته PDF</span>
+                  <span class="tag">پیش‌فاکتور: ${escapeHtml(order.proforma)}</span>
+                  ${order.finalInvoiceNo ? `<span class="tag tag-inv">🧾 فاکتور فروش: ${escapeHtml(order.finalInvoiceNo)}</span>` : ''}
+                  <span class="tag tag-sales">👤 ${escapeHtml(ownerName)}</span>
                   ${order.rev > 0 ? `<span class="tag tag-rev">اصلاحیه #${order.rev}</span>` : ''}
-                  <span class="tag">${order.channel || ''}</span>
-                  <span class="tag">${order.payment || ''}</span>
+                  ${order.channel ? `<span class="tag">${escapeHtml(order.channel)}</span>` : ''}
+                  ${order.payment ? `<span class="tag">${escapeHtml(order.payment)}</span>` : ''}
                 </div>
-                <div class="order-customer">${order.customer}</div>
-                <div class="order-items">${order.items}</div>
+                <div class="order-customer">${escapeHtml(order.customer)}</div>
+                <div class="order-items">${escapeHtml(order.items)}</div>
               </div>
-              ${order.amount ? `<div style="text-align:left; flex-shrink:0;"><strong style="font-size:13px;">${order.amount}</strong><div style="font-size:10px; color:var(--muted);">تومان</div></div>` : ''}
+              ${order.amount ? `<div style="text-align:left; flex-shrink:0;"><strong style="font-size:13px;">${escapeHtml(order.amount)}</strong><div style="font-size:10px; color:var(--muted);">تومان</div></div>` : ''}
             </div>
 
             <div class="pdf-packet">
               <div class="pdf-packet-info">
                 <span style="font-size:20px;">📑</span>
                 <div>
-                  <strong>${order.pdfName || order.proforma + '.pdf'}</strong>
-                  <span>بسته دیجیتال پیش‌فاکتور (آماده بررسی و پرینت در انبار)</span>
+                  <strong>${escapeHtml(order.pdfName || order.proforma + '.pdf')}</strong>
+                  <span>${order.finalInvoiceNo ? `تبدیل‌شده به فاکتور نهایی ${escapeHtml(order.finalInvoiceNo)} — آماده پرینت در انبار` : 'بسته دیجیتال پیش‌فاکتور'}</span>
                 </div>
               </div>
               <div class="pdf-btns">
-                <button type="button" class="btn-pdf-view" data-action="view-pdf" data-id="${order.id}">👁️ مشاهده PDF</button>
-                <button type="button" class="btn-pdf-print" data-action="print-pdf" data-id="${order.id}">🖨️ پرینت برگه انبار</button>
+                <button type="button" class="btn-pdf-view" data-action="view-pdf" data-id="${escapeHtml(order.id)}">👁️ مشاهده PDF</button>
+                <button type="button" class="btn-pdf-print" data-action="print-pdf" data-id="${escapeHtml(order.id)}">🖨️ پرینت برگه انبار</button>
               </div>
             </div>
 
-            ${isReturned ? `
+            ${isAnyReturned ? `
               <div class="return-alert">
-                <strong>⚠️ مغایرت گزارش‌شده: ${order.returnReason}</strong>
-                <span>${order.returnNote}</span>
+                <strong>⚠️ ${isReturnedMgr ? 'مغایرت گزارش‌شده توسط مالی (عودت به مدیر فروش)' : 'برگشت به کارشناس فروش'}: ${escapeHtml(order.returnReason || '')}</strong>
+                <span>${escapeHtml(order.returnNote || '')}</span>
               </div>
             ` : ''}
 
@@ -2178,13 +2528,16 @@
               <div class="step-chain">${stepsHtml}</div>
             </div>
 
-            ${(order.cartonsOut || order.cartonsDelivered || order.signatureData) ? `
+            ${(order.finalInvoiceNo || order.cartonsOut || order.cartonsDelivered || order.signatureData) ? `
               <div class="logistics-strip">
                 <div style="display:flex; flex-wrap:wrap; gap:8px 14px;">
-                  ${order.cartonsOut ? `<span>📦 خروج انبار: <strong>${order.cartonsOut} کارتن</strong></span>` : ''}
-                  ${order.driverName ? `<span>🚚 راننده: <strong>${order.driverName}</strong></span>` : ''}
-                  ${order.cartonsDelivered ? `<span>📦 تحویلی: <strong>${order.cartonsDelivered} کارتن</strong></span>` : ''}
-                  ${order.customerSigner ? `<span>👤 تحویل‌گیرنده: <strong>${order.customerSigner}</strong></span>` : ''}
+                  ${order.finalInvoiceNo ? `<span>🧾 شماره فاکتور فروش: <strong>${escapeHtml(order.finalInvoiceNo)}</strong></span>` : ''}
+                  ${order.accountingNote ? `<span>💰 یادداشت مالی: <strong>${escapeHtml(order.accountingNote)}</strong></span>` : ''}
+                  ${order.cartonsOut ? `<span>📦 خروجی انبار: <strong>${escapeHtml(order.cartonsOut)} کارتن</strong></span>` : ''}
+                  ${order.exitTime ? `<span>⏰ ساعت خروج: <strong>${escapeHtml(order.exitTime)}</strong></span>` : ''}
+                  ${order.driverName ? `<span>🚚 راننده: <strong>${escapeHtml(order.driverName)}</strong></span>` : ''}
+                  ${order.cartonsDelivered ? `<span>📦 تحویلی: <strong>${escapeHtml(order.cartonsDelivered)} کارتن</strong></span>` : ''}
+                  ${order.customerSigner ? `<span>👤 تحویل‌گیرنده: <strong>${escapeHtml(order.customerSigner)}</strong></span>` : ''}
                 </div>
                 ${order.signatureData ? `
                   <div class="sig-preview-box" title="امضای دیجیتال مشتری">
@@ -2203,233 +2556,522 @@
       }).join('');
     }
 
-    // ==================== بخش مستقل مالی (فاز ۲): آپلود تصویر چک/فیش + تایید مالی و مدیریت ====================
-    function onCheckImageSelected(event) {
-      const file = event.target.files && event.target.files[0];
-      if (!file) {
-        tempCheckImage = null;
-        document.getElementById('c-image-preview-wrap').classList.add('hidden');
+    // ==================== فاز ۲: چرخه ۳ مرحله‌ای مالی (چک‌ها و واریزی‌ها) + صندوق ====================
+    function renderFinancePhase() {
+      renderCeoFinanceSummary();
+      renderFinanceSchematic();
+      renderChecksList();
+    }
+
+    function renderCeoFinanceSummary() {
+      const box = document.getElementById('ceo-finance-summary');
+      if (!box) return;
+      if (!currentRole || (currentRole.id !== 'ceo' && currentRole.id !== 'accounting')) {
+        box.classList.add('hidden');
+        return;
+      }
+      box.classList.remove('hidden');
+
+      const allChecks = state.checks || [];
+      const safeChecks = allChecks.filter(c => c.status === 'finalized' && c.docType === 'چک دریافتی').length;
+      const approvedDeposits = allChecks.filter(c => c.status === 'finalized' && c.docType === 'واریزی').length;
+      const pendingBoth = allChecks.filter(c => c.status === 'pending').length;
+      const returnedDocs = allChecks.filter(c => c.status === 'returned').length;
+
+      const repRows = SALES_ROLES.map(sr => {
+        const list = allChecks.filter(c => c.salesOwnerId === sr.id);
+        const chkSafe = list.filter(c => c.status === 'finalized' && c.docType === 'چک دریافتی').length;
+        const depOk = list.filter(c => c.status === 'finalized' && c.docType === 'واریزی').length;
+        const pend = list.filter(c => c.status === 'pending').length;
+        const ret = list.filter(c => c.status === 'returned').length;
+        return `
+          <tr>
+            <td><strong>${escapeHtml(sr.title)}</strong></td>
+            <td style="color:var(--warning); font-weight:700;">${pend}</td>
+            <td style="color:var(--success); font-weight:800;">${chkSafe}</td>
+            <td style="color:var(--primary); font-weight:800;">${depOk}</td>
+            <td style="color:var(--danger); font-weight:700;">${ret}</td>
+          </tr>
+        `;
+      }).join('');
+
+      box.innerHTML = `
+        <div class="ceo-summary-card" style="border-color:#fcd34d;">
+          <div class="ceo-summary-head">
+            <h3 style="color:#92400e;">📊 گزارش خلاصه واحد مالی، صندوق چک‌ها و واریزی‌ها</h3>
+            <span class="tag tag-rev">در انتظار تایید دوگانه: ${pendingBoth} مورد</span>
+          </div>
+          <div class="stats-row" style="margin-top:0; margin-bottom:10px;">
+            <div class="stat-box"><div class="stat-num" style="color:var(--warning);">${pendingBoth}</div><div class="stat-lbl">در انتظار تایید</div></div>
+            <div class="stat-box"><div class="stat-num" style="color:var(--success);">${safeChecks}</div><div class="stat-lbl">🗄️ صندوق چک‌ها</div></div>
+            <div class="stat-box"><div class="stat-num" style="color:var(--primary);">${approvedDeposits}</div><div class="stat-lbl">📒 واریزی تاییدشده</div></div>
+            <div class="stat-box"><div class="stat-num" style="color:var(--danger);">${returnedDocs}</div><div class="stat-lbl">برگشتی به فروش</div></div>
+          </div>
+          <div class="summary-table-wrap">
+            <table class="summary-table">
+              <thead>
+                <tr>
+                  <th>کارشناس فروش</th>
+                  <th>در انتظار تایید</th>
+                  <th>چک در صندوق</th>
+                  <th>واریزی ثبت‌شده</th>
+                  <th>برگشتی</th>
+                </tr>
+              </thead>
+              <tbody>${repRows}</tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderFinanceSchematic() {
+      const track = document.getElementById('finance-flow-track');
+      if (!track) return;
+      const list = getVisibleChecks();
+      const s1 = list.filter(c => c.status === 'returned').length;
+      const s2 = list.filter(c => c.status === 'pending').length;
+      const s3 = list.filter(c => c.status === 'finalized').length;
+
+      track.innerHTML = `
+        <div class="flow-node ${currentRole && currentRole.isSales ? 'active-role' : ''}" data-fin-stage="returned">
+          <span class="flow-node-icon">📤</span>
+          <span class="flow-node-title">۱. بارگذاری کارشناس</span>
+          <span class="flow-node-count ${s1 > 0 ? 'has-items' : ''}">${s1} برگشتی</span>
+        </div>
+        <span class="flow-arrow">⬅</span>
+        <div class="flow-node ${currentRole && (currentRole.id === 'accounting' || currentRole.id === 'ceo') ? 'active-role' : ''}" data-fin-stage="pending_me">
+          <span class="flow-node-icon">⚖️</span>
+          <span class="flow-node-title">۲. تایید مالی و مدیریت</span>
+          <span class="flow-node-count ${s2 > 0 ? 'has-items' : ''}">${s2} در جریان</span>
+        </div>
+        <span class="flow-arrow">⬅</span>
+        <div class="flow-node" data-fin-stage="safe_checks">
+          <span class="flow-node-icon">🗄️</span>
+          <span class="flow-node-title">۳. صندوق چک / ثبت حسابداری</span>
+          <span class="flow-node-count ${s3 > 0 ? 'has-items' : ''}">${s3} نهایی‌شده</span>
+        </div>
+      `;
+    }
+
+    function compressImageFile(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const img = new Image();
+          img.onload = function () {
+            const canvas = document.createElement('canvas');
+            const maxSide = 950;
+            let w = img.width;
+            let h = img.height;
+            if (w > h && w > maxSide) {
+              h = Math.round((h * maxSide) / w);
+              w = maxSide;
+            } else if (h > maxSide) {
+              w = Math.round((w * maxSide) / h);
+              h = maxSide;
+            }
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+            resolve({ name: file.name, dataUrl: canvas.toDataURL('image/jpeg', 0.76) });
+          };
+          img.onerror = () => resolve(null);
+          img.src = e.target.result;
+        };
+        reader.onerror = () => resolve(null);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function onCheckImagesSelected(event, isRevise) {
+      const files = Array.from(event.target.files || []).slice(0, 4);
+      if (files.length === 0) {
+        if (isRevise) {
+          tempRevCheckImages = [];
+          document.getElementById('rev-chk-img-hint').textContent = '';
+        } else {
+          tempCheckImages = [];
+          document.getElementById('c-image-preview-wrap').classList.add('hidden');
+        }
         return;
       }
 
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const img = new Image();
-        img.onload = function () {
-          const canvas = document.createElement('canvas');
-          const maxSide = 1000;
-          let w = img.width;
-          let h = img.height;
-          if (w > h && w > maxSide) {
-            h = Math.round((h * maxSide) / w);
-            w = maxSide;
-          } else if (h > maxSide) {
-            w = Math.round((w * maxSide) / h);
-            h = maxSide;
-          }
-          canvas.width = w;
-          canvas.height = h;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, w, h);
-          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.78);
+      const compressed = [];
+      for (const f of files) {
+        const res = await compressImageFile(f);
+        if (res) compressed.push(res);
+      }
 
-          tempCheckImage = { name: file.name, dataUrl: compressedDataUrl };
-          document.getElementById('c-image-preview').src = compressedDataUrl;
-          document.getElementById('c-image-hint').textContent = `✅ تصویر «${file.name}» آماده ثبت است.`;
-          document.getElementById('c-image-preview-wrap').classList.remove('hidden');
-        };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
+      if (isRevise) {
+        tempRevCheckImages = compressed;
+        document.getElementById('rev-chk-img-hint').textContent = `✅ ${compressed.length} تصویر جدید آماده جایگزینی است.`;
+      } else {
+        tempCheckImages = compressed;
+        const previewList = document.getElementById('c-image-preview-list');
+        previewList.innerHTML = compressed.map(im => `
+          <div class="check-thumb-box" style="width:68px; height:68px; cursor:default;">
+            <img src="${im.dataUrl}" alt="${escapeHtml(im.name)}" />
+          </div>
+        `).join('');
+        document.getElementById('c-image-hint').textContent = `✅ ${compressed.length} تصویر آماده بارگذاری و ارسال است.`;
+        document.getElementById('c-image-preview-wrap').classList.remove('hidden');
+      }
     }
 
     async function handleCreateCheck(e) {
       e.preventDefault();
       const docType = document.getElementById('c-type').value;
+      const customer = document.getElementById('c-customer').value.trim();
       const amount = document.getElementById('c-amount').value.trim();
+      const refNo = document.getElementById('c-ref').value.trim();
       const caption = document.getElementById('c-caption').value.trim();
 
-      if (!caption || !tempCheckImage || !tempCheckImage.dataUrl) {
-        return;
-      }
+      if (!customer || !amount || !caption || tempCheckImages.length === 0) return;
 
       const newCheck = {
         id: 'chk-' + Date.now(),
         recordType: 'check_receipt',
-        docType: docType,
-        amount: amount,
-        caption: caption,
-        imageName: tempCheckImage.name,
-        imageData: tempCheckImage.dataUrl,
-        uploadedBy: currentRole ? getRoleDisplayName(currentRole.id) : 'کارشناس فروش',
+        docType,
+        customer,
+        amount,
+        refNo,
+        caption,
+        images: tempCheckImages,
+        salesOwnerId: currentRole.isSales ? currentRole.id : 'accounting',
+        salesOwnerName: currentRole.title,
         createdAt: nowDateTimeStr(),
+        status: 'pending', // 'pending' | 'returned' | 'finalized'
         financeStatus: 'pending',
         financeTime: '',
         ceoStatus: 'pending',
-        ceoTime: ''
+        ceoTime: '',
+        finalizedTime: '',
+        rejectReason: '',
+        rejectedBy: ''
       };
 
       state.checks.unshift(newCheck);
-      tempCheckImage = null;
+      tempCheckImages = [];
       document.getElementById('create-check-form').reset();
       document.getElementById('c-image-preview-wrap').classList.add('hidden');
 
       renderDashboard();
       await syncCheckToCloud(newCheck);
-      await addLogAndNotify(`💰 سند مالی جدید (${docType}) بارگذاری شد | کپشن: «${caption}» — در انتظار تایید مالی و مدیریت.`);
+      await addLogAndNotify(`💰 مدرک تسویه جدید (${docType}) برای «${customer}» به مبلغ ${amount} تومان توسط ${currentRole.title} بارگذاری شد.`);
     }
 
-    async function updateCheckApproval(checkId, target, decision) {
+    async function approveCheckItem(checkId, actor) {
       const item = state.checks.find(c => c.id === checkId);
       if (!item) return;
 
       const dt = nowDateTimeStr();
-      if (target === 'finance') {
-        item.financeStatus = decision;
+      if (actor === 'finance') {
+        item.financeStatus = 'approved';
         item.financeTime = dt;
-      } else if (target === 'ceo') {
-        item.ceoStatus = decision;
+      } else if (actor === 'ceo') {
+        item.ceoStatus = 'approved';
         item.ceoTime = dt;
+      }
+
+      // وقتی هر دو تایید شد -> ارسال به صندوق چک‌ها یا ثبت در حسابداری
+      if (item.financeStatus === 'approved' && item.ceoStatus === 'approved') {
+        item.status = 'finalized';
+        item.finalizedTime = dt;
+      } else {
+        item.status = 'pending';
       }
 
       renderDashboard();
       await syncCheckToCloud(item);
 
-      const who = target === 'finance' ? 'واحد حسابداری و مالی' : 'مدیرعامل';
-      const verb = decision === 'approved' ? 'تایید شد ✔️' : 'رد شد ❌';
-      await addLogAndNotify(`💳 سند مالی (${item.docType} - ${item.caption}) توسط ${who} ${verb}`);
+      const who = actor === 'finance' ? 'واحد مالی' : 'مدیریت';
+      const endMsg = item.status === 'finalized'
+        ? (item.docType === 'چک دریافتی' ? ' و به 🗄️ صندوق چک‌ها منتقل شد.' : ' و جهت ثبت در حسابداری نهایی شد.')
+        : ' (در انتظار تایید دوم).';
+      await addLogAndNotify(`✔️ مدرک ${item.docType} «${item.customer}» (${item.amount} تومان) توسط ${who} تایید شد${endMsg}`);
     }
 
-    function openCheckImageModal(checkId) {
+    function openCheckRejectModal(checkId, actor) {
       const item = state.checks.find(c => c.id === checkId);
-      if (!item || !item.imageData) return;
+      if (!item) return;
+      modalTargetCheckId = checkId;
+      modalCheckRejectBy = actor;
+      document.getElementById('modal-check-reject-desc').textContent = `${item.docType} | مشتری: ${item.customer} (${item.amount} تومان)`;
+      document.getElementById('inp-check-reject-note').value = '';
+      document.getElementById('modal-check-reject').classList.remove('hidden');
+    }
 
-      document.getElementById('modal-check-title').textContent = `🖼️ ${item.docType}`;
+    async function confirmCheckReject() {
+      const item = state.checks.find(c => c.id === modalTargetCheckId);
+      if (!item) return;
+      const note = document.getElementById('inp-check-reject-note').value.trim();
+      if (!note) return;
+
+      const dt = nowDateTimeStr();
+      if (modalCheckRejectBy === 'finance') {
+        item.financeStatus = 'rejected';
+        item.financeTime = dt;
+        item.rejectedBy = 'واحد حسابداری و مالی';
+      } else {
+        item.ceoStatus = 'rejected';
+        item.ceoTime = dt;
+        item.rejectedBy = 'مدیرعامل';
+      }
+      item.status = 'returned';
+      item.rejectReason = note;
+
+      closeModal('modal-check-reject');
+      renderDashboard();
+      await syncCheckToCloud(item);
+      await addLogAndNotify(`❌ مدرک ${item.docType} «${item.customer}» توسط ${item.rejectedBy} رد شد و به کارشناس فروش (${getSalesOwnerName(item)}) برگشت خورد.`);
+    }
+
+    function openReviseCheckModal(checkId) {
+      const item = state.checks.find(c => c.id === checkId);
+      if (!item) return;
+      modalTargetCheckId = checkId;
+      tempRevCheckImages = [];
+
+      document.getElementById('modal-revise-check-alert').innerHTML = `<strong>علت برگشت (${escapeHtml(item.rejectedBy || 'مالی/مدیریت')}):</strong><span>${escapeHtml(item.rejectReason || '')}</span>`;
+      document.getElementById('inp-rev-chk-customer').value = item.customer || '';
+      document.getElementById('inp-rev-chk-amount').value = item.amount || '';
+      document.getElementById('inp-rev-chk-ref').value = item.refNo || '';
+      document.getElementById('inp-rev-chk-caption').value = item.caption || '';
+      document.getElementById('inp-rev-chk-img').value = '';
+      document.getElementById('rev-chk-img-hint').textContent = '';
+      document.getElementById('modal-revise-check').classList.remove('hidden');
+    }
+
+    async function confirmReviseCheck() {
+      const item = state.checks.find(c => c.id === modalTargetCheckId);
+      if (!item) return;
+
+      item.customer = document.getElementById('inp-rev-chk-customer').value.trim() || item.customer;
+      item.amount = document.getElementById('inp-rev-chk-amount').value.trim() || item.amount;
+      item.refNo = document.getElementById('inp-rev-chk-ref').value.trim();
+      item.caption = document.getElementById('inp-rev-chk-caption').value.trim() || item.caption;
+      if (tempRevCheckImages.length > 0) {
+        item.images = tempRevCheckImages;
+      }
+
+      item.status = 'pending';
+      item.financeStatus = 'pending';
+      item.financeTime = '';
+      item.ceoStatus = 'pending';
+      item.ceoTime = '';
+      item.rejectReason = '';
+      item.rejectedBy = '';
+      item.createdAt = nowDateTimeStr() + ' (اصلاح‌شده)';
+
+      closeModal('modal-revise-check');
+      renderDashboard();
+      await syncCheckToCloud(item);
+      await addLogAndNotify(`🔄 مدرک ${item.docType} «${item.customer}» توسط ${getSalesOwnerName(item)} اصلاح و مجدداً به مالی و مدیریت ارسال شد.`);
+    }
+
+    function openCheckImageModal(checkId, imgIndex) {
+      const item = state.checks.find(c => c.id === checkId);
+      if (!item || !item.images || !item.images[imgIndex]) return;
+      const imgObj = item.images[imgIndex];
+
+      document.getElementById('modal-check-title').textContent = `🖼️ ${item.docType} — ${item.customer || ''}`;
       document.getElementById('modal-check-caption-box').innerHTML = `
-        <strong>📌 متعلق به / کپشن:</strong> ${item.caption}
-        ${item.amount ? `<div style="margin-top:4px; color:var(--success); font-weight:800;">💰 مبلغ: ${item.amount} تومان</div>` : ''}
-        <div style="margin-top:4px; font-size:11px; color:var(--muted);">ثبت توسط: ${item.uploadedBy || '-'} | زمان: ${item.createdAt || '-'}</div>
+        <strong>📌 کپشن / توضیحات:</strong> ${escapeHtml(item.caption || '')}
+        ${item.amount ? `<div style="margin-top:4px; color:var(--success); font-weight:800;">💰 مبلغ: ${escapeHtml(item.amount)} تومان ${item.refNo ? `| ${escapeHtml(item.refNo)}` : ''}</div>` : ''}
+        <div style="margin-top:4px; font-size:11px; color:var(--muted);">کارشناس فروش: ${escapeHtml(getSalesOwnerName(item))} | زمان: ${escapeHtml(item.createdAt || '')}</div>
       `;
-      document.getElementById('modal-check-full-img').src = item.imageData;
-      document.getElementById('btn-download-check-img').href = item.imageData;
-      document.getElementById('btn-download-check-img').download = item.imageName || 'check-receipt.jpg';
+      document.getElementById('modal-check-full-img').src = imgObj.dataUrl;
+      document.getElementById('btn-download-check-img').href = imgObj.dataUrl;
+      document.getElementById('btn-download-check-img').download = imgObj.name || 'settlement-doc.jpg';
       document.getElementById('modal-check-img').classList.remove('hidden');
+    }
+
+    function updateCheckFilterPillsUI() {
+      document.querySelectorAll('.check-filter-pill').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.checkFilter === activeCheckFilter);
+      });
     }
 
     function setCheckFilter(filter) {
       activeCheckFilter = filter;
-      document.querySelectorAll('.check-filter-pill').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.checkFilter === filter);
-      });
+      updateCheckFilterPillsUI();
       renderChecksList();
     }
 
     function renderChecksList() {
       const container = document.getElementById('checks-list');
-      if (!container) return;
+      if (!container || !currentRole) return;
 
-      let list = state.checks || [];
-      if (activeCheckFilter === 'pending_fin') {
-        list = list.filter(c => c.financeStatus === 'pending');
-      } else if (activeCheckFilter === 'pending_ceo') {
-        list = list.filter(c => c.ceoStatus === 'pending');
-      } else if (activeCheckFilter === 'approved_all') {
-        list = list.filter(c => c.financeStatus === 'approved' && c.ceoStatus === 'approved');
-      } else if (activeCheckFilter === 'rejected') {
-        list = list.filter(c => c.financeStatus === 'rejected' || c.ceoStatus === 'rejected');
+      let list = getVisibleChecks();
+      if (activeCheckFilter === 'pending_me') {
+        if (currentRole.id === 'ceo') {
+          list = list.filter(c => c.status === 'pending' && c.ceoStatus === 'pending');
+        } else if (currentRole.id === 'accounting') {
+          list = list.filter(c => c.status === 'pending' && c.financeStatus === 'pending');
+        } else if (currentRole.isSales) {
+          list = list.filter(c => c.status === 'returned');
+        } else {
+          list = list.filter(c => c.status === 'pending');
+        }
+      } else if (activeCheckFilter === 'safe_checks') {
+        list = list.filter(c => c.status === 'finalized' && c.docType === 'چک دریافتی');
+      } else if (activeCheckFilter === 'approved_deposits') {
+        list = list.filter(c => c.status === 'finalized' && c.docType === 'واریزی');
+      } else if (activeCheckFilter === 'returned') {
+        list = list.filter(c => c.status === 'returned');
       }
 
       if (list.length === 0) {
         container.innerHTML = `
           <div class="form-card" style="text-align:center; padding:26px 16px;">
             <div style="font-size:26px; margin-bottom:6px;">🧾</div>
-            <strong style="font-size:13px; display:block;">سند مالی (چک یا فیش) در این بخش ثبت نشده است</strong>
-            <span style="font-size:11.5px; color:var(--muted);">کارشناس فروش می‌تواند از فرم بالا تصویر چک یا فیش مشتری را به همراه کپشن بارگذاری کند.</span>
+            <strong style="font-size:13px; display:block;">مدرکی در این فیلتر وجود ندارد</strong>
+            <span style="font-size:11.5px; color:var(--muted);">برای مشاهده کل چک‌ها و واریزی‌ها روی «همه مدارک مالی» یا «صندوق چک‌ها» بزنید.</span>
           </div>
         `;
         return;
       }
 
-      const canFinanceAct = currentRole && (currentRole.id === 'accounting' || currentRole.id === 'ceo');
-      const canCeoAct = currentRole && currentRole.id === 'ceo';
-
       container.innerHTML = list.map(item => {
-        const finApproved = item.financeStatus === 'approved';
-        const finRejected = item.financeStatus === 'rejected';
-        const ceoApproved = item.ceoStatus === 'approved';
-        const ceoRejected = item.ceoStatus === 'rejected';
-        const fullyDone = finApproved && ceoApproved;
+        const isCheck = item.docType === 'چک دریافتی';
+        const isFinalized = item.status === 'finalized';
+        const isReturned = item.status === 'returned';
+        const finOk = item.financeStatus === 'approved';
+        const finNo = item.financeStatus === 'rejected';
+        const ceoOk = item.ceoStatus === 'approved';
+        const ceoNo = item.ceoStatus === 'rejected';
+        const ownerName = getSalesOwnerName(item);
+
+        const thumbsHtml = (item.images || []).map((im, idx) => `
+          <div class="check-thumb-box" data-check-action="view-img" data-check-id="${escapeHtml(item.id)}" data-img-idx="${idx}" title="کلیک برای بزرگ‌نمایی">
+            <img src="${im.dataUrl}" alt="${escapeHtml(im.name || 'مدرک')}" />
+            <span class="check-thumb-zoom">🔍 تصویر ${idx + 1}</span>
+          </div>
+        `).join('');
+
+        // زنجیره ۳ مرحله‌ای داخل هر کارت مالی
+        const step3Label = isCheck ? 'صندوق چک‌ها' : 'تایید مبلغ و ثبت حسابداری';
+        const miniStepsHtml = `
+          <div class="step-chain three-step">
+            <div class="step-unit ${isReturned ? 'returned' : 'done'}">
+              <div class="step-circle">${isReturned ? '!' : '✓'}</div>
+              <div class="step-label">بارگذاری کارشناس</div>
+            </div>
+            <div class="step-unit ${isFinalized ? 'done' : isReturned ? '' : 'current'}">
+              <div class="step-circle">${isFinalized ? '✓' : '۲'}</div>
+              <div class="step-label">تایید مالی و مدیریت</div>
+            </div>
+            <div class="step-unit ${isFinalized ? 'done' : ''}">
+              <div class="step-circle">${isFinalized ? '✓' : '۳'}</div>
+              <div class="step-label">${step3Label}</div>
+            </div>
+          </div>
+        `;
 
         let actionsHtml = '';
-        if (canFinanceAct && item.financeStatus === 'pending') {
-          actionsHtml += `
-            <button type="button" class="btn-action-main success" data-check-action="fin-approve" data-check-id="${item.id}">
-              ✔️ تایید واحد مالی
-            </button>
-            <button type="button" class="btn-action-danger" data-check-action="fin-reject" data-check-id="${item.id}">
-              ❌ رد مالی
-            </button>
-          `;
-        }
-        if (canCeoAct && item.ceoStatus === 'pending') {
-          actionsHtml += `
-            <button type="button" class="btn-action-main" data-check-action="ceo-approve" data-check-id="${item.id}">
-              👔 تایید نهایی مدیریت
-            </button>
-            <button type="button" class="btn-action-danger" data-check-action="ceo-reject" data-check-id="${item.id}">
-              ❌ رد مدیریت
-            </button>
-          `;
-        }
-
-        if (!actionsHtml) {
+        if (isReturned) {
+          if (currentRole.isSales && item.salesOwnerId === currentRole.id) {
+            actionsHtml = `
+              <button type="button" class="btn-action-danger" style="width:100%;" data-check-action="revise-check" data-check-id="${escapeHtml(item.id)}">
+                ✏️ اصلاح مدرک تسویه و ارسال مجدد به مالی و مدیریت
+              </button>
+            `;
+          } else {
+            actionsHtml = `
+              <div class="wait-banner" style="background:var(--danger-soft); color:var(--danger);">
+                <span>↩️ برگشت خورده به کارشناس فروش (<strong>${escapeHtml(ownerName)}</strong>) جهت اصلاح</span>
+              </div>
+            `;
+          }
+        } else if (!isFinalized) {
+          if (currentRole.id === 'accounting' && item.financeStatus === 'pending') {
+            actionsHtml += `
+              <button type="button" class="btn-action-main success" data-check-action="fin-approve" data-check-id="${escapeHtml(item.id)}">
+                ✔️ تایید واحد مالی
+              </button>
+              <button type="button" class="btn-action-danger" data-check-action="fin-reject" data-check-id="${escapeHtml(item.id)}">
+                ❌ رد و برگشت به کارشناس
+              </button>
+            `;
+          }
+          if (currentRole.id === 'ceo' && item.ceoStatus === 'pending') {
+            actionsHtml += `
+              <button type="button" class="btn-action-main" data-check-action="ceo-approve" data-check-id="${escapeHtml(item.id)}">
+                👔 تایید مدیریت
+              </button>
+              <button type="button" class="btn-action-danger" data-check-action="ceo-reject" data-check-id="${escapeHtml(item.id)}">
+                ❌ رد و برگشت به کارشناس
+              </button>
+            `;
+          }
+          if (!actionsHtml) {
+            actionsHtml = `
+              <div class="wait-banner">
+                <span>⏳ در انتظار تکمیل تایید دوگانه واحد مالی و مدیرعامل</span>
+              </div>
+            `;
+          }
+        } else {
           actionsHtml = `
-            <div class="wait-banner" style="${fullyDone ? 'background:var(--success-soft); color:var(--success); font-weight:800;' : ''}">
-              <span>${fullyDone ? '🎉 تایید کامل واحد مالی و مدیریت انجام شد' : '🔒 وضعیت ثبت شده (برای تغییر وضعیت نیاز به دسترسی مالی یا مدیرعامل است)'}</span>
+            <div class="wait-banner" style="background:var(--success-soft); color:var(--success); font-weight:800;">
+              <span>${isCheck ? '🗄️ تایید دوگانه کامل شد — بایگانی در صندوق چک‌ها' : '📒 تایید دوگانه کامل شد — تایید مبلغ و ثبت در حسابداری'}</span>
+              <span>${escapeHtml(item.finalizedTime || '')}</span>
             </div>
           `;
         }
+
+        const myPendingTurn = (!isFinalized && !isReturned) && (
+          (currentRole.id === 'accounting' && item.financeStatus === 'pending') ||
+          (currentRole.id === 'ceo' && item.ceoStatus === 'pending')
+        );
 
         return `
-          <article class="order-card ${fullyDone ? 'done-state' : (finRejected || ceoRejected) ? 'returned-state' : ''}">
+          <article class="order-card ${isReturned ? 'returned-state' : isFinalized ? 'done-state' : myPendingTurn ? 'my-turn' : ''}">
             <div class="order-head">
-              <div class="tag-row">
-                <span class="tag" style="background:var(--warning-soft); color:#92400e; border:1px solid #fde68a;">${item.docType}</span>
-                <span class="tag">👤 ${item.uploadedBy || 'فروش'}</span>
-                <span class="tag">🕒 ${item.createdAt || ''}</span>
+              <div>
+                <div class="tag-row">
+                  <span class="tag" style="background:${isCheck ? 'var(--warning-soft)' : 'var(--primary-soft)'}; color:${isCheck ? '#92400e' : '#1e40af'}; border:1px solid ${isCheck ? '#fde68a' : '#bfdbfe'};">${isCheck ? '📝 چک دریافتی' : '🧾 واریزی'}</span>
+                  <span class="tag tag-sales">👤 ${escapeHtml(ownerName)}</span>
+                  <span class="tag">🕒 ${escapeHtml(item.createdAt || '')}</span>
+                  ${item.refNo ? `<span class="tag">🔖 ${escapeHtml(item.refNo)}</span>` : ''}
+                </div>
+                <div class="order-customer">${escapeHtml(item.customer || '')}</div>
+                <div class="order-items">📌 ${escapeHtml(item.caption || '')}</div>
               </div>
-              ${item.amount ? `<div style="text-align:left; flex-shrink:0;"><strong style="font-size:13px; color:var(--success);">${item.amount}</strong><div style="font-size:10px; color:var(--muted);">تومان</div></div>` : ''}
+              ${item.amount ? `<div style="text-align:left; flex-shrink:0;"><strong style="font-size:13px; color:var(--success);">${escapeHtml(item.amount)}</strong><div style="font-size:10px; color:var(--muted);">تومان</div></div>` : ''}
             </div>
 
-            <div class="check-media-row">
-              ${item.imageData ? `
-                <div class="check-thumb-box" data-check-action="view-img" data-check-id="${item.id}" title="کلیک جهت بزرگ‌نمایی">
-                  <img src="${item.imageData}" alt="${item.docType}" />
-                  <span class="check-thumb-zoom">🔍 بزرگ‌نمایی</span>
-                </div>
-              ` : ''}
-              <div style="flex:1; min-width:0;">
-                <div style="font-size:11px; color:var(--muted); font-weight:700;">📌 متعلق به / کپشن سند:</div>
-                <div style="font-size:13.5px; font-weight:800; color:var(--text); margin-top:3px;">${item.caption}</div>
-                ${item.imageData ? `
-                  <button type="button" class="btn-pdf-view" style="margin-top:8px;" data-check-action="view-img" data-check-id="${item.id}">
-                    👁️ مشاهده تصویر کامل چک / فیش
-                  </button>
-                ` : ''}
+            ${thumbsHtml ? `<div class="check-thumbs-grid">${thumbsHtml}</div>` : ''}
+
+            ${isReturned ? `
+              <div class="return-alert">
+                <strong>❌ عدم تایید توسط ${escapeHtml(item.rejectedBy || 'مالی/مدیریت')}:</strong>
+                <span>${escapeHtml(item.rejectReason || '')}</span>
               </div>
-            </div>
+            ` : ''}
+
+            ${isFinalized ? `
+              <div class="safe-banner">
+                <span>${isCheck ? '🗄️ موجود در صندوق چک‌ها (دسترسی دائمی برای مالی و مدیریت)' : '📒 مبلغ تایید و آماده/ثبت‌شده در حسابداری'}</span>
+                <span>✅ تایید دوگانه کامل</span>
+              </div>
+            ` : ''}
+
+            <div class="card-schematic">${miniStepsHtml}</div>
 
             <div class="approval-dual-grid">
-              <div class="approval-status-box ${finApproved ? 'ok' : finRejected ? 'no' : ''}">
+              <div class="approval-status-box ${finOk ? 'ok' : finNo ? 'no' : ''}">
                 <strong>💰 تایید واحد مالی:</strong>
                 <div style="margin-top:2px;">
-                  ${finApproved ? `✅ تایید شد (${item.financeTime || ''})` : finRejected ? `❌ رد شده (${item.financeTime || ''})` : '⏳ در انتظار بررسی حسابداری'}
+                  ${finOk ? `✅ تایید شد (${escapeHtml(item.financeTime || '')})` : finNo ? `❌ رد شد (${escapeHtml(item.financeTime || '')})` : '⏳ در انتظار بررسی واحد مالی'}
                 </div>
               </div>
-              <div class="approval-status-box ${ceoApproved ? 'ok' : ceoRejected ? 'no' : ''}">
+              <div class="approval-status-box ${ceoOk ? 'ok' : ceoNo ? 'no' : ''}">
                 <strong>👔 تایید مدیریت:</strong>
                 <div style="margin-top:2px;">
-                  ${ceoApproved ? `✅ تایید شد (${item.ceoTime || ''})` : ceoRejected ? `❌ رد شده (${item.ceoTime || ''})` : '⏳ در انتظار تایید مدیرعامل'}
+                  ${ceoOk ? `✅ تایید شد (${escapeHtml(item.ceoTime || '')})` : ceoNo ? `❌ رد شد (${escapeHtml(item.ceoTime || '')})` : '⏳ در انتظار تایید مدیرعامل'}
                 </div>
               </div>
             </div>
@@ -2444,19 +3086,20 @@
 
     function renderLogsList() {
       const el = document.getElementById('logs-list');
+      if (!el) return;
       if (state.logs.length === 0) {
         el.innerHTML = '<p style="font-size:12px; color:var(--muted);">هنوز گزارشی ثبت نشده است.</p>';
         return;
       }
       el.innerHTML = state.logs.map(l => `
         <div style="padding:9px 0; border-bottom:1px solid var(--border); font-size:12px;">
-          <span style="font-size:10px; color:var(--muted); display:block;">ساعت ${l.time}</span>
-          <span>${l.text}</span>
+          <span style="font-size:10px; color:var(--muted); display:block;">ساعت ${escapeHtml(l.time)}</span>
+          <span>${escapeHtml(l.text)}</span>
         </div>
       `).join('');
     }
 
-    // ==================== مدیریت تب‌ها ====================
+    // ==================== مدیریت تب‌های فاز ۱ ====================
     function switchTab(tab) {
       activeTab = tab;
       ['board', 'new', 'logs'].forEach(t => {
@@ -2465,7 +3108,7 @@
       });
 
       if (tab === 'new' && currentRole) {
-        const allowed = currentRole.id === 'sales' || currentRole.id === 'ceo';
+        const allowed = currentRole.isSales;
         document.getElementById('create-order-form').classList.toggle('hidden', !allowed);
         document.getElementById('new-order-permission-msg').classList.toggle('hidden', allowed);
       }
@@ -2475,26 +3118,23 @@
     function onPdfSelected(event, mode) {
       const file = event.target.files && event.target.files[0];
       if (!file) return;
+      const hintId = mode === 'new' ? 'f-pdf-hint' : mode === 'revise' ? 'rev-pdf-hint' : 'final-inv-pdf-hint';
+
       if (file.size > 1.5 * 1024 * 1024) {
-        if (mode === 'new') {
-          tempNewPdf = { name: file.name, dataUrl: null };
-          document.getElementById('f-pdf-hint').textContent = `⚠️ حجم فایل بیش از ۱.۵ مگابایت است؛ نام فایل ثبت شد و برگه چاپی استاندارد انبار تولید می‌شود.`;
-        } else {
-          tempRevPdf = { name: file.name, dataUrl: null };
-          document.getElementById('rev-pdf-hint').textContent = `⚠️ حجم فایل بیش از ۱.۵ مگابایت است؛ برگه چاپی استاندارد انبار جایگزین می‌شود.`;
-        }
+        const packet = { name: file.name, dataUrl: null };
+        if (mode === 'new') tempNewPdf = packet;
+        else if (mode === 'revise') tempRevPdf = packet;
+        else tempFinalInvPdf = packet;
+        document.getElementById(hintId).textContent = `⚠️ حجم فایل بیش از ۱.۵ مگابایت است؛ نام فایل ثبت شد و برگه چاپی استاندارد انبار تولید می‌شود.`;
         return;
       }
       const reader = new FileReader();
       reader.onload = function (e) {
         const packet = { name: file.name, dataUrl: e.target.result };
-        if (mode === 'new') {
-          tempNewPdf = packet;
-          document.getElementById('f-pdf-hint').textContent = `✅ فایل «${file.name}» ضمیمه بسته سفارش شد و روی تمام دستگاه‌ها قابل مشاهده است.`;
-        } else {
-          tempRevPdf = packet;
-          document.getElementById('rev-pdf-hint').textContent = `✅ نسخه جدید «${file.name}» آماده ارسال به انبار است.`;
-        }
+        if (mode === 'new') tempNewPdf = packet;
+        else if (mode === 'revise') tempRevPdf = packet;
+        else tempFinalInvPdf = packet;
+        document.getElementById(hintId).textContent = `✅ فایل «${file.name}» ضمیمه شد و روی تمام دستگاه‌ها قابل مشاهده است.`;
       };
       reader.readAsDataURL(file);
     }
@@ -2513,28 +3153,29 @@
           <div id="print-area" style="border:2px solid #0f172a; border-radius:14px; padding:18px; background:#fff;">
             <div style="display:flex; justify-content:space-between; border-bottom:2px solid #0f172a; padding-bottom:10px; margin-bottom:12px;">
               <div>
-                <h4 style="font-size:15px; font-weight:800;">برگه حواله و پیش‌فاکتور انبار | پخش قطعات یدکی</h4>
+                <h4 style="font-size:15px; font-weight:800;">${order.finalInvoiceNo ? 'فاکتور فروش نهایی و حواله انبار' : 'برگه پیش‌فاکتور فروش'} | پخش قطعات یدکی</h4>
                 <p style="font-size:11px; color:#475569;">ایران‌خودرو و سایپا (۵۰ برند منتخب)</p>
               </div>
               <div style="text-align:left; font-size:12px;">
-                <strong>شماره: ${order.proforma}</strong>
-                <div>نسخه: ${order.rev > 0 ? 'اصلاحیه #' + order.rev : 'اصلی'}</div>
+                <strong>پیش‌فاکتور: ${escapeHtml(order.proforma)}</strong>
+                ${order.finalInvoiceNo ? `<div style="color:#059669; font-weight:800;">فاکتور فروش: ${escapeHtml(order.finalInvoiceNo)}</div>` : ''}
+                <div>کارشناس: ${escapeHtml(getSalesOwnerName(order))}</div>
               </div>
             </div>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; background:#f8fafc; padding:10px; border-radius:10px; font-size:12px; margin-bottom:12px;">
-              <div><strong>مشتری:</strong> ${order.customer}</div>
-              <div><strong>تسویه:</strong> ${order.payment}</div>
-              <div><strong>مبلغ کل:</strong> ${order.amount || '-'} تومان</div>
-              <div><strong>کانال سفارش:</strong> ${order.channel}</div>
+              <div><strong>مشتری:</strong> ${escapeHtml(order.customer)}</div>
+              <div><strong>تسویه:</strong> ${escapeHtml(order.payment || '-')}</div>
+              <div><strong>مبلغ کل:</strong> ${escapeHtml(order.amount || '-')} تومان</div>
+              <div><strong>کانال سفارش:</strong> ${escapeHtml(order.channel || '-')}</div>
             </div>
             <div style="border:1px solid #94a3b8; border-radius:10px; padding:12px; font-size:12.5px; margin-bottom:14px;">
               <strong style="display:block; margin-bottom:6px;">شرح قطعات جهت جمع‌آوری و بسته‌بندی در انبار:</strong>
-              <p>${order.items}</p>
+              <p>${escapeHtml(order.items)}</p>
             </div>
             <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px; font-size:11px; text-align:center;">
-              <div style="border:1px solid #cbd5e1; padding:8px; border-radius:8px;">تایید مالی: ${order.times[2] || 'در انتظار'}</div>
-              <div style="border:1px solid #cbd5e1; padding:8px; border-radius:8px;">مدیر فروش: ${order.times[3] || 'در انتظار'}</div>
-              <div style="border:1px solid #cbd5e1; padding:8px; border-radius:8px;">مدیرعامل: ${order.times[4] || 'در انتظار'}</div>
+              <div style="border:1px solid #cbd5e1; padding:8px; border-radius:8px;">مدیر فروش: ${escapeHtml(order.times[2] || 'در انتظار')}</div>
+              <div style="border:1px solid #cbd5e1; padding:8px; border-radius:8px;">تایید مشتری: ${escapeHtml(order.times[3] || 'در انتظار')}</div>
+              <div style="border:1px solid #cbd5e1; padding:8px; border-radius:8px;">حسابداری/فاکتور: ${escapeHtml(order.times[4] || 'در انتظار')}</div>
             </div>
           </div>
         `;
@@ -2546,9 +3187,11 @@
       }
     }
 
-    // ==================== ثبت سفارش جدید ====================
+    // ==================== مرحله ۱: ثبت سفارش جدید توسط کارشناس فروش ====================
     async function handleCreateOrder(e) {
       e.preventDefault();
+      if (!currentRole || !currentRole.isSales) return;
+
       const customer = document.getElementById('f-customer').value.trim();
       const proforma = document.getElementById('f-proforma').value.trim();
       const channel = document.getElementById('f-channel').value;
@@ -2559,23 +3202,28 @@
 
       const newOrder = {
         id: 'ord-' + Date.now(),
+        schemaVersion: 3,
+        salesOwnerId: currentRole.id,
+        salesOwnerName: currentRole.title,
         customer,
         proforma,
+        finalInvoiceNo: '',
+        accountingNote: '',
         channel,
         amount,
         payment,
         items,
-        stage: 2,
+        stage: 2, // مستقیم ارسال به مدیر فروش
         status: 'active',
         rev: 0,
-        pdfName: tempNewPdf ? tempNewPdf.name : `${proforma}_Invoice.pdf`,
+        pdfName: tempNewPdf ? tempNewPdf.name : `${proforma}_PreInvoice.pdf`,
         pdfData: tempNewPdf ? tempNewPdf.dataUrl : null,
         times: { 1: t }
       };
 
       state.orders.unshift(newOrder);
       await syncOrderToCloud(newOrder);
-      await addLogAndNotify(`📝 پیش‌فاکتور جدید «${proforma}» برای «${customer}» همراه با بسته PDF ثبت و به حسابداری ارسال شد.`);
+      await addLogAndNotify(`📝 پیش‌فاکتور جدید «${proforma}» برای «${customer}» توسط ${currentRole.title} ثبت و به مدیر فروش ارسال شد.`);
 
       tempNewPdf = null;
       document.getElementById('create-order-form').reset();
@@ -2584,32 +3232,91 @@
       setOrderFilter('all');
     }
 
-    // ==================== مراحل ۲ تا ۵ ====================
+    // ==================== مراحل ۲ و ۳ (تایید مدیر فروش و تاییدیه مشتری) ====================
     async function advanceOrderStage(orderId) {
       const order = state.orders.find(o => o.id === orderId);
       if (!order) return;
 
-      const st = STAGES[order.stage - 1];
       const t = nowTimeStr();
-      order.times[order.stage] = t;
-      order.stage += 1;
-
-      const msg = order.stage === 6
-        ? `📦 بار جمع شد: سفارش «${order.customer}» (${order.proforma}) در انبار جمع‌آوری شد و در انتظار خروج سرپرست انبار است (ساعت ${t}).`
-        : `✔️ ${st.short} تایید شد: سفارش «${order.customer}» (${order.proforma}) در ساعت ${t} به مرحله بعد رفت.`;
+      let msg = '';
+      if (order.stage === 2) {
+        order.times[2] = t;
+        order.stage = 3;
+        msg = `📊 مدیر فروش تایید کرد: پیش‌فاکتور «${order.proforma}» (${order.customer}) جهت اخذ تاییدیه مشتری به کارتابل ${getSalesOwnerName(order)} رفت.`;
+      } else if (order.stage === 3) {
+        order.times[3] = t;
+        order.stage = 4;
+        msg = `🤝 تاییدیه مشتری ثبت شد: پیش‌فاکتور «${order.proforma}» (${order.customer}) توسط ${getSalesOwnerName(order)} به واحد حسابداری و مالی ارسال شد.`;
+      }
 
       renderDashboard();
       await syncOrderToCloud(order);
-      await addLogAndNotify(msg);
+      if (msg) await addLogAndNotify(msg);
     }
 
-    // ==================== مرحله ۶: خروج بار توسط سرپرست انبار ====================
+    // مدیر فروش مغایرت برگشتی از حسابداری را بررسی و مجدد به حسابداری می‌فرستد
+    async function resolveMgrReturnToAccounting(orderId) {
+      const order = state.orders.find(o => o.id === orderId);
+      if (!order) return;
+
+      const t = nowTimeStr();
+      order.status = 'active';
+      order.stage = 4;
+      order.returnReason = '';
+      order.returnNote = '';
+      order.times[2] = `${t} (بررسی مجدد)`;
+
+      renderDashboard();
+      await syncOrderToCloud(order);
+      await addLogAndNotify(`🔄 مدیر فروش مغایرت پیش‌فاکتور «${order.proforma}» (${order.customer}) را بررسی و مجدداً به حسابداری ارسال کرد.`);
+    }
+
+    // ==================== مرحله ۴: تبدیل پیش‌فاکتور به فاکتور فروش (حسابداری) ====================
+    function openConvertInvoiceModal(orderId) {
+      const order = state.orders.find(o => o.id === orderId);
+      if (!order) return;
+      modalTargetOrderId = orderId;
+      tempFinalInvPdf = null;
+      document.getElementById('modal-convert-desc').textContent = `مشتری: ${order.customer} | شماره پیش‌فاکتور: ${order.proforma} | کارشناس: ${getSalesOwnerName(order)}`;
+      document.getElementById('inp-final-invoice-no').value = order.finalInvoiceNo || '';
+      document.getElementById('inp-accounting-note').value = order.accountingNote || '';
+      document.getElementById('inp-final-inv-pdf').value = '';
+      document.getElementById('final-inv-pdf-hint').textContent = 'در صورت عدم انتخاب فایل جدید، همان فایل پیش‌فاکتور همراه با شماره فاکتور نهایی به انبار ارسال می‌شود.';
+      document.getElementById('modal-convert-invoice').classList.remove('hidden');
+    }
+
+    async function confirmConvertInvoice() {
+      const order = state.orders.find(o => o.id === modalTargetOrderId);
+      if (!order) return;
+
+      const invNo = normalizeDigits(document.getElementById('inp-final-invoice-no').value);
+      const note = document.getElementById('inp-accounting-note').value.trim();
+      if (!invNo) return;
+
+      const t = nowTimeStr();
+      order.finalInvoiceNo = invNo;
+      order.accountingNote = note;
+      if (tempFinalInvPdf) {
+        order.pdfName = tempFinalInvPdf.name;
+        order.pdfData = tempFinalInvPdf.dataUrl;
+      }
+      order.times[4] = t;
+      order.stage = 5; // ارسال به سرپرست انبار
+
+      closeModal('modal-convert-invoice');
+      renderDashboard();
+      await syncOrderToCloud(order);
+      await addLogAndNotify(`🧾 حسابداری پیش‌فاکتور «${order.proforma}» (${order.customer}) را به فاکتور فروش شماره «${invNo}» تبدیل و به سرپرست انبار ارسال کرد.`);
+    }
+
+    // ==================== مرحله ۵: سرپرست انبار (جمع‌آوری + تعداد کارتن + ساعت خروج) ====================
     function openWarehouseExitModal(orderId) {
       const order = state.orders.find(o => o.id === orderId);
       if (!order) return;
       modalTargetOrderId = orderId;
-      document.getElementById('modal-exit-desc').textContent = `مشتری: ${order.customer} (${order.proforma})`;
+      document.getElementById('modal-exit-desc').textContent = `مشتری: ${order.customer} | فاکتور فروش: ${order.finalInvoiceNo || order.proforma}`;
       document.getElementById('inp-exit-cartons').value = order.cartonsOut || '';
+      document.getElementById('inp-exit-time').value = order.exitTime || nowTimeStr();
       document.getElementById('inp-exit-driver').value = order.driverName || '';
       document.getElementById('modal-warehouse-exit').classList.remove('hidden');
     }
@@ -2618,23 +3325,24 @@
       const order = state.orders.find(o => o.id === modalTargetOrderId);
       if (!order) return;
 
-      const cartons = parseInt(document.getElementById('inp-exit-cartons').value, 10);
+      const cartons = parseInt(normalizeDigits(document.getElementById('inp-exit-cartons').value), 10);
+      const exitTime = document.getElementById('inp-exit-time').value.trim() || nowTimeStr();
       const driver = document.getElementById('inp-exit-driver').value.trim();
       if (!cartons || cartons < 1 || !driver) return;
 
-      const t = nowTimeStr();
       order.cartonsOut = cartons;
+      order.exitTime = exitTime;
       order.driverName = driver;
-      order.times[6] = t;
-      order.stage = 7;
+      order.times[5] = exitTime;
+      order.stage = 6; // ارسال به کارتابل راننده
 
       closeModal('modal-warehouse-exit');
       renderDashboard();
       await syncOrderToCloud(order);
-      await addLogAndNotify(`🏷️ خروج از انبار: بار «${order.customer}» (${order.proforma}) با ${cartons} کارتن تحویل راننده (${driver}) شد.`);
+      await addLogAndNotify(`📦 خروج از انبار: فاکتور «${order.finalInvoiceNo || order.proforma}» (${order.customer}) به تعداد ${cartons} کارتن در ساعت ${exitTime} تحویل راننده (${driver}) شد.`);
     }
 
-    // ==================== مرحله ۷ (نهایی): تحویل راننده + پد امضای دیجیتال لمسی ====================
+    // ==================== مرحله ۶ (نهایی): تحویل راننده + پد امضای دیجیتال لمسی ====================
     function initSignaturePad() {
       sigCanvas = document.getElementById('driver-sig-canvas');
       if (!sigCanvas) return;
@@ -2701,7 +3409,7 @@
       if (!order) return;
       modalTargetOrderId = orderId;
 
-      document.getElementById('modal-delivery-desc').textContent = `مشتری: ${order.customer} (${order.proforma}) | خروجی انبار: ${order.cartonsOut || '-'} کارتن`;
+      document.getElementById('modal-delivery-desc').textContent = `مشتری: ${order.customer} (${order.finalInvoiceNo || order.proforma}) | خروجی انبار: ${order.cartonsOut || '-'} کارتن`;
       document.getElementById('inp-del-cartons').value = order.cartonsOut || '';
       document.getElementById('inp-del-signer').value = '';
       document.getElementById('sig-error-msg').classList.add('hidden');
@@ -2714,7 +3422,7 @@
       const order = state.orders.find(o => o.id === modalTargetOrderId);
       if (!order) return;
 
-      const cartons = parseInt(document.getElementById('inp-del-cartons').value, 10);
+      const cartons = parseInt(normalizeDigits(document.getElementById('inp-del-cartons').value), 10);
       const signer = document.getElementById('inp-del-signer').value.trim();
       const errEl = document.getElementById('sig-error-msg');
 
@@ -2730,42 +3438,87 @@
       order.cartonsDelivered = cartons;
       order.customerSigner = signer;
       order.signatureData = signatureDataUrl;
-      order.times[7] = dt;
-      order.stage = 8;
+      order.times[6] = dt;
+      order.stage = 7; // تکمیل قطعی
 
-      const reportMsg = `🎉 تحویل نهایی و امضا شد: سفارش «${order.customer}» (${order.proforma}) به تعداد ${cartons} کارتن در تاریخ ${dt} با امضای دیجیتال «${signer}» تحویل گردید.`;
+      const reportMsg = `🎉 تحویل نهایی و امضا شد: فاکتور «${order.finalInvoiceNo || order.proforma}» (${order.customer}) به تعداد ${cartons} کارتن در تاریخ ${dt} با امضای دیجیتال «${signer}» تحویل گردید.`;
       closeModal('modal-driver-delivery');
       renderDashboard();
       await syncOrderToCloud(order);
       await addLogAndNotify(reportMsg);
     }
 
-    // ==================== چرخه برگشت مغایرت و اصلاح ====================
-    function openReturnModal(orderId) {
+    // ==================== چرخه‌های برگشت مغایرت و عدم تایید مشتری ====================
+    function openReturnModal(orderId, targetMode) {
       const order = state.orders.find(o => o.id === orderId);
       if (!order) return;
       modalTargetOrderId = orderId;
-      document.getElementById('modal-return-desc').textContent = `ثبت مغایرت برای پیش‌فاکتور ${order.proforma} (${order.customer}):`;
+      modalReturnTarget = targetMode; // 'sales' | 'sales_mgr' | 'customer_reject'
+
+      const titleEl = document.getElementById('modal-return-title');
+      const descEl = document.getElementById('modal-return-desc');
+      const selectEl = document.getElementById('inp-return-reason');
+      const btnEl = document.getElementById('btn-confirm-return');
+
+      if (targetMode === 'sales_mgr') {
+        titleEl.textContent = '⚠️ مغایرت نرم‌افزار و عودت به مدیر فروش';
+        descEl.textContent = `گزارش مغایرت پیش‌فاکتور «${order.proforma}» (${order.customer}) با نرم‌افزار حسابداری جهت بررسی مدیر فروش:`;
+        selectEl.innerHTML = `
+          <option value="مغایرت پیش‌فاکتور کارتابل با نرم‌افزار حسابداری">مغایرت پیش‌فاکتور کارتابل با نرم‌افزار حسابداری</option>
+          <option value="مغایرت قیمت یا تخفیف ثبت‌شده در نرم‌افزار">مغایرت قیمت یا تخفیف ثبت‌شده در نرم‌افزار</option>
+          <option value="مغایرت شرایط تسویه یا سقف اعتبار مشتری">مغایرت شرایط تسویه یا سقف اعتبار مشتری</option>
+        `;
+        btnEl.textContent = '↩️ عودت به کارتابل مدیر فروش';
+      } else if (targetMode === 'customer_reject') {
+        titleEl.textContent = '❌ ثبت عدم تایید مشتری و برگشت به مرحله اول';
+        descEl.textContent = `پیش‌فاکتور «${order.proforma}» (${order.customer}) به کارتابل شما برمی‌گردد تا پس از اصلاح، مجدداً توسط مدیر فروش تایید شود:`;
+        selectEl.innerHTML = `
+          <option value="عدم تایید مشتری - درخواست تغییر اقلام یا تعداد">عدم تایید مشتری - درخواست تغییر اقلام یا تعداد</option>
+          <option value="عدم تایید مشتری - درخواست اصلاح قیمت یا تخفیف">عدم تایید مشتری - درخواست اصلاح قیمت یا تخفیف</option>
+          <option value="عدم تایید مشتری - تغییر شرایط تسویه">عدم تایید مشتری - تغییر شرایط تسویه</option>
+        `;
+        btnEl.textContent = '↩️ برگشت به مرحله اول برای اصلاح و تایید مجدد مدیر فروش';
+      } else {
+        titleEl.textContent = '⚠️ گزارش مغایرت و برگشت به کارشناس فروش';
+        descEl.textContent = `برگشت سفارش «${order.proforma}» (${order.customer}) به کارتابل ${getSalesOwnerName(order)}:`;
+        selectEl.innerHTML = `
+          <option value="کسری موجودی قطعه در انبار">کسری موجودی قطعه در انبار</option>
+          <option value="مغایرت کد فنی / مدل خودرو">مغایرت کد فنی / مدل خودرو (ایران‌خودرو/سایپا)</option>
+          <option value="عدم موجودی برند درخواستی">عدم موجودی برند درخواستی</option>
+          <option value="اصلاح تخفیف یا قیمت فروش">اصلاح تخفیف یا قیمت فروش</option>
+        `;
+        btnEl.textContent = '↩️ برگشت به کارتابل کارشناس فروش';
+      }
+
       document.getElementById('inp-return-note').value = '';
       document.getElementById('modal-return').classList.remove('hidden');
     }
 
-    async function confirmReturnToSales() {
+    async function confirmReturnOrder() {
       const order = state.orders.find(o => o.id === modalTargetOrderId);
       if (!order) return;
       const reason = document.getElementById('inp-return-reason').value;
       const note = document.getElementById('inp-return-note').value.trim();
       if (!note) return;
 
-      order.status = 'returned';
-      order.stage = 1;
       order.returnReason = reason;
       order.returnNote = note;
+
+      let msg = '';
+      if (modalReturnTarget === 'sales_mgr') {
+        order.status = 'returned_to_sales_mgr';
+        order.stage = 2;
+        msg = `⚠️ عودت از مالی به مدیر فروش: پیش‌فاکتور «${order.proforma}» (${order.customer}) به علت «${reason}» جهت بررسی به مدیر فروش برگشت خورد.`;
+      } else {
+        order.status = 'returned_to_sales';
+        order.stage = 1;
+        msg = `↩️ برگشت به کارشناس فروش (${getSalesOwnerName(order)}): پیش‌فاکتور «${order.proforma}» (${order.customer}) به علت «${reason}» به مرحله اول برگشت خورد.`;
+      }
 
       closeModal('modal-return');
       renderDashboard();
       await syncOrderToCloud(order);
-      await addLogAndNotify(`⚠️ برگشت مغایرت به فروش: «${order.customer}» (${order.proforma}) به علت «${reason}» برگشت خورد.`);
+      await addLogAndNotify(msg);
     }
 
     function openReviseModal(orderId) {
@@ -2774,10 +3527,11 @@
       modalTargetOrderId = orderId;
       tempRevPdf = null;
 
-      document.getElementById('modal-revise-alert').innerHTML = `<strong>علت برگشت: ${order.returnReason}</strong><span>${order.returnNote}</span>`;
+      document.getElementById('modal-revise-alert').innerHTML = `<strong>علت برگشت: ${escapeHtml(order.returnReason || '')}</strong><span>${escapeHtml(order.returnNote || '')}</span>`;
       document.getElementById('inp-rev-proforma').value = order.proforma;
       document.getElementById('inp-rev-amount').value = order.amount || '';
       document.getElementById('inp-rev-items').value = order.items || '';
+      document.getElementById('inp-rev-pdf').value = '';
       document.getElementById('modal-revise').classList.remove('hidden');
     }
 
@@ -2790,7 +3544,9 @@
       order.items = document.getElementById('inp-rev-items').value.trim();
       order.rev = (order.rev || 0) + 1;
       order.status = 'active';
-      order.stage = 2;
+      order.stage = 2; // ارسال مجدد برای تایید مدیر فروش قبل از تایید مشتری
+      order.returnReason = '';
+      order.returnNote = '';
       order.times = { 1: `${nowTimeStr()} (اصلاحیه #${order.rev})` };
       if (tempRevPdf) {
         order.pdfName = tempRevPdf.name;
@@ -2802,10 +3558,10 @@
       closeModal('modal-revise');
       renderDashboard();
       await syncOrderToCloud(order);
-      await addLogAndNotify(`🔄 اصلاح پیش‌فاکتور و آپلود PDF جدید: «${order.customer}» (${order.proforma} - نسخه #${order.rev}) مجدداً به حسابداری ارسال شد.`);
+      await addLogAndNotify(`🔄 اصلاح پیش‌فاکتور «${order.proforma}» (${order.customer} - نسخه #${order.rev}) توسط ${getSalesOwnerName(order)} انجام و مجدداً جهت تایید به مدیر فروش ارسال شد.`);
     }
 
-    // ==================== تنظیمات مدیریتی، واتساپ و تغییر رمزها (همگام‌سازی‌شده در ابر) ====================
+    // ==================== تنظیمات مدیریتی، واتساپ و تغییر رمزها ====================
     function openSettingsModal() {
       document.getElementById('inp-wa-phone').value = state.waPhone || '';
       const pinsSection = document.getElementById('ceo-pins-section');
@@ -2814,10 +3570,9 @@
       if (currentRole && currentRole.id === 'ceo') {
         pinsSection.classList.remove('hidden');
         pinsList.innerHTML = ROLES.map(r => `
-          <div style="display:grid; grid-template-columns:1.2fr 1fr 0.7fr; align-items:center; gap:6px; background:var(--surface-soft); padding:7px 9px; border-radius:10px; border:1px solid var(--border);">
-            <span style="font-size:11.5px; font-weight:700;">${r.icon} ${r.title}</span>
-            <input type="text" data-role-name="${r.id}" value="${(state.roleNames && state.roleNames[r.id]) || ''}" placeholder="نام مسئول" class="form-control" style="min-height:34px; padding:4px 8px; font-size:11.5px;" />
-            <input type="text" data-role-pin="${r.id}" value="${getRolePin(r.id)}" dir="ltr" class="form-control" style="min-height:34px; padding:4px 6px; text-align:center; font-weight:800; font-size:12px;" />
+          <div style="display:grid; grid-template-columns:1.5fr 0.7fr; align-items:center; gap:8px; background:var(--surface-soft); padding:7px 10px; border-radius:10px; border:1px solid var(--border);">
+            <span style="font-size:11.5px; font-weight:700;">${r.icon} ${escapeHtml(getRoleTitle(r.id))}</span>
+            <input type="text" data-role-pin="${r.id}" value="${escapeHtml(getRolePin(r.id))}" dir="ltr" class="form-control" style="min-height:34px; padding:4px 6px; text-align:center; font-weight:800; font-size:12px;" />
           </div>
         `).join('');
       } else {
@@ -2836,16 +3591,11 @@
           const val = normalizeDigits(inp.value);
           if (val) state.rolePins[rId] = val;
         });
-        document.querySelectorAll('[data-role-name]').forEach(inp => {
-          const rId = inp.getAttribute('data-role-name');
-          state.roleNames[rId] = inp.value.trim();
-        });
       }
 
-      updateLoginDropdownLabels();
       closeModal('modal-settings');
       renderDashboard();
-      await addLogAndNotify('⚙️ تنظیمات مدیریتی، نام مسئولین و رمزهای عبور روی سرور ابری ذخیره شد.');
+      await addLogAndNotify('⚙️ تنظیمات مدیریتی و رمزهای عبور روی سرور ابری ذخیره شد.');
     }
 
     function buildWhatsAppUrl(text) {
@@ -2856,15 +3606,21 @@
     }
 
     function sendFullSummaryWhatsApp() {
+      const safeChecksCount = state.checks.filter(c => c.status === 'finalized' && c.docType === 'چک دریافتی').length;
+      const approvedDepCount = state.checks.filter(c => c.status === 'finalized' && c.docType === 'واریزی').length;
       const lines = [
         `📊 گزارش لحظه‌ای پخش قطعات یدکی (${nowDateTimeStr()})`,
-        ...state.orders.map(o => {
-          const st = o.status === 'returned'
-            ? `برگشت مغایرت (${o.returnReason})`
-            : o.stage === 8
-              ? `تحویل قطعی (${o.cartonsDelivered || o.cartonsOut} کارتن - تحویل‌گیرنده: ${o.customerSigner || '-'} - ساعت: ${o.times[7] || '-'})`
-              : `مرحله ${o.stage}: ${STAGES[o.stage - 1].short}`;
-          return `• ${o.customer} (${o.proforma}) ⬅️ ${st}`;
+        `🗄️ صندوق چک‌ها: ${safeChecksCount} فقره | 📒 واریزی‌های تاییدشده: ${approvedDepCount} فقره`,
+        '── وضعیت سفارش‌ها ──',
+        ...getVisibleOrders().map(o => {
+          const st = o.status === 'returned_to_sales'
+            ? `برگشت به کارشناس (${o.returnReason})`
+            : o.status === 'returned_to_sales_mgr'
+              ? `مغایرت مالی/عودت به مدیر فروش (${o.returnReason})`
+              : o.stage >= 7
+                ? `تحویل قطعی (${o.cartonsDelivered || o.cartonsOut} کارتن - تحویل‌گیرنده: ${o.customerSigner || '-'})`
+                : `مرحله ${o.stage}: ${STAGES[o.stage - 1].short}`;
+          return `• ${o.customer} (${o.finalInvoiceNo || o.proforma} | ${getSalesOwnerName(o)}) ⬅️ ${st}`;
         })
       ];
       window.open(buildWhatsAppUrl(lines.join('\n')), '_blank', 'noopener');
@@ -2886,10 +3642,8 @@
     // ==================== اتصال رویدادها پس از بارگذاری DOM ====================
     document.addEventListener('DOMContentLoaded', function () {
       loadLocalCache();
-      updateLoginDropdownLabels();
       fetchFromCloud(true);
 
-      // همگام‌سازی خودکار هر ۴ ثانیه با سرور ابری برای تمام گوشی‌ها
       pollTimer = setInterval(() => {
         fetchFromCloud(false);
       }, 4000);
@@ -2911,7 +3665,7 @@
       document.getElementById('phase-btn-2').addEventListener('click', () => switchPhase(2));
       document.getElementById('phase-btn-3').addEventListener('click', () => switchPhase(3));
 
-      // کلیک روی ایستگاه‌های نقشه شماتیک
+      // کلیک روی ایستگاه‌های نقشه شماتیک فروش
       document.getElementById('master-flow-track').addEventListener('click', function (e) {
         const node = e.target.closest('[data-station-stage]');
         if (!node) return;
@@ -2930,7 +3684,14 @@
         renderOrdersList();
       });
 
-      // تب‌ها
+      // کلیک روی ایستگاه‌های نقشه شماتیک مالی
+      document.getElementById('finance-flow-track').addEventListener('click', function (e) {
+        const node = e.target.closest('[data-fin-stage]');
+        if (!node) return;
+        setCheckFilter(node.getAttribute('data-fin-stage'));
+      });
+
+      // تب‌های فاز ۱
       document.getElementById('tab-btn-board').addEventListener('click', () => switchTab('board'));
       document.getElementById('tab-btn-new').addEventListener('click', () => switchTab('new'));
       document.getElementById('tab-btn-logs').addEventListener('click', () => switchTab('logs'));
@@ -2942,15 +3703,22 @@
         });
       });
 
-      // فیلترها و رویدادهای بخش مستقل مالی (چک‌ها و فیش‌ها - فاز ۲)
+      // فیلترها و رویدادهای بخش مالی (فاز ۲)
       document.querySelectorAll('.check-filter-pill').forEach(btn => {
         btn.addEventListener('click', function () {
           setCheckFilter(this.dataset.checkFilter);
         });
       });
 
+      document.getElementById('finance-sales-filter').addEventListener('change', function () {
+        activeFinanceSalesFilter = this.value;
+        renderFinanceSchematic();
+        renderChecksList();
+      });
+
       document.getElementById('create-check-form').addEventListener('submit', handleCreateCheck);
-      document.getElementById('c-image').addEventListener('change', onCheckImageSelected);
+      document.getElementById('c-image').addEventListener('change', e => onCheckImagesSelected(e, false));
+      document.getElementById('inp-rev-chk-img').addEventListener('change', e => onCheckImagesSelected(e, true));
 
       document.getElementById('checks-list').addEventListener('click', function (e) {
         const targetEl = e.target.closest('[data-check-action]');
@@ -2958,11 +3726,14 @@
         const action = targetEl.getAttribute('data-check-action');
         const id = targetEl.getAttribute('data-check-id');
 
-        if (action === 'view-img') openCheckImageModal(id);
-        else if (action === 'fin-approve') updateCheckApproval(id, 'finance', 'approved');
-        else if (action === 'fin-reject') updateCheckApproval(id, 'finance', 'rejected');
-        else if (action === 'ceo-approve') updateCheckApproval(id, 'ceo', 'approved');
-        else if (action === 'ceo-reject') updateCheckApproval(id, 'ceo', 'rejected');
+        if (action === 'view-img') {
+          const idx = parseInt(targetEl.getAttribute('data-img-idx') || '0', 10);
+          openCheckImageModal(id, idx);
+        } else if (action === 'fin-approve') approveCheckItem(id, 'finance');
+        else if (action === 'fin-reject') openCheckRejectModal(id, 'finance');
+        else if (action === 'ceo-approve') approveCheckItem(id, 'ceo');
+        else if (action === 'ceo-reject') openCheckRejectModal(id, 'ceo');
+        else if (action === 'revise-check') openReviseCheckModal(id);
       });
 
       // دکمه‌های داخل کارت‌های سفارش
@@ -2973,26 +3744,34 @@
         const id = btn.getAttribute('data-id');
 
         if (action === 'advance') advanceOrderStage(id);
+        else if (action === 'mgr-resolve-to-acc') resolveMgrReturnToAccounting(id);
+        else if (action === 'convert-invoice') openConvertInvoiceModal(id);
         else if (action === 'warehouse-exit') openWarehouseExitModal(id);
         else if (action === 'driver-delivery') openDriverDeliveryModal(id);
-        else if (action === 'return') openReturnModal(id);
+        else if (action === 'return-to-sales') openReturnModal(id, 'sales');
+        else if (action === 'return-to-mgr') openReturnModal(id, 'sales_mgr');
+        else if (action === 'customer-reject') openReturnModal(id, 'customer_reject');
         else if (action === 'revise') openReviseModal(id);
         else if (action === 'view-pdf') openPdfModal(id, false);
         else if (action === 'print-pdf') openPdfModal(id, true);
       });
 
-      // فرم ثبت پیش‌فاکتور جدید
+      // فرم‌های ثبت و آپلود PDF
       document.getElementById('create-order-form').addEventListener('submit', handleCreateOrder);
       document.getElementById('f-pdf').addEventListener('change', e => onPdfSelected(e, 'new'));
       document.getElementById('inp-rev-pdf').addEventListener('change', e => onPdfSelected(e, 'revise'));
+      document.getElementById('inp-final-inv-pdf').addEventListener('change', e => onPdfSelected(e, 'final'));
 
       // دکمه‌های مودال‌ها
       document.getElementById('btn-trigger-print').addEventListener('click', () => window.print());
+      document.getElementById('btn-confirm-convert-invoice').addEventListener('click', confirmConvertInvoice);
       document.getElementById('btn-confirm-exit').addEventListener('click', confirmWarehouseExit);
       document.getElementById('btn-confirm-delivery').addEventListener('click', confirmDriverDelivery);
       document.getElementById('btn-clear-sig').addEventListener('click', clearSignaturePad);
-      document.getElementById('btn-confirm-return').addEventListener('click', confirmReturnToSales);
+      document.getElementById('btn-confirm-return').addEventListener('click', confirmReturnOrder);
       document.getElementById('btn-confirm-revise').addEventListener('click', confirmSalesRevision);
+      document.getElementById('btn-confirm-check-reject').addEventListener('click', confirmCheckReject);
+      document.getElementById('btn-confirm-revise-check').addEventListener('click', confirmReviseCheck);
       document.getElementById('btn-save-settings').addEventListener('click', saveManagerSettings);
       document.getElementById('btn-send-full-wa').addEventListener('click', sendFullSummaryWhatsApp);
       document.getElementById('btn-hide-toast').addEventListener('click', () => {
