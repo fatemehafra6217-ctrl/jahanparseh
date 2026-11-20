@@ -215,7 +215,7 @@
       justify-content: center;
     }
 
-    .login-error-box {
+    .login-error-box, .inline-error-box {
       background: var(--danger-soft);
       border: 1px solid #fecaca;
       color: var(--danger);
@@ -669,6 +669,11 @@
       flex-wrap: wrap;
     }
 
+    .pdf-packet.final-inv {
+      background: var(--success-soft);
+      border-color: #6ee7b7;
+    }
+
     .pdf-packet-info {
       display: flex;
       align-items: center;
@@ -680,6 +685,11 @@
       font-size: 11.5px;
       color: #1e3a8a;
       display: block;
+      word-break: break-all;
+    }
+
+    .pdf-packet.final-inv .pdf-packet-info strong {
+      color: #065f46;
     }
 
     .pdf-packet-info span {
@@ -688,9 +698,14 @@
       display: block;
     }
 
+    .pdf-packet.final-inv .pdf-packet-info span {
+      color: #047857;
+    }
+
     .pdf-btns {
       display: flex;
       gap: 6px;
+      flex-wrap: wrap;
     }
 
     .btn-pdf-view {
@@ -702,6 +717,10 @@
       font-size: 11px;
       font-weight: 800;
       cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
 
     .btn-pdf-print {
@@ -713,6 +732,9 @@
       font-size: 11px;
       font-weight: 800;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
 
     /* نوار شماتیک داخل هر کارت */
@@ -1038,6 +1060,11 @@
       background: var(--warning-soft);
     }
 
+    .upload-box.green {
+      border-color: #6ee7b7;
+      background: var(--success-soft);
+    }
+
     /* پد امضای دیجیتال لمسی در کارتابل راننده */
     .sig-pad-wrapper {
       border: 2px dashed #94a3b8;
@@ -1082,7 +1109,7 @@
     .modal-panel {
       background: #fff;
       width: 100%;
-      max-width: 480px;
+      max-width: 500px;
       border-radius: 20px;
       padding: 18px;
       max-height: 92vh;
@@ -1091,13 +1118,15 @@
     }
 
     .modal-panel.wide {
-      max-width: 720px;
+      max-width: 760px;
     }
 
     .modal-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
       padding-bottom: 10px;
       margin-bottom: 12px;
       border-bottom: 1px solid var(--border);
@@ -1253,10 +1282,10 @@
 
       <!-- ==================== محتوای فاز ۱: زنجیره فروش تا امضای مشتری ==================== -->
       <div id="phase-view-1">
-        <!-- خلاصه گزارش مدیرعامل (فقط در کارتابل مدیرعامل نمایش داده می‌شود) -->
+        <!-- خلاصه گزارش مدیرعامل -->
         <div id="ceo-sales-summary" class="hidden"></div>
 
-        <!-- نقشه شماتیک ۶ ایستگاه (قابل کلیک برای فیلتر) -->
+        <!-- نقشه شماتیک ۶ ایستگاه -->
         <div class="schematic-master">
           <div class="schematic-head">
             <h3>🗺️ نقشه شماتیک ۶ مرحله‌ای جریان فروش تا تحویل (برای فیلتر روی هر ایستگاه بزنید)</h3>
@@ -1266,7 +1295,7 @@
             <div class="flow-track" id="master-flow-track"></div>
           </div>
           <div class="return-loop-banner">
-            <span>↩️ <strong>چرخه‌های برگشت:</strong> عدم تایید مشتری ⬅️ برگشت به کارشناس فروش و تایید مجدد مدیر فروش | مغایرت نرم‌افزار در حسابداری ⬅️ عودت به مدیر فروش | مغایرت انبار ⬅️ برگشت به کارشناس فروش.</span>
+            <span>↩️ <strong>چرخه‌های برگشت:</strong> عدم تایید مشتری ⬅️ برگشت به کارشناس و تایید مجدد مدیر فروش | مغایرت نرم‌افزار در حسابداری ⬅️ عودت به مدیر فروش | مغایرت انبار ⬅️ برگشت به واحد مالی جهت اصلاح فاکتور و ارسال مجدد به انبار.</span>
           </div>
         </div>
 
@@ -1343,15 +1372,15 @@
 
             <div class="upload-box">
               <label for="f-pdf" style="display:block; font-size:12px; font-weight:800; color:#1e3a8a; margin-bottom:6px;">
-                📄 بارگذاری فایل PDF پیش‌فاکتور (حداکثر ۱.۵ مگابایت جهت همگام‌سازی ابری و پرینت در انبار)
+                📄 بارگذاری فایل PDF یا تصویر پیش‌فاکتور (حداکثر ۳.۵ مگابایت)
               </label>
-              <input type="file" id="f-pdf" accept="application/pdf" style="font-size:12px; width:100%;" />
+              <input type="file" id="f-pdf" accept="application/pdf,image/*" style="font-size:12px; width:100%;" />
               <p id="f-pdf-hint" style="font-size:11px; color:#3b82f6; margin-top:6px;">
-                در صورت عدم انتخاب فایل یا حجم بالاتر از ۱.۵ مگابایت، سیستم به‌صورت خودکار برگه استاندارد قابل پرینت انبار را تولید می‌کند.
+                در صورت عدم انتخاب فایل، سیستم به‌صورت خودکار برگه استاندارد قابل پرینت انبار را تولید می‌کند.
               </p>
             </div>
 
-            <button type="submit" class="btn-action-main" style="width:100%;">
+            <button type="submit" id="btn-submit-new-order" class="btn-action-main" style="width:100%;">
               🚀 ثبت پیش‌فاکتور و ارسال به مدیر فروش
             </button>
           </form>
@@ -1392,7 +1421,7 @@
           </div>
         </div>
 
-        <!-- فرم بارگذاری مدارک تسویه مشتری (اختصاصی ۴ کارشناس فروش + مالی) -->
+        <!-- فرم بارگذاری مدارک تسویه مشتری -->
         <div id="check-upload-wrapper" class="form-card" style="margin-bottom:12px;">
           <h3 style="font-size:13.5px; font-weight:800; margin-bottom:12px; color:var(--text);">📤 بارگذاری مدارک تسویه مشتری (تصویر چک دریافتی یا واریزی)</h3>
           <form id="create-check-form">
@@ -1437,6 +1466,8 @@
               </div>
             </div>
 
+            <div id="check-form-error" class="inline-error-box hidden"></div>
+
             <button type="submit" class="btn-action-main warning" style="width:100%;">
               📤 ارسال مدارک تسویه جهت تایید واحد مالی و مدیریت
             </button>
@@ -1467,7 +1498,7 @@
         <div id="checks-list"></div>
       </div>
 
-      <!-- محتوای فاز ۳: واحد تامین و مدیریت ۵۰ برند (آماده توسعه) -->
+      <!-- محتوای فاز ۳: واحد تامین و مدیریت ۵۰ برند -->
       <div id="phase-view-3" class="hidden">
         <div class="form-card" style="text-align:center; padding:26px 18px;">
           <div style="font-size:34px; margin-bottom:8px;">🏭</div>
@@ -1481,29 +1512,47 @@
     </section>
   </div>
 
-  <!-- ==================== مودال مرحله ۴: تبدیل پیش‌فاکتور به فاکتور فروش (حسابداری) ==================== -->
+  <!-- ==================== مودال مرحله ۴: تبدیل پیش‌فاکتور به فاکتور فروش / اصلاح مغایرت انبار (حسابداری) ==================== -->
   <div id="modal-convert-invoice" class="modal-backdrop hidden">
     <div class="modal-panel">
       <div class="modal-head">
-        <h3>🧾 تبدیل پیش‌فاکتور به فاکتور فروش نهایی</h3>
+        <h3 id="modal-convert-title">🧾 تبدیل پیش‌فاکتور به فاکتور فروش نهایی</h3>
         <button type="button" data-close-modal="modal-convert-invoice" class="btn-close">✕</button>
       </div>
+      <div id="modal-convert-alert" class="return-alert hidden"></div>
       <div id="modal-convert-desc" style="font-size:12px; color:var(--muted); margin-bottom:12px;"></div>
-      <div class="form-group">
-        <label for="inp-final-invoice-no">شماره فاکتور فروش نهایی (ثبت‌شده در نرم‌افزار حسابداری) *</label>
-        <input type="text" id="inp-final-invoice-no" class="form-control" dir="ltr" placeholder="مثلاً: INV-1405-8821" />
+
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label for="inp-final-invoice-no">شماره فاکتور فروش نهایی *</label>
+          <input type="text" id="inp-final-invoice-no" class="form-control" dir="ltr" placeholder="مثلاً: INV-1405-8821" />
+        </div>
+        <div class="form-group">
+          <label for="inp-final-inv-amount">مبلغ فاکتور (تومان)</label>
+          <input type="text" id="inp-final-inv-amount" class="form-control" placeholder="مبلغ نهایی فاکتور" />
+        </div>
       </div>
+
       <div class="form-group">
-        <label for="inp-accounting-note">توضیحات بررسی حساب مشتری (اختیاری)</label>
-        <input type="text" id="inp-accounting-note" class="form-control" placeholder="مثلاً: مانده حساب بررسی و تایید شد" />
+        <label for="inp-final-inv-items">شرح اقلام فاکتور (قابل ویرایش در صورت اصلاح مغایرت انبار)</label>
+        <textarea id="inp-final-inv-items" class="form-control" rows="2"></textarea>
       </div>
-      <div class="upload-box">
-        <label for="inp-final-inv-pdf" style="display:block; font-size:12px; font-weight:800; color:#1e3a8a; margin-bottom:5px;">
-          📄 بارگذاری PDF فاکتور فروش نهایی جهت پرینت انبار (اختیاری)
+
+      <div class="form-group">
+        <label for="inp-accounting-note">توضیحات واحد مالی (اختیاری)</label>
+        <input type="text" id="inp-accounting-note" class="form-control" placeholder="مثلاً: مانده حساب بررسی شد / اقلام کسری از فاکتور حذف گردید" />
+      </div>
+
+      <div class="upload-box green">
+        <label for="inp-final-inv-pdf" style="display:block; font-size:12px; font-weight:800; color:#065f46; margin-bottom:6px;">
+          📄 بارگذاری فایل فاکتور فروش نهایی (PDF یا تصویر JPG/PNG)
         </label>
-        <input type="file" id="inp-final-inv-pdf" accept="application/pdf" style="font-size:12px; width:100%;" />
-        <p id="final-inv-pdf-hint" style="font-size:11px; color:#3b82f6; margin-top:4px;">در صورت عدم انتخاب فایل جدید، همان فایل پیش‌فاکتور همراه با شماره فاکتور نهایی به انبار ارسال می‌شود.</p>
+        <input type="file" id="inp-final-inv-pdf" accept="application/pdf,image/*" style="font-size:12px; width:100%;" />
+        <p id="final-inv-pdf-hint" style="font-size:11px; color:#047857; margin-top:5px;">فایل فاکتور نهایی (PDF یا عکس) را انتخاب کنید؛ در صورت عدم انتخاب، فایل فعلی همراه با شماره فاکتور نهایی به انبار ارسال می‌شود.</p>
       </div>
+
+      <div id="convert-invoice-error" class="inline-error-box hidden"></div>
+
       <button type="button" id="btn-confirm-convert-invoice" class="btn-action-main success" style="width:100%;">
         ✅ ثبت شماره فاکتور نهایی و ارسال به انبار
       </button>
@@ -1539,6 +1588,7 @@
         <label for="inp-check-reject-note">علت عدم تایید (جهت اصلاح توسط کارشناس فروش) *</label>
         <textarea id="inp-check-reject-note" class="form-control" rows="3" placeholder="مثلاً: تصویر چک ناخواناست / شماره صیادی ثبت نشده / مبلغ واریزی مغایرت دارد..."></textarea>
       </div>
+      <div id="check-reject-error" class="inline-error-box hidden">لطفاً علت عدم تایید را وارد کنید.</div>
       <button type="button" id="btn-confirm-check-reject" class="btn-action-danger" style="width:100%; padding:12px;">
         ↩️ ثبت عدم تایید و برگشت به کارشناس فروش
       </button>
@@ -1589,8 +1639,11 @@
     <div class="modal-panel wide">
       <div class="modal-head">
         <h3 id="modal-pdf-title">📄 بسته دیجیتال سفارش</h3>
-        <div style="display:flex; gap:6px;">
-          <button type="button" id="btn-trigger-print" class="btn-pdf-print">🖨️ پرینت مستقیم در انبار</button>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+          <a id="btn-pdf-open-tab" href="#" target="_blank" rel="noopener" class="btn-pdf-view hidden">📂 باز کردن تمام‌صفحه</a>
+          <a id="btn-pdf-download" href="#" download="invoice.pdf" class="btn-pdf-view hidden">⬇️ دانلود فایل</a>
+          <button type="button" id="btn-toggle-print-sheet" class="btn-pdf-view hidden">🧾 برگه استاندارد انبار</button>
+          <button type="button" id="btn-trigger-print" class="btn-pdf-print">🖨️ پرینت</button>
           <button type="button" data-close-modal="modal-pdf" class="btn-close">✕</button>
         </div>
       </div>
@@ -1620,6 +1673,7 @@
         <label for="inp-exit-driver">نام راننده / خودرو حمل *</label>
         <input type="text" id="inp-exit-driver" class="form-control" placeholder="مثلاً: آقای رضایی - نیسان شرکت" />
       </div>
+      <div id="exit-error-msg" class="inline-error-box hidden">لطفاً تعداد کارتن و نام راننده را وارد کنید.</div>
       <button type="button" id="btn-confirm-exit" class="btn-action-main success" style="width:100%;">
         ✅ تایید خروج از انبار و ارسال به کارتابل راننده
       </button>
@@ -1655,8 +1709,8 @@
             <button type="button" id="btn-clear-sig" class="btn-sm" style="padding:4px 9px; font-size:11px; color:var(--danger);">🗑️ پاک کردن امضا</button>
           </div>
         </div>
-        <div id="sig-error-msg" class="hidden" style="color:var(--danger); font-size:11.5px; font-weight:700; margin-top:5px;">
-          لطفاً نام تحویل‌گیرنده و امضای دیجیتال مشتری را ثبت کنید.
+        <div id="sig-error-msg" class="inline-error-box hidden" style="margin-top:8px;">
+          لطفاً تعداد کارتن، نام تحویل‌گیرنده و امضای دیجیتال مشتری را ثبت کنید.
         </div>
       </div>
 
@@ -1679,8 +1733,8 @@
         <select id="inp-return-reason" class="form-control"></select>
       </div>
       <div class="form-group">
-        <label for="inp-return-note">توضیحات دقیق *</label>
-        <textarea id="inp-return-note" class="form-control" rows="3" placeholder="توضیحات دقیق مغایرت یا اصلاح موردنیاز را بنویسید..."></textarea>
+        <label for="inp-return-note">توضیحات تکمیلی (اختیاری)</label>
+        <textarea id="inp-return-note" class="form-control" rows="3" placeholder="در صورت نیاز، جزئیات مغایرت یا اصلاح موردنیاز را بنویسید..."></textarea>
       </div>
       <button type="button" id="btn-confirm-return" class="btn-action-danger" style="width:100%; padding:12px;">
         ↩️ ثبت برگشت
@@ -1710,10 +1764,10 @@
       </div>
       <div class="upload-box">
         <label for="inp-rev-pdf" style="display:block; font-size:12px; font-weight:800; color:#1e3a8a; margin-bottom:5px;">
-          📄 بارگذاری نسخه جدید PDF پیش‌فاکتور
+          📄 بارگذاری نسخه جدید PDF یا تصویر پیش‌فاکتور
         </label>
-        <input type="file" id="inp-rev-pdf" accept="application/pdf" style="font-size:12px; width:100%;" />
-        <p id="rev-pdf-hint" style="font-size:11px; color:#3b82f6; margin-top:4px;">فایل PDF جدید جایگزین نسخه قبلی برای بررسی و پرینت انبار می‌شود.</p>
+        <input type="file" id="inp-rev-pdf" accept="application/pdf,image/*" style="font-size:12px; width:100%;" />
+        <p id="rev-pdf-hint" style="font-size:11px; color:#3b82f6; margin-top:4px;">فایل جدید جایگزین نسخه قبلی برای بررسی و پرینت انبار می‌شود.</p>
       </div>
       <button type="button" id="btn-confirm-revise" class="btn-action-main" style="width:100%;">
         🔄 ثبت اصلاحیه و ارسال مجدد برای تایید مدیر فروش
@@ -1766,8 +1820,8 @@
       { id: 'sales_3', title: 'افسانه کردی', roleLabel: 'کارشناس فروش', pin: '1103', icon: '📝', isSales: true, scope: 'ثبت پیش‌فاکتور، تاییدیه مشتری و بارگذاری مدارک تسویه (مشتریان اختصاصی)' },
       { id: 'sales_4', title: 'فاطمه افرا', roleLabel: 'کارشناس فروش', pin: '1104', icon: '📝', isSales: true, scope: 'ثبت پیش‌فاکتور، تاییدیه مشتری و بارگذاری مدارک تسویه (مشتریان اختصاصی)' },
       { id: 'sales_mgr', title: 'مدیر فروش', pin: '3333', icon: '📊', isSales: false, scope: 'تایید پیش‌فاکتورها و بررسی مغایرت‌های عودتی از مالی' },
-      { id: 'accounting', title: 'واحد حسابداری و مالی', pin: '2222', icon: '💰', isSales: false, scope: 'بررسی حساب، تبدیل به فاکتور فروش، تایید چک‌ها و دسترسی صندوق' },
-      { id: 'warehouse_sup', title: 'سرپرست انبار', pin: '5555', icon: '📦', isSales: false, scope: 'جمع‌آوری کالا، ثبت تعداد کارتن، ساعت خروج و تحویل به راننده' },
+      { id: 'accounting', title: 'واحد حسابداری و مالی', pin: '2222', icon: '💰', isSales: false, scope: 'بررسی حساب، تبدیل به فاکتور فروش، اصلاح مغایرت انبار، تایید چک‌ها و صندوق' },
+      { id: 'warehouse_sup', title: 'سرپرست انبار', pin: '5555', icon: '📦', isSales: false, scope: 'جمع‌آوری کالا، ثبت تعداد کارتن و ساعت خروج (یا برگشت مغایرت به مالی)' },
       { id: 'driver', title: 'راننده و توزیع', pin: '6666', icon: '🚚', isSales: false, scope: 'تحویل نهایی بار + دریافت امضای دیجیتال لمسی مشتری' }
     ];
 
@@ -1804,13 +1858,18 @@
     let tempNewPdf = null;
     let tempRevPdf = null;
     let tempFinalInvPdf = null;
+    let isReadingFile = false;
     let tempCheckImages = [];
     let tempRevCheckImages = [];
 
     let modalTargetOrderId = null;
-    let modalReturnTarget = 'sales'; // 'sales' | 'sales_mgr'
+    let modalReturnTarget = 'sales'; // 'sales' | 'sales_mgr' | 'customer_reject' | 'accounting'
     let modalTargetCheckId = null;
     let modalCheckRejectBy = 'finance'; // 'finance' | 'ceo'
+
+    let currentPdfModalOrderId = null;
+    let currentPdfBlobUrl = null;
+    let currentPdfShowingSheet = false;
 
     let isSyncing = false;
     let pollTimer = null;
@@ -1840,6 +1899,29 @@
         out = out.replace(fa[i], i).replace(ar[i], i);
       }
       return out;
+    }
+
+    function findOrderById(orderId) {
+      return state.orders.find(o => String(o.id) === String(orderId));
+    }
+
+    function findCheckById(checkId) {
+      return state.checks.find(c => String(c.id) === String(checkId));
+    }
+
+    function isAnyModalOpen() {
+      const modals = document.querySelectorAll('.modal-backdrop');
+      for (const m of modals) {
+        if (!m.classList.contains('hidden')) return true;
+      }
+      return false;
+    }
+
+    function isUserEditingInput() {
+      const el = document.activeElement;
+      if (!el) return false;
+      const tag = el.tagName.toLowerCase();
+      return tag === 'input' || tag === 'textarea' || tag === 'select';
     }
 
     function getRolePin(roleId) {
@@ -1897,14 +1979,44 @@
       return d.toLocaleDateString('fa-IR') + ' - ' + nowTimeStr();
     }
 
+    // ==================== تبدیل امن Base64 DataURL به Blob URL جهت نمایش قطعی PDF ====================
+    function revokePdfBlobUrl() {
+      if (currentPdfBlobUrl) {
+        try { URL.revokeObjectURL(currentPdfBlobUrl); } catch (e) {}
+        currentPdfBlobUrl = null;
+      }
+    }
+
+    function dataUrlToBlobUrl(dataUrl) {
+      try {
+        const parts = dataUrl.split(',');
+        if (parts.length < 2) return null;
+        const mimeMatch = parts[0].match(/:(.*?);/);
+        const mime = mimeMatch ? mimeMatch[1] : 'application/pdf';
+        const binary = atob(parts[1]);
+        const len = binary.length;
+        const bytes = new Uint8Array(len);
+        for (let i = 0; i < len; i++) {
+          bytes[i] = binary.charCodeAt(i);
+        }
+        const blob = new Blob([bytes], { type: mime });
+        return URL.createObjectURL(blob);
+      } catch (e) {
+        console.warn('Blob conversion failed:', e);
+        return null;
+      }
+    }
+
     // ==================== حافظه پشتیبان محلی و همگام‌سازی زنده با Supabase ====================
     function saveLocalCache() {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       } catch (e) {
-        const slimOrders = state.orders.map(o => ({ ...o, pdfData: null }));
-        const slimChecks = state.checks.map(c => ({ ...c, images: [], imageData: null }));
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...state, orders: slimOrders, checks: slimChecks }));
+        try {
+          const slimOrders = state.orders.map(o => ({ ...o, pdfData: null }));
+          const slimChecks = state.checks.map(c => ({ ...c, images: [], imageData: null }));
+          localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...state, orders: slimOrders, checks: slimChecks }));
+        } catch (err2) {}
       }
     }
 
@@ -1915,8 +2027,8 @@
           const parsed = JSON.parse(raw);
           if (parsed && typeof parsed === 'object') {
             state = {
-              orders: Array.isArray(parsed.orders) ? parsed.orders : [],
-              checks: Array.isArray(parsed.checks) ? parsed.checks : [],
+              orders: Array.isArray(parsed.orders) ? parsed.orders.map(o => normalizeOrderRecord(o, o.id)).filter(Boolean) : [],
+              checks: Array.isArray(parsed.checks) ? parsed.checks.map(c => normalizeCheckRecord(c, c.id)).filter(Boolean) : [],
               logs: Array.isArray(parsed.logs) ? parsed.logs : [],
               waPhone: parsed.waPhone || '',
               rolePins: parsed.rolePins || {}
@@ -1934,7 +2046,7 @@
           method: 'POST',
           headers: supabaseHeaders({ 'Prefer': 'resolution=merge-duplicates,return=minimal' }),
           body: JSON.stringify({
-            id: id,
+            id: String(id),
             data: payloadObj,
             updated_at: new Date().toISOString()
           })
@@ -1959,20 +2071,22 @@
     }
 
     async function syncOrderToCloud(order) {
+      order.id = String(order.id);
       saveLocalCache();
-      await upsertCloudRecord(order.id, order);
+      return await upsertCloudRecord(order.id, order);
     }
 
     async function syncCheckToCloud(checkItem) {
+      checkItem.id = String(checkItem.id);
       saveLocalCache();
-      await upsertCloudRecord(checkItem.id, checkItem);
+      return await upsertCloudRecord(checkItem.id, checkItem);
     }
 
-    function normalizeOrderRecord(o) {
+    function normalizeOrderRecord(o, rowId) {
       if (!o || typeof o !== 'object') return null;
+      o.id = String(o.id || rowId || ('ord-' + Date.now()));
       if (!o.times || typeof o.times !== 'object') o.times = {};
       if (!o.status) o.status = 'active';
-      // مهاجرت امن سفارش‌های قدیمی به ساختار ۶ مرحله‌ای جدید
       if (!o.schemaVersion) {
         if (o.status === 'returned') o.status = 'returned_to_sales';
         if (o.stage === 8) o.stage = 7;
@@ -1985,8 +2099,9 @@
       return o;
     }
 
-    function normalizeCheckRecord(c) {
+    function normalizeCheckRecord(c, rowId) {
       if (!c || typeof c !== 'object') return null;
+      c.id = String(c.id || rowId || ('chk-' + Date.now()));
       if (!Array.isArray(c.images)) {
         c.images = c.imageData ? [{ name: c.imageName || 'doc.jpg', dataUrl: c.imageData }] : [];
       }
@@ -2001,7 +2116,7 @@
       return c;
     }
 
-    async function fetchFromCloud(isInitial = false) {
+    async function fetchFromCloud(isManual = false) {
       if (isSyncing) return;
       isSyncing = true;
       try {
@@ -2022,13 +2137,13 @@
             if (row.id === SETTINGS_RECORD_ID) {
               settingsRow = row.data;
             } else if (String(row.id).startsWith('__SYSTEM_SETTINGS__')) {
-              // نادیده گرفتن تنظیمات نسخه‌های قدیمی برای جلوگیری از تداخل رمزها
+              // نادیده گرفتن تنظیمات نسخه‌های قدیمی
             } else if (row.data && typeof row.data === 'object') {
               if (String(row.id).startsWith('chk-') || String(row.id).startsWith('chk_') || row.data.recordType === 'check_receipt' || row.data.recordType === 'receipt') {
-                const normC = normalizeCheckRecord(row.data);
+                const normC = normalizeCheckRecord(row.data, row.id);
                 if (normC) fetchedChecks.push(normC);
               } else if (row.data.proforma || row.data.customer) {
-                const normO = normalizeOrderRecord(row.data);
+                const normO = normalizeOrderRecord(row.data, row.id);
                 if (normO) fetchedOrders.push(normO);
               }
             }
@@ -2047,7 +2162,8 @@
           saveLocalCache();
         }
 
-        if (currentRole) {
+        // جلوگیری از قطع شدن کلیک یا تایپ کاربر هنگام باز بودن مودال یا فرم
+        if (currentRole && (isManual || (!isAnyModalOpen() && !isUserEditingInput()))) {
           renderDashboard();
         }
       } catch (err) {
@@ -2113,7 +2229,6 @@
       const settingsBtn = document.getElementById('btn-ceo-settings');
       settingsBtn.textContent = role.id === 'ceo' ? '⚙️ تنظیمات و رمزها' : '📲 واتساپ مدیرعامل';
 
-      // برای مدیرعامل، فیلتر پیش‌فرض همه سفارش‌ها تا گزارش کامل ببیند
       selectedStationStage = null;
       activeFilter = role.id === 'ceo' ? 'all' : 'mine';
       activeCheckFilter = (role.id === 'ceo' || role.id === 'accounting') ? 'pending_me' : 'all';
@@ -2121,13 +2236,12 @@
       const salesFilterSel = document.getElementById('finance-sales-filter');
       if (salesFilterSel) salesFilterSel.value = 'all';
 
-      // مخفی کردن تب «ثبت پیش‌فاکتور جدید» برای غیر کارشناسان فروش (یا نمایش پیام دسترسی)
       updateFilterPillsUI();
       updateCheckFilterPillsUI();
       switchPhase(1);
       switchTab('board');
       renderDashboard();
-      fetchFromCloud(false);
+      fetchFromCloud(true);
     }
 
     function logoutRole() {
@@ -2167,10 +2281,10 @@
 
     function renderStats() {
       const visibleOrders = getVisibleOrders();
-      const salesFlowCount = visibleOrders.filter(o => o.status !== 'done' && o.stage <= 4).length;
+      const salesFlowCount = visibleOrders.filter(o => o.stage <= 4).length;
       const warehouseCount = visibleOrders.filter(o => o.status === 'active' && o.stage === 5).length;
       const driverCount = visibleOrders.filter(o => o.status === 'active' && o.stage === 6).length;
-      const doneCount = visibleOrders.filter(o => o.stage === 7).length;
+      const doneCount = visibleOrders.filter(o => o.stage >= 7).length;
 
       document.getElementById('stats-row').innerHTML = `
         <div class="stat-box"><div class="stat-num">${salesFlowCount}</div><div class="stat-lbl">فروش و مالی</div></div>
@@ -2179,7 +2293,6 @@
         <div class="stat-box"><div class="stat-num" style="color:var(--success);">${doneCount}</div><div class="stat-lbl">تحویل قطعی</div></div>
       `;
 
-      // شمارنده مدارک مالی نیازمند اقدام در تب فاز ۲
       const allMyVisibleChecks = currentRole.isSales
         ? state.checks.filter(c => c.salesOwnerId === currentRole.id)
         : state.checks;
@@ -2219,8 +2332,12 @@
         const repOrders = state.orders.filter(o => o.salesOwnerId === sr.id);
         const total = repOrders.length;
         const inProgress = repOrders.filter(o => o.status === 'active' && o.stage < 7).length;
-        const returned = repOrders.filter(o => o.status === 'returned_to_sales' || o.status === 'returned_to_sales_mgr').length;
-        const delivered = repOrders.filter(o => o.stage === 7).length;
+        const returned = repOrders.filter(o =>
+          o.status === 'returned_to_sales' ||
+          o.status === 'returned_to_sales_mgr' ||
+          o.status === 'returned_to_accounting'
+        ).length;
+        const delivered = repOrders.filter(o => o.stage >= 7).length;
         return `
           <tr>
             <td><strong>${escapeHtml(sr.title)}</strong></td>
@@ -2267,6 +2384,7 @@
         const count = visibleOrders.filter(o => {
           if (st.id === 1) return o.status === 'returned_to_sales';
           if (st.id === 2) return (o.status === 'active' && o.stage === 2) || o.status === 'returned_to_sales_mgr';
+          if (st.id === 4) return (o.status === 'active' && o.stage === 4) || o.status === 'returned_to_accounting';
           return o.status === 'active' && o.stage === st.id;
         }).length;
 
@@ -2289,7 +2407,6 @@
 
     function canActOnOrder(order) {
       if (!currentRole || order.stage >= 7) return false;
-      // مدیرعامل از چرخه تایید فروش حذف شده است (فقط گزارش‌گیری)
       if (currentRole.id === 'ceo') return false;
 
       if (order.status === 'returned_to_sales') {
@@ -2297,6 +2414,9 @@
       }
       if (order.status === 'returned_to_sales_mgr') {
         return currentRole.id === 'sales_mgr';
+      }
+      if (order.status === 'returned_to_accounting') {
+        return currentRole.id === 'accounting';
       }
 
       if (order.stage === 2) return currentRole.id === 'sales_mgr';
@@ -2330,19 +2450,25 @@
           list = list.filter(o => o.status === 'returned_to_sales');
         } else if (selectedStationStage === 2) {
           list = list.filter(o => (o.status === 'active' && o.stage === 2) || o.status === 'returned_to_sales_mgr');
+        } else if (selectedStationStage === 4) {
+          list = list.filter(o => (o.status === 'active' && o.stage === 4) || o.status === 'returned_to_accounting');
         } else {
           list = list.filter(o => o.status === 'active' && o.stage === selectedStationStage);
         }
       } else if (activeFilter === 'mine') {
         list = currentRole.id === 'ceo' ? list : list.filter(o => canActOnOrder(o));
       } else if (activeFilter === 'returned') {
-        list = list.filter(o => o.status === 'returned_to_sales' || o.status === 'returned_to_sales_mgr');
+        list = list.filter(o =>
+          o.status === 'returned_to_sales' ||
+          o.status === 'returned_to_sales_mgr' ||
+          o.status === 'returned_to_accounting'
+        );
       } else if (activeFilter === 'warehouse') {
         list = list.filter(o => o.status === 'active' && o.stage === 5);
       } else if (activeFilter === 'driver') {
         list = list.filter(o => o.status === 'active' && o.stage === 6);
       } else if (activeFilter === 'done') {
-        list = list.filter(o => o.stage === 7);
+        list = list.filter(o => o.stage >= 7);
       }
 
       if (list.length === 0) {
@@ -2360,7 +2486,8 @@
         const isDone = order.stage >= 7;
         const isReturnedSales = order.status === 'returned_to_sales';
         const isReturnedMgr = order.status === 'returned_to_sales_mgr';
-        const isAnyReturned = isReturnedSales || isReturnedMgr;
+        const isReturnedAcc = order.status === 'returned_to_accounting';
+        const isAnyReturned = isReturnedSales || isReturnedMgr || isReturnedAcc;
         const myTurn = canActOnOrder(order);
         const currentStageObj = !isDone ? STAGES[Math.min(Math.max(order.stage - 1, 0), STAGES.length - 1)] : null;
         const ownerName = getSalesOwnerName(order);
@@ -2377,6 +2504,12 @@
           } else if (isReturnedMgr && st.id === 2) {
             cls = 'returned';
             mark = '!';
+          } else if (isReturnedAcc && st.id === 4) {
+            cls = 'returned';
+            mark = '!';
+          } else if (isReturnedAcc && st.id < 4) {
+            cls = 'done';
+            mark = '✓';
           } else if (!isAnyReturned && order.stage === st.id) {
             cls = 'current';
           }
@@ -2419,13 +2552,30 @@
                 🔄 بررسی انجام شد / ارسال مجدد به حسابداری
               </button>
               <button type="button" class="btn-action-danger" data-action="return-to-sales" data-id="${escapeHtml(order.id)}">
-                ↩️ ارجاع به کارشناس فروش جهت اصلاح
+                ↩️ برگشت به کارشناس فروش جهت اصلاح
               </button>
             `;
           } else {
             footerHtml = `
               <div class="wait-banner" style="background:var(--danger-soft); color:var(--danger);">
                 <span>⚠️ مغایرت نرم‌افزار گزارش‌شده توسط مالی — در انتظار بررسی <strong>مدیر فروش</strong></span>
+              </div>
+            `;
+          }
+        } else if (isReturnedAcc) {
+          if (myTurn) {
+            footerHtml = `
+              <button type="button" class="btn-action-main success" data-action="convert-invoice" data-id="${escapeHtml(order.id)}">
+                ✏️ اصلاح فاکتور فروش (آپلود فایل و شماره جدید) و ارسال مجدد به انبار
+              </button>
+              <button type="button" class="btn-action-danger" data-action="return-to-mgr" data-id="${escapeHtml(order.id)}">
+                ↩️ عودت به مدیر فروش
+              </button>
+            `;
+          } else {
+            footerHtml = `
+              <div class="wait-banner" style="background:var(--danger-soft); color:var(--danger);">
+                <span>⚠️ مغایرت گزارش‌شده توسط انبار — برگشت خورده به <strong>واحد حسابداری و مالی</strong> جهت اصلاح فاکتور</span>
               </div>
             `;
           }
@@ -2462,8 +2612,8 @@
               <button type="button" class="btn-action-main success" data-action="warehouse-exit" data-id="${escapeHtml(order.id)}">
                 📦 ثبت جمع‌آوری، تعداد کارتن و ساعت خروج
               </button>
-              <button type="button" class="btn-action-danger" data-action="return-to-sales" data-id="${escapeHtml(order.id)}">
-                ⚠️ مغایرت انبار / برگشت به کارشناس
+              <button type="button" class="btn-action-danger" data-action="return-to-accounting" data-id="${escapeHtml(order.id)}">
+                ⚠️ مغایرت انبار (برگشت به مالی)
               </button>
             `;
           } else if (order.stage === 6) {
@@ -2485,6 +2635,12 @@
           `;
         }
 
+        const returnAlertTitle = isReturnedAcc
+          ? 'مغایرت گزارش‌شده توسط انبار (برگشت به واحد مالی جهت اصلاح)'
+          : isReturnedMgr
+            ? 'مغایرت گزارش‌شده توسط مالی (عودت به مدیر فروش)'
+            : 'برگشت به کارشناس فروش';
+
         return `
           <article class="order-card ${isAnyReturned ? 'returned-state' : myTurn ? 'my-turn' : isDone ? 'done-state' : ''}">
             <div class="order-head">
@@ -2503,23 +2659,23 @@
               ${order.amount ? `<div style="text-align:left; flex-shrink:0;"><strong style="font-size:13px;">${escapeHtml(order.amount)}</strong><div style="font-size:10px; color:var(--muted);">تومان</div></div>` : ''}
             </div>
 
-            <div class="pdf-packet">
+            <div class="pdf-packet ${order.finalInvoiceNo ? 'final-inv' : ''}">
               <div class="pdf-packet-info">
-                <span style="font-size:20px;">📑</span>
+                <span style="font-size:20px;">${order.finalInvoiceNo ? '🧾' : '📑'}</span>
                 <div>
-                  <strong>${escapeHtml(order.pdfName || order.proforma + '.pdf')}</strong>
-                  <span>${order.finalInvoiceNo ? `تبدیل‌شده به فاکتور نهایی ${escapeHtml(order.finalInvoiceNo)} — آماده پرینت در انبار` : 'بسته دیجیتال پیش‌فاکتور'}</span>
+                  <strong>${escapeHtml(order.pdfName || (order.finalInvoiceNo || order.proforma) + '.pdf')}</strong>
+                  <span>${order.finalInvoiceNo ? `فاکتور فروش نهایی شماره ${escapeHtml(order.finalInvoiceNo)} — آماده مشاهده و پرینت` : (order.pdfData ? 'فایل پیوست‌شده پیش‌فاکتور' : 'برگه دیجیتال پیش‌فاکتور')}</span>
                 </div>
               </div>
               <div class="pdf-btns">
-                <button type="button" class="btn-pdf-view" data-action="view-pdf" data-id="${escapeHtml(order.id)}">👁️ مشاهده PDF</button>
+                <button type="button" class="btn-pdf-view" data-action="view-pdf" data-id="${escapeHtml(order.id)}">👁️ مشاهده فایل / PDF</button>
                 <button type="button" class="btn-pdf-print" data-action="print-pdf" data-id="${escapeHtml(order.id)}">🖨️ پرینت برگه انبار</button>
               </div>
             </div>
 
             ${isAnyReturned ? `
               <div class="return-alert">
-                <strong>⚠️ ${isReturnedMgr ? 'مغایرت گزارش‌شده توسط مالی (عودت به مدیر فروش)' : 'برگشت به کارشناس فروش'}: ${escapeHtml(order.returnReason || '')}</strong>
+                <strong>⚠️ ${returnAlertTitle}: ${escapeHtml(order.returnReason || '')}</strong>
                 <span>${escapeHtml(order.returnNote || '')}</span>
               </div>
             ` : ''}
@@ -2661,7 +2817,7 @@
           const img = new Image();
           img.onload = function () {
             const canvas = document.createElement('canvas');
-            const maxSide = 950;
+            const maxSide = 1100;
             let w = img.width;
             let h = img.height;
             if (w > h && w > maxSide) {
@@ -2675,7 +2831,7 @@
             canvas.height = h;
             const ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, w, h);
-            resolve({ name: file.name, dataUrl: canvas.toDataURL('image/jpeg', 0.76) });
+            resolve({ name: file.name, dataUrl: canvas.toDataURL('image/jpeg', 0.8) });
           };
           img.onerror = () => resolve(null);
           img.src = e.target.result;
@@ -2717,6 +2873,7 @@
         `).join('');
         document.getElementById('c-image-hint').textContent = `✅ ${compressed.length} تصویر آماده بارگذاری و ارسال است.`;
         document.getElementById('c-image-preview-wrap').classList.remove('hidden');
+        document.getElementById('check-form-error').classList.add('hidden');
       }
     }
 
@@ -2727,8 +2884,19 @@
       const amount = document.getElementById('c-amount').value.trim();
       const refNo = document.getElementById('c-ref').value.trim();
       const caption = document.getElementById('c-caption').value.trim();
+      const errBox = document.getElementById('check-form-error');
 
-      if (!customer || !amount || !caption || tempCheckImages.length === 0) return;
+      if (!customer || !amount || !caption) {
+        errBox.textContent = 'لطفاً نام مشتری، مبلغ و کپشن را کامل وارد کنید.';
+        errBox.classList.remove('hidden');
+        return;
+      }
+      if (tempCheckImages.length === 0) {
+        errBox.textContent = 'لطفاً تصویر چک یا فیش را انتخاب کنید (در صورت انتخاب، ۲ ثانیه صبر کنید تا پیش‌نمایش ظاهر شود).';
+        errBox.classList.remove('hidden');
+        return;
+      }
+      errBox.classList.add('hidden');
 
       const newCheck = {
         id: 'chk-' + Date.now(),
@@ -2742,7 +2910,7 @@
         salesOwnerId: currentRole.isSales ? currentRole.id : 'accounting',
         salesOwnerName: currentRole.title,
         createdAt: nowDateTimeStr(),
-        status: 'pending', // 'pending' | 'returned' | 'finalized'
+        status: 'pending',
         financeStatus: 'pending',
         financeTime: '',
         ceoStatus: 'pending',
@@ -2763,7 +2931,7 @@
     }
 
     async function approveCheckItem(checkId, actor) {
-      const item = state.checks.find(c => c.id === checkId);
+      const item = findCheckById(checkId);
       if (!item) return;
 
       const dt = nowDateTimeStr();
@@ -2775,7 +2943,6 @@
         item.ceoTime = dt;
       }
 
-      // وقتی هر دو تایید شد -> ارسال به صندوق چک‌ها یا ثبت در حسابداری
       if (item.financeStatus === 'approved' && item.ceoStatus === 'approved') {
         item.status = 'finalized';
         item.finalizedTime = dt;
@@ -2794,20 +2961,26 @@
     }
 
     function openCheckRejectModal(checkId, actor) {
-      const item = state.checks.find(c => c.id === checkId);
+      const item = findCheckById(checkId);
       if (!item) return;
-      modalTargetCheckId = checkId;
+      modalTargetCheckId = String(item.id);
       modalCheckRejectBy = actor;
       document.getElementById('modal-check-reject-desc').textContent = `${item.docType} | مشتری: ${item.customer} (${item.amount} تومان)`;
       document.getElementById('inp-check-reject-note').value = '';
+      document.getElementById('check-reject-error').classList.add('hidden');
       document.getElementById('modal-check-reject').classList.remove('hidden');
     }
 
     async function confirmCheckReject() {
-      const item = state.checks.find(c => c.id === modalTargetCheckId);
+      const item = findCheckById(modalTargetCheckId);
       if (!item) return;
       const note = document.getElementById('inp-check-reject-note').value.trim();
-      if (!note) return;
+      const errBox = document.getElementById('check-reject-error');
+      if (!note) {
+        errBox.classList.remove('hidden');
+        return;
+      }
+      errBox.classList.add('hidden');
 
       const dt = nowDateTimeStr();
       if (modalCheckRejectBy === 'finance') {
@@ -2829,9 +3002,9 @@
     }
 
     function openReviseCheckModal(checkId) {
-      const item = state.checks.find(c => c.id === checkId);
+      const item = findCheckById(checkId);
       if (!item) return;
-      modalTargetCheckId = checkId;
+      modalTargetCheckId = String(item.id);
       tempRevCheckImages = [];
 
       document.getElementById('modal-revise-check-alert').innerHTML = `<strong>علت برگشت (${escapeHtml(item.rejectedBy || 'مالی/مدیریت')}):</strong><span>${escapeHtml(item.rejectReason || '')}</span>`;
@@ -2845,7 +3018,7 @@
     }
 
     async function confirmReviseCheck() {
-      const item = state.checks.find(c => c.id === modalTargetCheckId);
+      const item = findCheckById(modalTargetCheckId);
       if (!item) return;
 
       item.customer = document.getElementById('inp-rev-chk-customer').value.trim() || item.customer;
@@ -2872,7 +3045,7 @@
     }
 
     function openCheckImageModal(checkId, imgIndex) {
-      const item = state.checks.find(c => c.id === checkId);
+      const item = findCheckById(checkId);
       if (!item || !item.images || !item.images[imgIndex]) return;
       const imgObj = item.images[imgIndex];
 
@@ -2951,7 +3124,6 @@
           </div>
         `).join('');
 
-        // زنجیره ۳ مرحله‌ای داخل هر کارت مالی
         const step3Label = isCheck ? 'صندوق چک‌ها' : 'تایید مبلغ و ثبت حسابداری';
         const miniStepsHtml = `
           <div class="step-chain three-step">
@@ -3114,74 +3286,148 @@
       }
     }
 
-    // ==================== مدیریت فایل PDF و پرینت ====================
-    function onPdfSelected(event, mode) {
+    // ==================== مدیریت فایل PDF و تصویر (پیش‌فاکتور و فاکتور نهایی) ====================
+    async function onInvoiceFileSelected(event, mode) {
       const file = event.target.files && event.target.files[0];
-      if (!file) return;
       const hintId = mode === 'new' ? 'f-pdf-hint' : mode === 'revise' ? 'rev-pdf-hint' : 'final-inv-pdf-hint';
+      const hintEl = document.getElementById(hintId);
 
-      if (file.size > 1.5 * 1024 * 1024) {
-        const packet = { name: file.name, dataUrl: null };
-        if (mode === 'new') tempNewPdf = packet;
-        else if (mode === 'revise') tempRevPdf = packet;
-        else tempFinalInvPdf = packet;
-        document.getElementById(hintId).textContent = `⚠️ حجم فایل بیش از ۱.۵ مگابایت است؛ نام فایل ثبت شد و برگه چاپی استاندارد انبار تولید می‌شود.`;
+      if (!file) {
+        if (mode === 'new') tempNewPdf = null;
+        else if (mode === 'revise') tempRevPdf = null;
+        else tempFinalInvPdf = null;
         return;
       }
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const packet = { name: file.name, dataUrl: e.target.result };
-        if (mode === 'new') tempNewPdf = packet;
-        else if (mode === 'revise') tempRevPdf = packet;
-        else tempFinalInvPdf = packet;
-        document.getElementById(hintId).textContent = `✅ فایل «${file.name}» ضمیمه شد و روی تمام دستگاه‌ها قابل مشاهده است.`;
-      };
-      reader.readAsDataURL(file);
+
+      isReadingFile = true;
+      hintEl.textContent = '⏳ در حال آماده‌سازی فایل...';
+
+      try {
+        if (file.type && file.type.startsWith('image/')) {
+          const compressed = await compressImageFile(file);
+          const packet = compressed ? { name: file.name, dataUrl: compressed.dataUrl } : { name: file.name, dataUrl: null };
+          if (mode === 'new') tempNewPdf = packet;
+          else if (mode === 'revise') tempRevPdf = packet;
+          else tempFinalInvPdf = packet;
+          hintEl.textContent = `✅ تصویر «${file.name}» آماده ثبت و مشاهده در تمام دستگاه‌ها است.`;
+        } else {
+          if (file.size > 3.5 * 1024 * 1024) {
+            const packet = { name: file.name, dataUrl: null };
+            if (mode === 'new') tempNewPdf = packet;
+            else if (mode === 'revise') tempRevPdf = packet;
+            else tempFinalInvPdf = packet;
+            hintEl.textContent = `⚠️ حجم فایل PDF بیش از ۳.۵ مگابایت است؛ لطفاً فایل کم‌حجم‌تر انتخاب کنید (فعلاً برگه استاندارد انبار نمایش داده می‌شود).`;
+          } else {
+            const dataUrl = await new Promise((resolve) => {
+              const reader = new FileReader();
+              reader.onload = (e) => resolve(e.target.result);
+              reader.onerror = () => resolve(null);
+              reader.readAsDataURL(file);
+            });
+            const packet = { name: file.name, dataUrl };
+            if (mode === 'new') tempNewPdf = packet;
+            else if (mode === 'revise') tempRevPdf = packet;
+            else tempFinalInvPdf = packet;
+            hintEl.textContent = `✅ فایل PDF «${file.name}» ضمیمه شد و روی تمام دستگاه‌ها قابل مشاهده و دانلود است.`;
+          }
+        }
+      } finally {
+        isReadingFile = false;
+      }
+    }
+
+    function buildPrintableWarehouseSheetHtml(order) {
+      return `
+        <div id="print-area" style="border:2px solid #0f172a; border-radius:14px; padding:18px; background:#fff;">
+          <div style="display:flex; justify-content:space-between; border-bottom:2px solid #0f172a; padding-bottom:10px; margin-bottom:12px;">
+            <div>
+              <h4 style="font-size:15px; font-weight:800;">${order.finalInvoiceNo ? 'فاکتور فروش نهایی و حواله انبار' : 'برگه پیش‌فاکتور فروش'} | پخش قطعات یدکی</h4>
+              <p style="font-size:11px; color:#475569;">ایران‌خودرو و سایپا (۵۰ برند منتخب)</p>
+            </div>
+            <div style="text-align:left; font-size:12px;">
+              <strong>پیش‌فاکتور: ${escapeHtml(order.proforma)}</strong>
+              ${order.finalInvoiceNo ? `<div style="color:#059669; font-weight:800;">فاکتور فروش: ${escapeHtml(order.finalInvoiceNo)}</div>` : ''}
+              <div>کارشناس: ${escapeHtml(getSalesOwnerName(order))}</div>
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; background:#f8fafc; padding:10px; border-radius:10px; font-size:12px; margin-bottom:12px;">
+            <div><strong>مشتری:</strong> ${escapeHtml(order.customer)}</div>
+            <div><strong>تسویه:</strong> ${escapeHtml(order.payment || '-')}</div>
+            <div><strong>مبلغ کل:</strong> ${escapeHtml(order.amount || '-')} تومان</div>
+            <div><strong>کانال سفارش:</strong> ${escapeHtml(order.channel || '-')}</div>
+          </div>
+          <div style="border:1px solid #94a3b8; border-radius:10px; padding:12px; font-size:12.5px; margin-bottom:14px;">
+            <strong style="display:block; margin-bottom:6px;">شرح قطعات جهت جمع‌آوری و بسته‌بندی در انبار:</strong>
+            <p>${escapeHtml(order.items)}</p>
+          </div>
+          ${order.accountingNote ? `<div style="background:#ecfdf5; border:1px solid #6ee7b7; border-radius:8px; padding:8px 10px; font-size:11.5px; margin-bottom:12px; color:#065f46;"><strong>یادداشت مالی:</strong> ${escapeHtml(order.accountingNote)}</div>` : ''}
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px; font-size:11px; text-align:center;">
+            <div style="border:1px solid #cbd5e1; padding:8px; border-radius:8px;">مدیر فروش: ${escapeHtml(order.times[2] || 'در انتظار')}</div>
+            <div style="border:1px solid #cbd5e1; padding:8px; border-radius:8px;">تایید مشتری: ${escapeHtml(order.times[3] || 'در انتظار')}</div>
+            <div style="border:1px solid #cbd5e1; padding:8px; border-radius:8px;">حسابداری/فاکتور: ${escapeHtml(order.times[4] || 'در انتظار')}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderPdfModalBody(order, forceSheet) {
+      const body = document.getElementById('modal-pdf-content');
+      const openTabBtn = document.getElementById('btn-pdf-open-tab');
+      const dlBtn = document.getElementById('btn-pdf-download');
+      const toggleSheetBtn = document.getElementById('btn-toggle-print-sheet');
+
+      revokePdfBlobUrl();
+
+      const hasUploadedFile = Boolean(order.pdfData && typeof order.pdfData === 'string' && order.pdfData.startsWith('data:'));
+      currentPdfShowingSheet = forceSheet || !hasUploadedFile;
+
+      if (hasUploadedFile) {
+        const blobUrl = dataUrlToBlobUrl(order.pdfData);
+        currentPdfBlobUrl = blobUrl;
+        const viewUrl = blobUrl || order.pdfData;
+        openTabBtn.href = viewUrl;
+        openTabBtn.classList.remove('hidden');
+        dlBtn.href = viewUrl;
+        dlBtn.download = order.pdfName || ((order.finalInvoiceNo || order.proforma) + '.pdf');
+        dlBtn.classList.remove('hidden');
+        toggleSheetBtn.classList.remove('hidden');
+        toggleSheetBtn.textContent = currentPdfShowingSheet ? '📄 نمایش فایل آپلودشده' : '🧾 برگه استاندارد انبار';
+      } else {
+        openTabBtn.classList.add('hidden');
+        dlBtn.classList.add('hidden');
+        toggleSheetBtn.classList.add('hidden');
+      }
+
+      if (!currentPdfShowingSheet && hasUploadedFile) {
+        if (order.pdfData.startsWith('data:image/')) {
+          body.innerHTML = `
+            <div id="print-area" style="background:#f8fafc; border:1px solid var(--border); border-radius:14px; padding:8px; text-align:center; max-height:68vh; overflow:auto;">
+              <img src="${order.pdfData}" alt="تصویر فاکتور" style="max-width:100%; height:auto; border-radius:10px; display:inline-block;" />
+            </div>
+          `;
+        } else {
+          const viewUrl = currentPdfBlobUrl || order.pdfData;
+          body.innerHTML = `
+            <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:8px 10px; font-size:11px; color:#1e40af; margin-bottom:8px;">
+              💡 در صورتی که در گوشی موبایل فایل داخل کادر نمایش داده نشد، روی دکمه <strong>«📂 باز کردن تمام‌صفحه»</strong> یا <strong>«⬇️ دانلود فایل»</strong> در بالای همین پنجره بزنید.
+            </div>
+            <iframe src="${viewUrl}" style="width:100%; height:64vh; border:1px solid #cbd5e1; border-radius:12px; background:#fff;"></iframe>
+          `;
+        }
+      } else {
+        body.innerHTML = buildPrintableWarehouseSheetHtml(order);
+      }
     }
 
     function openPdfModal(orderId, autoPrint) {
-      const order = state.orders.find(o => o.id === orderId);
+      const order = findOrderById(orderId);
       if (!order) return;
+      currentPdfModalOrderId = String(order.id);
 
-      document.getElementById('modal-pdf-title').textContent = `📄 ${order.pdfName || order.proforma + '.pdf'}`;
-      const body = document.getElementById('modal-pdf-content');
-
-      if (order.pdfData) {
-        body.innerHTML = `<iframe src="${order.pdfData}" style="width:100%; height:65vh; border:1px solid #cbd5e1; border-radius:12px;"></iframe>`;
-      } else {
-        body.innerHTML = `
-          <div id="print-area" style="border:2px solid #0f172a; border-radius:14px; padding:18px; background:#fff;">
-            <div style="display:flex; justify-content:space-between; border-bottom:2px solid #0f172a; padding-bottom:10px; margin-bottom:12px;">
-              <div>
-                <h4 style="font-size:15px; font-weight:800;">${order.finalInvoiceNo ? 'فاکتور فروش نهایی و حواله انبار' : 'برگه پیش‌فاکتور فروش'} | پخش قطعات یدکی</h4>
-                <p style="font-size:11px; color:#475569;">ایران‌خودرو و سایپا (۵۰ برند منتخب)</p>
-              </div>
-              <div style="text-align:left; font-size:12px;">
-                <strong>پیش‌فاکتور: ${escapeHtml(order.proforma)}</strong>
-                ${order.finalInvoiceNo ? `<div style="color:#059669; font-weight:800;">فاکتور فروش: ${escapeHtml(order.finalInvoiceNo)}</div>` : ''}
-                <div>کارشناس: ${escapeHtml(getSalesOwnerName(order))}</div>
-              </div>
-            </div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; background:#f8fafc; padding:10px; border-radius:10px; font-size:12px; margin-bottom:12px;">
-              <div><strong>مشتری:</strong> ${escapeHtml(order.customer)}</div>
-              <div><strong>تسویه:</strong> ${escapeHtml(order.payment || '-')}</div>
-              <div><strong>مبلغ کل:</strong> ${escapeHtml(order.amount || '-')} تومان</div>
-              <div><strong>کانال سفارش:</strong> ${escapeHtml(order.channel || '-')}</div>
-            </div>
-            <div style="border:1px solid #94a3b8; border-radius:10px; padding:12px; font-size:12.5px; margin-bottom:14px;">
-              <strong style="display:block; margin-bottom:6px;">شرح قطعات جهت جمع‌آوری و بسته‌بندی در انبار:</strong>
-              <p>${escapeHtml(order.items)}</p>
-            </div>
-            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px; font-size:11px; text-align:center;">
-              <div style="border:1px solid #cbd5e1; padding:8px; border-radius:8px;">مدیر فروش: ${escapeHtml(order.times[2] || 'در انتظار')}</div>
-              <div style="border:1px solid #cbd5e1; padding:8px; border-radius:8px;">تایید مشتری: ${escapeHtml(order.times[3] || 'در انتظار')}</div>
-              <div style="border:1px solid #cbd5e1; padding:8px; border-radius:8px;">حسابداری/فاکتور: ${escapeHtml(order.times[4] || 'در انتظار')}</div>
-            </div>
-          </div>
-        `;
-      }
-
+      document.getElementById('modal-pdf-title').textContent = `📄 ${order.pdfName || (order.finalInvoiceNo || order.proforma) + '.pdf'}`;
+      renderPdfModalBody(order, autoPrint);
       document.getElementById('modal-pdf').classList.remove('hidden');
+
       if (autoPrint) {
         setTimeout(() => window.print(), 300);
       }
@@ -3191,6 +3437,10 @@
     async function handleCreateOrder(e) {
       e.preventDefault();
       if (!currentRole || !currentRole.isSales) return;
+      if (isReadingFile) {
+        alert('فایل پیوست هنوز در حال آماده‌سازی است، لطفاً ۲ ثانیه صبر کنید و دوباره بزنید.');
+        return;
+      }
 
       const customer = document.getElementById('f-customer').value.trim();
       const proforma = document.getElementById('f-proforma').value.trim();
@@ -3213,7 +3463,7 @@
         amount,
         payment,
         items,
-        stage: 2, // مستقیم ارسال به مدیر فروش
+        stage: 2,
         status: 'active',
         rev: 0,
         pdfName: tempNewPdf ? tempNewPdf.name : `${proforma}_PreInvoice.pdf`,
@@ -3227,14 +3477,14 @@
 
       tempNewPdf = null;
       document.getElementById('create-order-form').reset();
-      document.getElementById('f-pdf-hint').textContent = 'در صورت عدم انتخاب فایل یا حجم بالاتر از ۱.۵ مگابایت، سیستم به‌صورت خودکار برگه استاندارد قابل پرینت انبار را تولید می‌کند.';
+      document.getElementById('f-pdf-hint').textContent = 'در صورت عدم انتخاب فایل، سیستم به‌صورت خودکار برگه استاندارد قابل پرینت انبار را تولید می‌کند.';
       switchTab('board');
       setOrderFilter('all');
     }
 
     // ==================== مراحل ۲ و ۳ (تایید مدیر فروش و تاییدیه مشتری) ====================
     async function advanceOrderStage(orderId) {
-      const order = state.orders.find(o => o.id === orderId);
+      const order = findOrderById(orderId);
       if (!order) return;
 
       const t = nowTimeStr();
@@ -3254,9 +3504,8 @@
       if (msg) await addLogAndNotify(msg);
     }
 
-    // مدیر فروش مغایرت برگشتی از حسابداری را بررسی و مجدد به حسابداری می‌فرستد
     async function resolveMgrReturnToAccounting(orderId) {
-      const order = state.orders.find(o => o.id === orderId);
+      const order = findOrderById(orderId);
       if (!order) return;
 
       const t = nowTimeStr();
@@ -3271,70 +3520,133 @@
       await addLogAndNotify(`🔄 مدیر فروش مغایرت پیش‌فاکتور «${order.proforma}» (${order.customer}) را بررسی و مجدداً به حسابداری ارسال کرد.`);
     }
 
-    // ==================== مرحله ۴: تبدیل پیش‌فاکتور به فاکتور فروش (حسابداری) ====================
+    // ==================== مرحله ۴: تبدیل پیش‌فاکتور به فاکتور فروش + اصلاح مغایرت انبار (حسابداری) ====================
     function openConvertInvoiceModal(orderId) {
-      const order = state.orders.find(o => o.id === orderId);
+      const order = findOrderById(orderId);
       if (!order) return;
-      modalTargetOrderId = orderId;
+      modalTargetOrderId = String(order.id);
       tempFinalInvPdf = null;
+
+      const isWarehouseReturn = order.status === 'returned_to_accounting';
+      document.getElementById('modal-convert-title').textContent = isWarehouseReturn
+        ? '✏️ اصلاح فاکتور فروش (مغایرت انبار) و ارسال مجدد'
+        : '🧾 تبدیل پیش‌فاکتور به فاکتور فروش نهایی';
+
+      const alertBox = document.getElementById('modal-convert-alert');
+      if (isWarehouseReturn) {
+        alertBox.innerHTML = `<strong>⚠️ علت مغایرت انبار: ${escapeHtml(order.returnReason || '')}</strong><span>${escapeHtml(order.returnNote || '')}</span>`;
+        alertBox.classList.remove('hidden');
+      } else {
+        alertBox.classList.add('hidden');
+      }
+
       document.getElementById('modal-convert-desc').textContent = `مشتری: ${order.customer} | شماره پیش‌فاکتور: ${order.proforma} | کارشناس: ${getSalesOwnerName(order)}`;
       document.getElementById('inp-final-invoice-no').value = order.finalInvoiceNo || '';
+      document.getElementById('inp-final-inv-amount').value = order.amount || '';
+      document.getElementById('inp-final-inv-items').value = order.items || '';
       document.getElementById('inp-accounting-note').value = order.accountingNote || '';
       document.getElementById('inp-final-inv-pdf').value = '';
-      document.getElementById('final-inv-pdf-hint').textContent = 'در صورت عدم انتخاب فایل جدید، همان فایل پیش‌فاکتور همراه با شماره فاکتور نهایی به انبار ارسال می‌شود.';
+      document.getElementById('final-inv-pdf-hint').textContent = 'فایل فاکتور نهایی (PDF یا عکس) را انتخاب کنید؛ در صورت عدم انتخاب، فایل فعلی همراه با شماره فاکتور نهایی به انبار ارسال می‌شود.';
+      document.getElementById('convert-invoice-error').classList.add('hidden');
+      document.getElementById('btn-confirm-convert-invoice').textContent = isWarehouseReturn
+        ? '✅ ثبت اصلاحیه فاکتور و ارسال مجدد به انبار'
+        : '✅ ثبت شماره فاکتور نهایی و ارسال به انبار';
+
       document.getElementById('modal-convert-invoice').classList.remove('hidden');
     }
 
     async function confirmConvertInvoice() {
-      const order = state.orders.find(o => o.id === modalTargetOrderId);
-      if (!order) return;
+      const order = findOrderById(modalTargetOrderId);
+      const errBox = document.getElementById('convert-invoice-error');
+      if (!order) {
+        errBox.textContent = 'سفارش یافت نشد؛ لطفاً صفحه را یک‌بار بروزرسانی کنید.';
+        errBox.classList.remove('hidden');
+        return;
+      }
+
+      if (isReadingFile) {
+        errBox.textContent = '⏳ فایل فاکتور هنوز در حال آماده‌سازی است؛ لطفاً ۲ ثانیه صبر کنید و دوباره بزنید.';
+        errBox.classList.remove('hidden');
+        return;
+      }
 
       const invNo = normalizeDigits(document.getElementById('inp-final-invoice-no').value);
+      const newAmount = document.getElementById('inp-final-inv-amount').value.trim();
+      const newItems = document.getElementById('inp-final-inv-items').value.trim();
       const note = document.getElementById('inp-accounting-note').value.trim();
-      if (!invNo) return;
 
+      if (!invNo) {
+        errBox.textContent = 'لطفاً شماره فاکتور فروش نهایی را وارد کنید.';
+        errBox.classList.remove('hidden');
+        document.getElementById('inp-final-invoice-no').focus();
+        return;
+      }
+      errBox.classList.add('hidden');
+
+      const wasWarehouseReturn = order.status === 'returned_to_accounting';
       const t = nowTimeStr();
+
       order.finalInvoiceNo = invNo;
+      if (newAmount) order.amount = newAmount;
+      if (newItems) order.items = newItems;
       order.accountingNote = note;
       if (tempFinalInvPdf) {
         order.pdfName = tempFinalInvPdf.name;
         order.pdfData = tempFinalInvPdf.dataUrl;
       }
-      order.times[4] = t;
+      if (wasWarehouseReturn) {
+        order.rev = (order.rev || 0) + 1;
+        order.returnReason = '';
+        order.returnNote = '';
+        order.times[4] = `${t} (اصلاح #${order.rev})`;
+      } else {
+        order.times[4] = t;
+      }
+
+      order.status = 'active';
       order.stage = 5; // ارسال به سرپرست انبار
 
       closeModal('modal-convert-invoice');
       renderDashboard();
       await syncOrderToCloud(order);
-      await addLogAndNotify(`🧾 حسابداری پیش‌فاکتور «${order.proforma}» (${order.customer}) را به فاکتور فروش شماره «${invNo}» تبدیل و به سرپرست انبار ارسال کرد.`);
+      const msg = wasWarehouseReturn
+        ? `🔄 واحد مالی مغایرت انبار فاکتور «${invNo}» (${order.customer}) را اصلاح و مجدداً به سرپرست انبار ارسال کرد.`
+        : `🧾 حسابداری پیش‌فاکتور «${order.proforma}» (${order.customer}) را به فاکتور فروش شماره «${invNo}» تبدیل و به سرپرست انبار ارسال کرد.`;
+      await addLogAndNotify(msg);
     }
 
     // ==================== مرحله ۵: سرپرست انبار (جمع‌آوری + تعداد کارتن + ساعت خروج) ====================
     function openWarehouseExitModal(orderId) {
-      const order = state.orders.find(o => o.id === orderId);
+      const order = findOrderById(orderId);
       if (!order) return;
-      modalTargetOrderId = orderId;
+      modalTargetOrderId = String(order.id);
       document.getElementById('modal-exit-desc').textContent = `مشتری: ${order.customer} | فاکتور فروش: ${order.finalInvoiceNo || order.proforma}`;
       document.getElementById('inp-exit-cartons').value = order.cartonsOut || '';
       document.getElementById('inp-exit-time').value = order.exitTime || nowTimeStr();
       document.getElementById('inp-exit-driver').value = order.driverName || '';
+      document.getElementById('exit-error-msg').classList.add('hidden');
       document.getElementById('modal-warehouse-exit').classList.remove('hidden');
     }
 
     async function confirmWarehouseExit() {
-      const order = state.orders.find(o => o.id === modalTargetOrderId);
+      const order = findOrderById(modalTargetOrderId);
       if (!order) return;
 
       const cartons = parseInt(normalizeDigits(document.getElementById('inp-exit-cartons').value), 10);
       const exitTime = document.getElementById('inp-exit-time').value.trim() || nowTimeStr();
       const driver = document.getElementById('inp-exit-driver').value.trim();
-      if (!cartons || cartons < 1 || !driver) return;
+      const errBox = document.getElementById('exit-error-msg');
+      if (!cartons || cartons < 1 || !driver) {
+        errBox.classList.remove('hidden');
+        return;
+      }
+      errBox.classList.add('hidden');
 
       order.cartonsOut = cartons;
       order.exitTime = exitTime;
       order.driverName = driver;
       order.times[5] = exitTime;
-      order.stage = 6; // ارسال به کارتابل راننده
+      order.stage = 6;
 
       closeModal('modal-warehouse-exit');
       renderDashboard();
@@ -3405,9 +3717,9 @@
     }
 
     function openDriverDeliveryModal(orderId) {
-      const order = state.orders.find(o => o.id === orderId);
+      const order = findOrderById(orderId);
       if (!order) return;
-      modalTargetOrderId = orderId;
+      modalTargetOrderId = String(order.id);
 
       document.getElementById('modal-delivery-desc').textContent = `مشتری: ${order.customer} (${order.finalInvoiceNo || order.proforma}) | خروجی انبار: ${order.cartonsOut || '-'} کارتن`;
       document.getElementById('inp-del-cartons').value = order.cartonsOut || '';
@@ -3419,7 +3731,7 @@
     }
 
     async function confirmDriverDelivery() {
-      const order = state.orders.find(o => o.id === modalTargetOrderId);
+      const order = findOrderById(modalTargetOrderId);
       if (!order) return;
 
       const cartons = parseInt(normalizeDigits(document.getElementById('inp-del-cartons').value), 10);
@@ -3439,7 +3751,7 @@
       order.customerSigner = signer;
       order.signatureData = signatureDataUrl;
       order.times[6] = dt;
-      order.stage = 7; // تکمیل قطعی
+      order.stage = 7;
 
       const reportMsg = `🎉 تحویل نهایی و امضا شد: فاکتور «${order.finalInvoiceNo || order.proforma}» (${order.customer}) به تعداد ${cartons} کارتن در تاریخ ${dt} با امضای دیجیتال «${signer}» تحویل گردید.`;
       closeModal('modal-driver-delivery');
@@ -3450,17 +3762,27 @@
 
     // ==================== چرخه‌های برگشت مغایرت و عدم تایید مشتری ====================
     function openReturnModal(orderId, targetMode) {
-      const order = state.orders.find(o => o.id === orderId);
+      const order = findOrderById(orderId);
       if (!order) return;
-      modalTargetOrderId = orderId;
-      modalReturnTarget = targetMode; // 'sales' | 'sales_mgr' | 'customer_reject'
+      modalTargetOrderId = String(order.id);
+      modalReturnTarget = targetMode; // 'sales' | 'sales_mgr' | 'customer_reject' | 'accounting'
 
       const titleEl = document.getElementById('modal-return-title');
       const descEl = document.getElementById('modal-return-desc');
       const selectEl = document.getElementById('inp-return-reason');
       const btnEl = document.getElementById('btn-confirm-return');
 
-      if (targetMode === 'sales_mgr') {
+      if (targetMode === 'accounting') {
+        titleEl.textContent = '⚠️ گزارش مغایرت انبار و برگشت به مالی';
+        descEl.textContent = `فاکتور «${order.finalInvoiceNo || order.proforma}» (${order.customer}) به واحد حسابداری و مالی برمی‌گردد تا اصلاح و مجدداً به انبار ارسال شود:`;
+        selectEl.innerHTML = `
+          <option value="کسری موجودی قطعه در انبار">کسری موجودی قطعه در انبار</option>
+          <option value="مغایرت تعداد یا اقلام فاکتور با موجودی انبار">مغایرت تعداد یا اقلام فاکتور با موجودی انبار</option>
+          <option value="مغایرت کد فنی / برند درخواستی">مغایرت کد فنی / برند درخواستی</option>
+          <option value="آسیب‌دیدگی کالا یا نیاز به اصلاح فاکتور فروش">آسیب‌دیدگی کالا یا نیاز به اصلاح فاکتور فروش</option>
+        `;
+        btnEl.textContent = '↩️ ثبت مغایرت و برگشت به کارتابل مالی';
+      } else if (targetMode === 'sales_mgr') {
         titleEl.textContent = '⚠️ مغایرت نرم‌افزار و عودت به مدیر فروش';
         descEl.textContent = `گزارش مغایرت پیش‌فاکتور «${order.proforma}» (${order.customer}) با نرم‌افزار حسابداری جهت بررسی مدیر فروش:`;
         selectEl.innerHTML = `
@@ -3479,15 +3801,15 @@
         `;
         btnEl.textContent = '↩️ برگشت به مرحله اول برای اصلاح و تایید مجدد مدیر فروش';
       } else {
-        titleEl.textContent = '⚠️ گزارش مغایرت و برگشت به کارشناس فروش';
-        descEl.textContent = `برگشت سفارش «${order.proforma}» (${order.customer}) به کارتابل ${getSalesOwnerName(order)}:`;
+        titleEl.textContent = '↩️ برگشت پیش‌فاکتور به کارشناس فروش';
+        descEl.textContent = `برگشت پیش‌فاکتور «${order.proforma}» (${order.customer}) به کارتابل ${getSalesOwnerName(order)} جهت اصلاح:`;
         selectEl.innerHTML = `
-          <option value="کسری موجودی قطعه در انبار">کسری موجودی قطعه در انبار</option>
-          <option value="مغایرت کد فنی / مدل خودرو">مغایرت کد فنی / مدل خودرو (ایران‌خودرو/سایپا)</option>
-          <option value="عدم موجودی برند درخواستی">عدم موجودی برند درخواستی</option>
           <option value="اصلاح تخفیف یا قیمت فروش">اصلاح تخفیف یا قیمت فروش</option>
+          <option value="اصلاح شرایط تسویه یا اعتبار مشتری">اصلاح شرایط تسویه یا اعتبار مشتری</option>
+          <option value="اصلاح اقلام یا کد فنی قطعات">اصلاح اقلام یا کد فنی قطعات</option>
+          <option value="نقص اطلاعات یا فایل پیش‌فاکتور">نقص اطلاعات یا فایل پیش‌فاکتور</option>
         `;
-        btnEl.textContent = '↩️ برگشت به کارتابل کارشناس فروش';
+        btnEl.textContent = '↩️ ثبت برگشت به کارتابل کارشناس فروش';
       }
 
       document.getElementById('inp-return-note').value = '';
@@ -3495,17 +3817,21 @@
     }
 
     async function confirmReturnOrder() {
-      const order = state.orders.find(o => o.id === modalTargetOrderId);
+      const order = findOrderById(modalTargetOrderId);
       if (!order) return;
       const reason = document.getElementById('inp-return-reason').value;
-      const note = document.getElementById('inp-return-note').value.trim();
-      if (!note) return;
+      const noteInput = document.getElementById('inp-return-note').value.trim();
+      const note = noteInput || reason;
 
       order.returnReason = reason;
       order.returnNote = note;
 
       let msg = '';
-      if (modalReturnTarget === 'sales_mgr') {
+      if (modalReturnTarget === 'accounting') {
+        order.status = 'returned_to_accounting';
+        order.stage = 4;
+        msg = `⚠️ مغایرت انبار (برگشت به مالی): فاکتور «${order.finalInvoiceNo || order.proforma}» (${order.customer}) به علت «${reason}» جهت اصلاح به واحد مالی برگشت خورد.`;
+      } else if (modalReturnTarget === 'sales_mgr') {
         order.status = 'returned_to_sales_mgr';
         order.stage = 2;
         msg = `⚠️ عودت از مالی به مدیر فروش: پیش‌فاکتور «${order.proforma}» (${order.customer}) به علت «${reason}» جهت بررسی به مدیر فروش برگشت خورد.`;
@@ -3522,9 +3848,9 @@
     }
 
     function openReviseModal(orderId) {
-      const order = state.orders.find(o => o.id === orderId);
+      const order = findOrderById(orderId);
       if (!order) return;
-      modalTargetOrderId = orderId;
+      modalTargetOrderId = String(order.id);
       tempRevPdf = null;
 
       document.getElementById('modal-revise-alert').innerHTML = `<strong>علت برگشت: ${escapeHtml(order.returnReason || '')}</strong><span>${escapeHtml(order.returnNote || '')}</span>`;
@@ -3532,19 +3858,24 @@
       document.getElementById('inp-rev-amount').value = order.amount || '';
       document.getElementById('inp-rev-items').value = order.items || '';
       document.getElementById('inp-rev-pdf').value = '';
+      document.getElementById('rev-pdf-hint').textContent = 'فایل جدید جایگزین نسخه قبلی برای بررسی و پرینت انبار می‌شود.';
       document.getElementById('modal-revise').classList.remove('hidden');
     }
 
     async function confirmSalesRevision() {
-      const order = state.orders.find(o => o.id === modalTargetOrderId);
+      const order = findOrderById(modalTargetOrderId);
       if (!order) return;
+      if (isReadingFile) {
+        alert('فایل جدید هنوز در حال آماده‌سازی است، لطفاً ۲ ثانیه صبر کنید.');
+        return;
+      }
 
       order.proforma = document.getElementById('inp-rev-proforma').value.trim() || order.proforma;
       order.amount = document.getElementById('inp-rev-amount').value.trim();
       order.items = document.getElementById('inp-rev-items').value.trim();
       order.rev = (order.rev || 0) + 1;
       order.status = 'active';
-      order.stage = 2; // ارسال مجدد برای تایید مدیر فروش قبل از تایید مشتری
+      order.stage = 2; // ارسال مجدد برای تایید مدیر فروش
       order.returnReason = '';
       order.returnNote = '';
       order.times = { 1: `${nowTimeStr()} (اصلاحیه #${order.rev})` };
@@ -3617,9 +3948,11 @@
             ? `برگشت به کارشناس (${o.returnReason})`
             : o.status === 'returned_to_sales_mgr'
               ? `مغایرت مالی/عودت به مدیر فروش (${o.returnReason})`
-              : o.stage >= 7
-                ? `تحویل قطعی (${o.cartonsDelivered || o.cartonsOut} کارتن - تحویل‌گیرنده: ${o.customerSigner || '-'})`
-                : `مرحله ${o.stage}: ${STAGES[o.stage - 1].short}`;
+              : o.status === 'returned_to_accounting'
+                ? `مغایرت انبار/برگشت به مالی (${o.returnReason})`
+                : o.stage >= 7
+                  ? `تحویل قطعی (${o.cartonsDelivered || o.cartonsOut} کارتن - تحویل‌گیرنده: ${o.customerSigner || '-'})`
+                  : `مرحله ${o.stage}: ${STAGES[o.stage - 1].short}`;
           return `• ${o.customer} (${o.finalInvoiceNo || o.proforma} | ${getSalesOwnerName(o)}) ⬅️ ${st}`;
         })
       ];
@@ -3637,6 +3970,10 @@
 
     function closeModal(id) {
       document.getElementById(id).classList.add('hidden');
+      if (id === 'modal-pdf') {
+        revokePdfBlobUrl();
+        currentPdfModalOrderId = null;
+      }
     }
 
     // ==================== اتصال رویدادها پس از بارگذاری DOM ====================
@@ -3646,7 +3983,7 @@
 
       pollTimer = setInterval(() => {
         fetchFromCloud(false);
-      }, 4000);
+      }, 4500);
 
       // ورود و نمایش رمز
       document.getElementById('login-form').addEventListener('submit', handleLoginSubmit);
@@ -3656,7 +3993,7 @@
       });
 
       // دکمه‌های هدر کارتابل
-      document.getElementById('btn-manual-sync').addEventListener('click', () => fetchFromCloud(false));
+      document.getElementById('btn-manual-sync').addEventListener('click', () => fetchFromCloud(true));
       document.getElementById('btn-ceo-settings').addEventListener('click', openSettingsModal);
       document.getElementById('btn-logout').addEventListener('click', logoutRole);
 
@@ -3750,20 +4087,41 @@
         else if (action === 'driver-delivery') openDriverDeliveryModal(id);
         else if (action === 'return-to-sales') openReturnModal(id, 'sales');
         else if (action === 'return-to-mgr') openReturnModal(id, 'sales_mgr');
+        else if (action === 'return-to-accounting') openReturnModal(id, 'accounting');
         else if (action === 'customer-reject') openReturnModal(id, 'customer_reject');
         else if (action === 'revise') openReviseModal(id);
         else if (action === 'view-pdf') openPdfModal(id, false);
         else if (action === 'print-pdf') openPdfModal(id, true);
       });
 
-      // فرم‌های ثبت و آپلود PDF
+      // فرم‌های ثبت و آپلود فایل (PDF یا تصویر)
       document.getElementById('create-order-form').addEventListener('submit', handleCreateOrder);
-      document.getElementById('f-pdf').addEventListener('change', e => onPdfSelected(e, 'new'));
-      document.getElementById('inp-rev-pdf').addEventListener('change', e => onPdfSelected(e, 'revise'));
-      document.getElementById('inp-final-inv-pdf').addEventListener('change', e => onPdfSelected(e, 'final'));
+      document.getElementById('f-pdf').addEventListener('change', e => onInvoiceFileSelected(e, 'new'));
+      document.getElementById('inp-rev-pdf').addEventListener('change', e => onInvoiceFileSelected(e, 'revise'));
+      document.getElementById('inp-final-inv-pdf').addEventListener('change', e => onInvoiceFileSelected(e, 'final'));
+
+      // دکمه‌های مودال PDF
+      document.getElementById('btn-toggle-print-sheet').addEventListener('click', function () {
+        if (!currentPdfModalOrderId) return;
+        const order = findOrderById(currentPdfModalOrderId);
+        if (order) renderPdfModalBody(order, !currentPdfShowingSheet);
+      });
+
+      document.getElementById('btn-trigger-print').addEventListener('click', function () {
+        if (currentPdfModalOrderId) {
+          const order = findOrderById(currentPdfModalOrderId);
+          if (order && !currentPdfShowingSheet && order.pdfData && order.pdfData.startsWith('data:application/pdf')) {
+            // اگر فایل PDF آپلودشده در حال نمایش است، برای پرینت تمیز برگه انبار یا باز کردن در تب جدید
+            if (currentPdfBlobUrl) {
+              const win = window.open(currentPdfBlobUrl, '_blank', 'noopener');
+              if (win) return;
+            }
+          }
+        }
+        window.print();
+      });
 
       // دکمه‌های مودال‌ها
-      document.getElementById('btn-trigger-print').addEventListener('click', () => window.print());
       document.getElementById('btn-confirm-convert-invoice').addEventListener('click', confirmConvertInvoice);
       document.getElementById('btn-confirm-exit').addEventListener('click', confirmWarehouseExit);
       document.getElementById('btn-confirm-delivery').addEventListener('click', confirmDriverDelivery);
