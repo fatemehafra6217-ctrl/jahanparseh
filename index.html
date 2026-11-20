@@ -2086,16 +2086,27 @@
       if (!o || typeof o !== 'object') return null;
       o.id = String(o.id || rowId || ('ord-' + Date.now()));
       if (!o.times || typeof o.times !== 'object') o.times = {};
+      if (!o.proforma) o.proforma = 'PF-' + String(o.id).slice(-4);
+      if (!o.items && o.item) o.items = o.qty ? `${o.item} (${o.qty} عدد)` : String(o.item);
+      if (!o.items) o.items = '-';
+      if (!o.amount && o.price) o.amount = String(o.price);
       if (!o.status) o.status = 'active';
       if (!o.schemaVersion) {
-        if (o.status === 'returned') o.status = 'returned_to_sales';
-        if (o.stage === 8) o.stage = 7;
+        if (o.status === 'returned') { o.status = 'returned_to_sales'; o.stage = 1; }
+        else if (o.status === 'pending_finance') { o.status = 'active'; o.stage = 4; }
+        else if (o.status === 'pending_warehouse') { o.status = 'active'; o.stage = 5; }
+        else if (o.status === 'ready_to_ship') { o.status = 'active'; o.stage = 6; }
+        else if (o.status === 'delivered') { o.status = 'active'; o.stage = 7; }
+        else if (o.stage === 8) o.stage = 7;
         else if (o.stage === 7) o.stage = 6;
         else if (o.stage === 5 || o.stage === 6) o.stage = 5;
         else if (o.stage === 4) o.stage = 4;
         else if (o.stage === 3) o.stage = 2;
         else if (o.stage === 2) o.stage = 4;
       }
+      o.stage = parseInt(o.stage, 10);
+      if (isNaN(o.stage) || o.stage < 1) o.stage = 2;
+      if (o.stage > 7) o.stage = 7;
       return o;
     }
 
